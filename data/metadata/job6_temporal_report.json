@@ -1,0 +1,18 @@
+{
+  "job_name": "Job 6: Temporal Traffic Analytics",
+  "job_id": "job_local2078628236_0001",
+  "timestamp": "2026-11-14 00:07:26",
+  "status": "COMPLETED_AND_VERIFIED",
+  "execution_duration_sec": 66.41,
+  "map_input_records": 2099976,
+  "map_output_records": 2099971,
+  "reduce_input_records": 2099971,
+  "reduce_input_groups": 60,
+  "reduce_output_records": 60,
+  "validation": {
+    "status": "PASSED",
+    "unique_minutes": 60,
+    "total_flows": 2099971,
+    "discrepancies": []
+  }
+}

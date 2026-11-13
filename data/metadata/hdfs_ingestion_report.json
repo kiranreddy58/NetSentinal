@@ -1,0 +1,131 @@
+{
+  "report_name": "NetSentinel Phase 5 HDFS Ingestion Master Report",
+  "verification_timestamp": "2026-11-13 23:12:08",
+  "total_verification_time_sec": 260.5,
+  "hdfs_namenode": "hdfs://localhost:9000",
+  "cluster_status": "HEALTHY",
+  "datanode_count": 1,
+  "all_checks_passed": true,
+  "total_files_ingested": 10,
+  "standard_files_count": 5,
+  "plus_files_count": 5,
+  "total_local_bytes": 1786525423,
+  "total_hdfs_bytes": 1786525423,
+  "bytes_parity": true,
+  "sha256_parity": true,
+  "storage_separation_verified": true,
+  "standard_directory": "/netsentinel/input/original",
+  "plus_directory": "/netsentinel/input/plus",
+  "files": [
+    {
+      "Filename": "monday.csv",
+      "Group": "Standard",
+      "Local_Bytes": 146143601,
+      "HDFS_Bytes": 146143601,
+      "Local_SHA256": "c493314d7f2cd5614193d3fd8de6d0731edfe1383ccf24df0323c8c6899ba7ab",
+      "HDFS_Content_SHA256": "c493314d7f2cd5614193d3fd8de6d0731edfe1383ccf24df0323c8c6899ba7ab",
+      "Bytes_Match": true,
+      "SHA256_Match": true,
+      "Status": "VERIFIED_PASSED"
+    },
+    {
+      "Filename": "tuesday.csv",
+      "Group": "Standard",
+      "Local_Bytes": 125393583,
+      "HDFS_Bytes": 125393583,
+      "Local_SHA256": "664b615572fdbd88ae24d01f33a538983277359151e9fd5172d40da092362f71",
+      "HDFS_Content_SHA256": "664b615572fdbd88ae24d01f33a538983277359151e9fd5172d40da092362f71",
+      "Bytes_Match": true,
+      "SHA256_Match": true,
+      "Status": "VERIFIED_PASSED"
+    },
+    {
+      "Filename": "wednesday.csv",
+      "Group": "Standard",
+      "Local_Bytes": 206984560,
+      "HDFS_Bytes": 206984560,
+      "Local_SHA256": "87c6ab27cef32df2dcac315ecd992f918484e71856f32b0d2a55eb171a774d60",
+      "HDFS_Content_SHA256": "87c6ab27cef32df2dcac315ecd992f918484e71856f32b0d2a55eb171a774d60",
+      "Bytes_Match": true,
+      "SHA256_Match": true,
+      "Status": "VERIFIED_PASSED"
+    },
+    {
+      "Filename": "thursday.csv",
+      "Group": "Standard",
+      "Local_Bytes": 132500204,
+      "HDFS_Bytes": 132500204,
+      "Local_SHA256": "e3cac669f495df33da7ae1e8fcc06ed511d3161b97a7ba9263f2d476cf467a0e",
+      "HDFS_Content_SHA256": "e3cac669f495df33da7ae1e8fcc06ed511d3161b97a7ba9263f2d476cf467a0e",
+      "Bytes_Match": true,
+      "SHA256_Match": true,
+      "Status": "VERIFIED_PASSED"
+    },
+    {
+      "Filename": "friday.csv",
+      "Group": "Standard",
+      "Local_Bytes": 199983721,
+      "HDFS_Bytes": 199983721,
+      "Local_SHA256": "e16fa2655766ed685fe3e43455d7e4024a81f8a1965c1eabf56e53dc9f07fb6b",
+      "HDFS_Content_SHA256": "e16fa2655766ed685fe3e43455d7e4024a81f8a1965c1eabf56e53dc9f07fb6b",
+      "Bytes_Match": true,
+      "SHA256_Match": true,
+      "Status": "VERIFIED_PASSED"
+    },
+    {
+      "Filename": "monday_plus.csv",
+      "Group": "Plus",
+      "Local_Bytes": 174470811,
+      "HDFS_Bytes": 174470811,
+      "Local_SHA256": "6da7071d5cc027dc6916da1272256093d373a1cdf9fea55dd97045710433e8e3",
+      "HDFS_Content_SHA256": "6da7071d5cc027dc6916da1272256093d373a1cdf9fea55dd97045710433e8e3",
+      "Bytes_Match": true,
+      "SHA256_Match": true,
+      "Status": "VERIFIED_PASSED"
+    },
+    {
+      "Filename": "tuesday_plus.csv",
+      "Group": "Plus",
+      "Local_Bytes": 149301905,
+      "HDFS_Bytes": 149301905,
+      "Local_SHA256": "b1ff6871dce6b71b7a7023a3295613b73ebb27aa0002b50cbb71ae555b44b87f",
+      "HDFS_Content_SHA256": "b1ff6871dce6b71b7a7023a3295613b73ebb27aa0002b50cbb71ae555b44b87f",
+      "Bytes_Match": true,
+      "SHA256_Match": true,
+      "Status": "VERIFIED_PASSED"
+    },
+    {
+      "Filename": "wednesday_plus.csv",
+      "Group": "Plus",
+      "Local_Bytes": 246436566,
+      "HDFS_Bytes": 246436566,
+      "Local_SHA256": "91d01bde1bdf56e721985165f3143d629207bbd94afcc2e03bc951f44861fd23",
+      "HDFS_Content_SHA256": "91d01bde1bdf56e721985165f3143d629207bbd94afcc2e03bc951f44861fd23",
+      "Bytes_Match": true,
+      "SHA256_Match": true,
+      "Status": "VERIFIED_PASSED"
+    },
+    {
+      "Filename": "thursday_plus.csv",
+      "Group": "Plus",
+      "Local_Bytes": 161084118,
+      "HDFS_Bytes": 161084118,
+      "Local_SHA256": "d508085294a561da7f4f3b67777c98d542a6d2a9892e9d65b654ff199f60851c",
+      "HDFS_Content_SHA256": "d508085294a561da7f4f3b67777c98d542a6d2a9892e9d65b654ff199f60851c",
+      "Bytes_Match": true,
+      "SHA256_Match": true,
+      "Status": "VERIFIED_PASSED"
+    },
+    {
+      "Filename": "friday_plus.csv",
+      "Group": "Plus",
+      "Local_Bytes": 244226354,
+      "HDFS_Bytes": 244226354,
+      "Local_SHA256": "266fdee62fd66d771300bf1f6250560c8b0353e53e411053a59a24b684524441",
+      "HDFS_Content_SHA256": "266fdee62fd66d771300bf1f6250560c8b0353e53e411053a59a24b684524441",
+      "Bytes_Match": true,
+      "SHA256_Match": true,
+      "Status": "VERIFIED_PASSED"
+    }
+  ]
+}

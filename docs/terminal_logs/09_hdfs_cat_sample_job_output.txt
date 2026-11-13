@@ -1,0 +1,8 @@
+================================================================================
+COMMAND: hdfs dfs -cat /netsentinel/output/job4_protocol_20261113_235732/part-00000
+TITLE:   HDFS MapReduce Part Output (Sample from /netsentinel/output/job4_protocol_*/part-00000)
+TIME:    2026-11-14 00:37:35
+EXIT:    0
+================================================================================
+
+cat: `/netsentinel/output/job4_protocol_20261113_235732/part-00000': No such file or directory

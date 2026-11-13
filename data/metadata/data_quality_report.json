@@ -1,0 +1,122 @@
+{
+  "friday.csv": {
+    "total_rows": 547557,
+    "malformed_rows": 0,
+    "duplicate_flow_fingerprints": 5,
+    "duplicate_percentage": 0.0009,
+    "negative_ports": 0,
+    "out_of_range_ports": 0,
+    "negative_flow_durations": 0,
+    "negative_packet_counts": 0,
+    "infinite_numeric_values": 0,
+    "null_cells_total": 0
+  },
+  "friday_plus.csv": {
+    "total_rows": 547557,
+    "malformed_rows": 0,
+    "duplicate_flow_fingerprints": 5,
+    "duplicate_percentage": 0.0009,
+    "negative_ports": 0,
+    "out_of_range_ports": 0,
+    "negative_flow_durations": 0,
+    "negative_packet_counts": 0,
+    "infinite_numeric_values": 0,
+    "null_cells_total": 0
+  },
+  "monday.csv": {
+    "total_rows": 371621,
+    "malformed_rows": 0,
+    "duplicate_flow_fingerprints": 8,
+    "duplicate_percentage": 0.0022,
+    "negative_ports": 0,
+    "out_of_range_ports": 0,
+    "negative_flow_durations": 0,
+    "negative_packet_counts": 0,
+    "infinite_numeric_values": 0,
+    "null_cells_total": 0
+  },
+  "monday_plus.csv": {
+    "total_rows": 371621,
+    "malformed_rows": 0,
+    "duplicate_flow_fingerprints": 8,
+    "duplicate_percentage": 0.0022,
+    "negative_ports": 0,
+    "out_of_range_ports": 0,
+    "negative_flow_durations": 0,
+    "negative_packet_counts": 0,
+    "infinite_numeric_values": 0,
+    "null_cells_total": 0
+  },
+  "thursday.csv": {
+    "total_rows": 362075,
+    "malformed_rows": 0,
+    "duplicate_flow_fingerprints": 3154,
+    "duplicate_percentage": 0.8711,
+    "negative_ports": 0,
+    "out_of_range_ports": 0,
+    "negative_flow_durations": 0,
+    "negative_packet_counts": 0,
+    "infinite_numeric_values": 0,
+    "null_cells_total": 0
+  },
+  "thursday_plus.csv": {
+    "total_rows": 362075,
+    "malformed_rows": 0,
+    "duplicate_flow_fingerprints": 3154,
+    "duplicate_percentage": 0.8711,
+    "negative_ports": 0,
+    "out_of_range_ports": 0,
+    "negative_flow_durations": 0,
+    "negative_packet_counts": 0,
+    "infinite_numeric_values": 0,
+    "null_cells_total": 0
+  },
+  "tuesday.csv": {
+    "total_rows": 322078,
+    "malformed_rows": 0,
+    "duplicate_flow_fingerprints": 8,
+    "duplicate_percentage": 0.0025,
+    "negative_ports": 0,
+    "out_of_range_ports": 0,
+    "negative_flow_durations": 0,
+    "negative_packet_counts": 0,
+    "infinite_numeric_values": 0,
+    "null_cells_total": 0
+  },
+  "tuesday_plus.csv": {
+    "total_rows": 322078,
+    "malformed_rows": 0,
+    "duplicate_flow_fingerprints": 8,
+    "duplicate_percentage": 0.0025,
+    "negative_ports": 0,
+    "out_of_range_ports": 0,
+    "negative_flow_durations": 0,
+    "negative_packet_counts": 0,
+    "infinite_numeric_values": 0,
+    "null_cells_total": 0
+  },
+  "wednesday.csv": {
+    "total_rows": 496640,
+    "malformed_rows": 0,
+    "duplicate_flow_fingerprints": 14,
+    "duplicate_percentage": 0.0028,
+    "negative_ports": 0,
+    "out_of_range_ports": 0,
+    "negative_flow_durations": 0,
+    "negative_packet_counts": 0,
+    "infinite_numeric_values": 0,
+    "null_cells_total": 0
+  },
+  "wednesday_plus.csv": {
+    "total_rows": 496640,
+    "malformed_rows": 0,
+    "duplicate_flow_fingerprints": 14,
+    "duplicate_percentage": 0.0028,
+    "negative_ports": 0,
+    "out_of_range_ports": 0,
+    "negative_flow_durations": 0,
+    "negative_packet_counts": 0,
+    "infinite_numeric_values": 0,
+    "null_cells_total": 0
+  }
+}

@@ -1,0 +1,592 @@
+{
+  "friday.csv": {
+    "total_rows_inspected": 547557,
+    "invalid_src_ip_dec": 0,
+    "invalid_dst_ip_dec": 0,
+    "valid_src_ip_rate_pct": 100.0,
+    "valid_dst_ip_rate_pct": 100.0,
+    "sample_verified_conversions": [
+      {
+        "role": "src",
+        "decimal": 3232238130,
+        "ipv4": "192.168.10.50"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238130,
+        "ipv4": "192.168.10.50"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "src",
+        "decimal": 134610945,
+        "ipv4": "8.6.0.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 134219268,
+        "ipv4": "8.0.6.4"
+      },
+      {
+        "role": "dst",
+        "decimal": 3758096635,
+        "ipv4": "224.0.0.251"
+      },
+      {
+        "role": "dst",
+        "decimal": 301796989,
+        "ipv4": "17.253.14.125"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      }
+    ]
+  },
+  "friday_plus.csv": {
+    "total_rows_inspected": 547557,
+    "invalid_src_ip_dec": 0,
+    "invalid_dst_ip_dec": 0,
+    "valid_src_ip_rate_pct": 100.0,
+    "valid_dst_ip_rate_pct": 100.0,
+    "sample_verified_conversions": [
+      {
+        "role": "src",
+        "decimal": 3232238130,
+        "ipv4": "192.168.10.50"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238130,
+        "ipv4": "192.168.10.50"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "src",
+        "decimal": 134610945,
+        "ipv4": "8.6.0.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 134219268,
+        "ipv4": "8.0.6.4"
+      },
+      {
+        "role": "dst",
+        "decimal": 3758096635,
+        "ipv4": "224.0.0.251"
+      },
+      {
+        "role": "dst",
+        "decimal": 301796989,
+        "ipv4": "17.253.14.125"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      }
+    ]
+  },
+  "monday.csv": {
+    "total_rows_inspected": 371621,
+    "invalid_src_ip_dec": 0,
+    "invalid_dst_ip_dec": 0,
+    "valid_src_ip_rate_pct": 100.0,
+    "valid_dst_ip_rate_pct": 100.0,
+    "sample_verified_conversions": [
+      {
+        "role": "src",
+        "decimal": 134610945,
+        "ipv4": "8.6.0.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 134219268,
+        "ipv4": "8.0.6.4"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238089,
+        "ipv4": "192.168.10.9"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238092,
+        "ipv4": "192.168.10.12"
+      },
+      {
+        "role": "dst",
+        "decimal": 3758096635,
+        "ipv4": "224.0.0.251"
+      },
+      {
+        "role": "dst",
+        "decimal": 2550302004,
+        "ipv4": "152.2.133.52"
+      },
+      {
+        "role": "dst",
+        "decimal": 760155097,
+        "ipv4": "45.79.11.217"
+      },
+      {
+        "role": "dst",
+        "decimal": 1539135942,
+        "ipv4": "91.189.89.198"
+      },
+      {
+        "role": "dst",
+        "decimal": 3351760921,
+        "ipv4": "199.199.208.25"
+      }
+    ]
+  },
+  "monday_plus.csv": {
+    "total_rows_inspected": 371621,
+    "invalid_src_ip_dec": 0,
+    "invalid_dst_ip_dec": 0,
+    "valid_src_ip_rate_pct": 100.0,
+    "valid_dst_ip_rate_pct": 100.0,
+    "sample_verified_conversions": [
+      {
+        "role": "src",
+        "decimal": 134610945,
+        "ipv4": "8.6.0.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 134219268,
+        "ipv4": "8.0.6.4"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238089,
+        "ipv4": "192.168.10.9"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238092,
+        "ipv4": "192.168.10.12"
+      },
+      {
+        "role": "dst",
+        "decimal": 3758096635,
+        "ipv4": "224.0.0.251"
+      },
+      {
+        "role": "dst",
+        "decimal": 2550302004,
+        "ipv4": "152.2.133.52"
+      },
+      {
+        "role": "dst",
+        "decimal": 760155097,
+        "ipv4": "45.79.11.217"
+      },
+      {
+        "role": "dst",
+        "decimal": 1539135942,
+        "ipv4": "91.189.89.198"
+      },
+      {
+        "role": "dst",
+        "decimal": 3351760921,
+        "ipv4": "199.199.208.25"
+      }
+    ]
+  },
+  "thursday.csv": {
+    "total_rows_inspected": 362075,
+    "invalid_src_ip_dec": 0,
+    "invalid_dst_ip_dec": 0,
+    "valid_src_ip_rate_pct": 100.0,
+    "valid_dst_ip_rate_pct": 100.0,
+    "sample_verified_conversions": [
+      {
+        "role": "src",
+        "decimal": 134610945,
+        "ipv4": "8.6.0.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 134219268,
+        "ipv4": "8.0.6.4"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238130,
+        "ipv4": "192.168.10.50"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238130,
+        "ipv4": "192.168.10.50"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3758096635,
+        "ipv4": "224.0.0.251"
+      },
+      {
+        "role": "dst",
+        "decimal": 134219268,
+        "ipv4": "8.0.6.4"
+      }
+    ]
+  },
+  "thursday_plus.csv": {
+    "total_rows_inspected": 362075,
+    "invalid_src_ip_dec": 0,
+    "invalid_dst_ip_dec": 0,
+    "valid_src_ip_rate_pct": 100.0,
+    "valid_dst_ip_rate_pct": 100.0,
+    "sample_verified_conversions": [
+      {
+        "role": "src",
+        "decimal": 134610945,
+        "ipv4": "8.6.0.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 134219268,
+        "ipv4": "8.0.6.4"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238130,
+        "ipv4": "192.168.10.50"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238130,
+        "ipv4": "192.168.10.50"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3758096635,
+        "ipv4": "224.0.0.251"
+      },
+      {
+        "role": "dst",
+        "decimal": 134219268,
+        "ipv4": "8.0.6.4"
+      }
+    ]
+  },
+  "tuesday.csv": {
+    "total_rows_inspected": 322078,
+    "invalid_src_ip_dec": 0,
+    "invalid_dst_ip_dec": 0,
+    "valid_src_ip_rate_pct": 100.0,
+    "valid_dst_ip_rate_pct": 100.0,
+    "sample_verified_conversions": [
+      {
+        "role": "src",
+        "decimal": 3232238085,
+        "ipv4": "192.168.10.5"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "src",
+        "decimal": 134610945,
+        "ipv4": "8.6.0.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 134219268,
+        "ipv4": "8.0.6.4"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238085,
+        "ipv4": "192.168.10.5"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238081,
+        "ipv4": "192.168.10.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238081,
+        "ipv4": "192.168.10.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      }
+    ]
+  },
+  "tuesday_plus.csv": {
+    "total_rows_inspected": 322078,
+    "invalid_src_ip_dec": 0,
+    "invalid_dst_ip_dec": 0,
+    "valid_src_ip_rate_pct": 100.0,
+    "valid_dst_ip_rate_pct": 100.0,
+    "sample_verified_conversions": [
+      {
+        "role": "src",
+        "decimal": 3232238085,
+        "ipv4": "192.168.10.5"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "src",
+        "decimal": 134610945,
+        "ipv4": "8.6.0.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 134219268,
+        "ipv4": "8.0.6.4"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238085,
+        "ipv4": "192.168.10.5"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238081,
+        "ipv4": "192.168.10.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238081,
+        "ipv4": "192.168.10.1"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      },
+      {
+        "role": "dst",
+        "decimal": 3232238083,
+        "ipv4": "192.168.10.3"
+      }
+    ]
+  },
+  "wednesday.csv": {
+    "total_rows_inspected": 496640,
+    "invalid_src_ip_dec": 0,
+    "invalid_dst_ip_dec": 0,
+    "valid_src_ip_rate_pct": 100.0,
+    "valid_dst_ip_rate_pct": 100.0,
+    "sample_verified_conversions": [
+      {
+        "role": "src",
+        "decimal": 3232238089,
+        "ipv4": "192.168.10.9"
+      },
+      {
+        "role": "dst",
+        "decimal": 885387958,
+        "ipv4": "52.197.242.182"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238089,
+        "ipv4": "192.168.10.9"
+      },
+      {
+        "role": "dst",
+        "decimal": 885387958,
+        "ipv4": "52.197.242.182"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238089,
+        "ipv4": "192.168.10.9"
+      },
+      {
+        "role": "dst",
+        "decimal": 910236785,
+        "ipv4": "54.65.28.113"
+      },
+      {
+        "role": "dst",
+        "decimal": 910236785,
+        "ipv4": "54.65.28.113"
+      },
+      {
+        "role": "dst",
+        "decimal": 885387958,
+        "ipv4": "52.197.242.182"
+      },
+      {
+        "role": "dst",
+        "decimal": 885387958,
+        "ipv4": "52.197.242.182"
+      },
+      {
+        "role": "dst",
+        "decimal": 885387958,
+        "ipv4": "52.197.242.182"
+      }
+    ]
+  },
+  "wednesday_plus.csv": {
+    "total_rows_inspected": 496640,
+    "invalid_src_ip_dec": 0,
+    "invalid_dst_ip_dec": 0,
+    "valid_src_ip_rate_pct": 100.0,
+    "valid_dst_ip_rate_pct": 100.0,
+    "sample_verified_conversions": [
+      {
+        "role": "src",
+        "decimal": 3232238089,
+        "ipv4": "192.168.10.9"
+      },
+      {
+        "role": "dst",
+        "decimal": 885387958,
+        "ipv4": "52.197.242.182"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238089,
+        "ipv4": "192.168.10.9"
+      },
+      {
+        "role": "dst",
+        "decimal": 885387958,
+        "ipv4": "52.197.242.182"
+      },
+      {
+        "role": "src",
+        "decimal": 3232238089,
+        "ipv4": "192.168.10.9"
+      },
+      {
+        "role": "dst",
+        "decimal": 910236785,
+        "ipv4": "54.65.28.113"
+      },
+      {
+        "role": "dst",
+        "decimal": 910236785,
+        "ipv4": "54.65.28.113"
+      },
+      {
+        "role": "dst",
+        "decimal": 885387958,
+        "ipv4": "52.197.242.182"
+      },
+      {
+        "role": "dst",
+        "decimal": 885387958,
+        "ipv4": "52.197.242.182"
+      },
+      {
+        "role": "dst",
+        "decimal": 885387958,
+        "ipv4": "52.197.242.182"
+      }
+    ]
+  }
+}

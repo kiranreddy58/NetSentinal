@@ -1,0 +1,191 @@
+================================================================================
+COMMAND: hdfs fsck / -files -blocks -locations
+TITLE:   HDFS Filesystem Health & Block Check (fsck /)
+TIME:    2026-11-14 00:37:10
+EXIT:    0
+================================================================================
+
+FSCK started by kiran (auth:SIMPLE) from /127.0.0.1 for path / at Sat Nov 14 00:37:10 IST 2026
+
+/ <dir>
+/netsentinel <dir>
+/netsentinel/input <dir>
+/netsentinel/input/original <dir>
+/netsentinel/input/original/friday.csv 199983721 bytes, replicated: replication=1, 2 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741833_1009 len=134217728 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+1. BP-182519608-10.10.29.238-1794589997861:blk_1073741834_1010 len=65765993 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/input/original/monday.csv 146143601 bytes, replicated: replication=1, 2 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741827_1003 len=134217728 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+1. BP-182519608-10.10.29.238-1794589997861:blk_1073741828_1004 len=11925873 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/input/original/thursday.csv 132500204 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741832_1008 len=132500204 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/input/original/tuesday.csv 125393583 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741829_1005 len=125393583 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/input/original/wednesday.csv 206984560 bytes, replicated: replication=1, 2 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741830_1006 len=134217728 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+1. BP-182519608-10.10.29.238-1794589997861:blk_1073741831_1007 len=72766832 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/input/plus <dir>
+/netsentinel/input/plus/friday_plus.csv 244226354 bytes, replicated: replication=1, 2 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741843_1019 len=134217728 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+1. BP-182519608-10.10.29.238-1794589997861:blk_1073741844_1020 len=110008626 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/input/plus/monday_plus.csv 174470811 bytes, replicated: replication=1, 2 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741835_1011 len=134217728 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+1. BP-182519608-10.10.29.238-1794589997861:blk_1073741836_1012 len=40253083 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/input/plus/thursday_plus.csv 161084118 bytes, replicated: replication=1, 2 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741841_1017 len=134217728 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+1. BP-182519608-10.10.29.238-1794589997861:blk_1073741842_1018 len=26866390 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/input/plus/tuesday_plus.csv 149301905 bytes, replicated: replication=1, 2 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741837_1013 len=134217728 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+1. BP-182519608-10.10.29.238-1794589997861:blk_1073741838_1014 len=15084177 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/input/plus/wednesday_plus.csv 246436566 bytes, replicated: replication=1, 2 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741839_1015 len=134217728 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+1. BP-182519608-10.10.29.238-1794589997861:blk_1073741840_1016 len=112218838 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output <dir>
+/netsentinel/output/job10_daily_20261114_001541 <dir>
+/netsentinel/output/job10_daily_20261114_001541/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job10_daily_20261114_001541/part-00000 80 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741858_1034 len=80 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output/job10_daily_20261114_001847 <dir>
+/netsentinel/output/job10_daily_20261114_001847/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job10_daily_20261114_001847/part-00000 468 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741859_1035 len=468 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output/job1_source_ip_20261113_235434 <dir>
+/netsentinel/output/job1_source_ip_20261113_235434/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job1_source_ip_20261113_235434/part-00000 9076 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741848_1024 len=9076 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output/job1_source_ip_20261113_235618 <dir>
+/netsentinel/output/job1_source_ip_20261113_235618/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job1_source_ip_20261113_235618/part-00000 9076 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741849_1025 len=9076 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output/job2_destination_ip_20261113_235815 <dir>
+/netsentinel/output/job2_destination_ip_20261113_235815/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job2_destination_ip_20261113_235815/part-00000 1278444 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741850_1026 len=1278444 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output/job3_destination_port_20261114_000014 <dir>
+/netsentinel/output/job3_destination_port_20261114_000014/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job3_destination_port_20261114_000014/part-00000 327697 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741851_1027 len=327697 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output/job4_protocol_20261114_000200 <dir>
+/netsentinel/output/job4_protocol_20261114_000200/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job4_protocol_20261114_000200/part-00000 317 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741852_1028 len=317 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output/job5_traffic_volume_20261114_000349 <dir>
+/netsentinel/output/job5_traffic_volume_20261114_000349/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job5_traffic_volume_20261114_000349/part-00000 501 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741853_1029 len=501 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output/job6_temporal_20261114_000541 <dir>
+/netsentinel/output/job6_temporal_20261114_000541/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job6_temporal_20261114_000541/part-00000 5170 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741854_1030 len=5170 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output/job7_attack_20261114_000735 <dir>
+/netsentinel/output/job7_attack_20261114_000735/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job7_attack_20261114_000735/part-00000 2624 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741855_1031 len=2624 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output/job8_correlation_20261114_000940 <dir>
+/netsentinel/output/job8_correlation_20261114_000940/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job8_correlation_20261114_000940/part-00000 4402083 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741856_1032 len=4402083 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/output/job9_suspicious_20261114_001219 <dir>
+/netsentinel/output/job9_suspicious_20261114_001219/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job9_suspicious_20261114_001219/part-00000 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job9_suspicious_20261114_001404 <dir>
+/netsentinel/output/job9_suspicious_20261114_001404/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/output/job9_suspicious_20261114_001404/part-00000 386 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741857_1033 len=386 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/test <dir>
+/netsentinel/test/smoke_input <dir>
+/netsentinel/test/smoke_input/smoke_test_flows.csv 4034 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741845_1021 len=4034 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/test/smoke_output <dir>
+/netsentinel/test/smoke_output/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/test/smoke_output/part-00000 28 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741846_1022 len=28 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/netsentinel/test/smoke_output_20261113_233933 <dir>
+/netsentinel/test/smoke_output_20261113_233933/_SUCCESS 0 bytes, replicated: replication=1, 0 block(s):  OK
+
+/netsentinel/test/smoke_output_20261113_233933/part-00000 28 bytes, replicated: replication=1, 1 block(s):  OK
+0. BP-182519608-10.10.29.238-1794589997861:blk_1073741847_1023 len=28 Live_repl=1  [DatanodeInfoWithStorage[127.0.0.1:9866,DS-f7d15cc7-cf89-47c6-b2be-7584a6f6e685,DISK]]
+
+/tmp <dir>
+/tmp/hadoop-yarn <dir>
+/tmp/hadoop-yarn/staging <dir>
+/tmp/hadoop-yarn/staging/kiran <dir>
+/tmp/hadoop-yarn/staging/kiran/.staging <dir>
+
+Status: HEALTHY
+ Number of data-nodes:	1
+ Number of racks:		1
+ Total dirs:			28
+ Total symlinks:		0
+
+Replicated Blocks:
+ Total size:	1792565435 B
+ Total files:	41
+ Total blocks (validated):	33 (avg. block size 54320164 B)
+ Minimally replicated blocks:	33 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	0 (0.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	1
+ Average block replication:	1.0
+ Missing blocks:		0
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+ Blocks queued for replication:	0
+
+Erasure Coded Block Groups:
+ Total size:	0 B
+ Total files:	0
+ Total block groups (validated):	0
+ Minimally erasure-coded block groups:	0
+ Over-erasure-coded block groups:	0
+ Under-erasure-coded block groups:	0
+ Unsatisfactory placement block groups:	0
+ Average block group size:	0.0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0
+ Blocks queued for replication:	0
+FSCK ended at Sat Nov 14 00:37:10 IST 2026 in 23 milliseconds
+
+
+The filesystem under path '/' is HEALTHY

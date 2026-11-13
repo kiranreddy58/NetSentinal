@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+        <description>Default block replication.</description>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:///C:/Users/kiran/OneDrive/Documents/bda/hadoop_data/namenode</value>
+        <description>Where the NameNode stores metadata.</description>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file:///C:/Users/kiran/OneDrive/Documents/bda/hadoop_data/datanode</value>
+        <description>Where DataNode stores blocks.</description>
+    </property>
+    <property>
+        <name>dfs.permissions.enabled</name>
+        <value>false</value>
+        <description>Disable permission checking for single-node development.</description>
+    </property>
+</configuration>

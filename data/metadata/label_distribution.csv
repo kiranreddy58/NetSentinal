@@ -1,0 +1,63 @@
+File,Label,Count,Percentage_Within_File
+friday.csv,BENIGN,288544,52.6966
+friday.csv,Botnet - Attempted,4067,0.7428
+friday.csv,Botnet,736,0.1344
+friday.csv,Portscan,159066,29.0501
+friday.csv,DDoS,95144,17.3761
+friday_plus.csv,BENIGN,288544,52.6966
+friday_plus.csv,Botnet - Attempted,4067,0.7428
+friday_plus.csv,Botnet,736,0.1344
+friday_plus.csv,Portscan,159066,29.0501
+friday_plus.csv,DDoS,95144,17.3761
+monday.csv,BENIGN,371621,100.0
+monday_plus.csv,BENIGN,371621,100.0
+thursday.csv,BENIGN,288171,79.5888
+thursday.csv,Web Attack - Brute Force - Attempted,1292,0.3568
+thursday.csv,Web Attack - Brute Force,73,0.0202
+thursday.csv,Infiltration - Attempted,45,0.0124
+thursday.csv,Infiltration,36,0.0099
+thursday.csv,Infiltration - Portscan,71767,19.821
+thursday.csv,Web Attack - XSS - Attempted,655,0.1809
+thursday.csv,Web Attack - XSS,18,0.005
+thursday.csv,Web Attack - SQL Injection - Attempted,5,0.0014
+thursday.csv,Web Attack - SQL Injection,13,0.0036
+thursday_plus.csv,BENIGN,288171,79.5888
+thursday_plus.csv,Web Attack - Brute Force - Attempted,1292,0.3568
+thursday_plus.csv,Web Attack - Brute Force,73,0.0202
+thursday_plus.csv,Infiltration - Attempted,45,0.0124
+thursday_plus.csv,Infiltration,36,0.0099
+thursday_plus.csv,Infiltration - Portscan,71767,19.821
+thursday_plus.csv,Web Attack - XSS - Attempted,655,0.1809
+thursday_plus.csv,Web Attack - XSS,18,0.005
+thursday_plus.csv,Web Attack - SQL Injection - Attempted,5,0.0014
+thursday_plus.csv,Web Attack - SQL Injection,13,0.0036
+tuesday.csv,BENIGN,315106,97.8353
+tuesday.csv,FTP-Patator - Attempted,12,0.0037
+tuesday.csv,FTP-Patator,3972,1.2332
+tuesday.csv,SSH-Patator,2961,0.9193
+tuesday.csv,SSH-Patator - Attempted,27,0.0084
+tuesday_plus.csv,BENIGN,315106,97.8353
+tuesday_plus.csv,FTP-Patator - Attempted,12,0.0037
+tuesday_plus.csv,FTP-Patator,3972,1.2332
+tuesday_plus.csv,SSH-Patator,2961,0.9193
+tuesday_plus.csv,SSH-Patator - Attempted,27,0.0084
+wednesday.csv,BENIGN,319119,64.2556
+wednesday.csv,DoS Slowloris,3859,0.777
+wednesday.csv,DoS Slowloris - Attempted,1847,0.3719
+wednesday.csv,DoS Slowhttptest,1740,0.3504
+wednesday.csv,DoS Slowhttptest - Attempted,3368,0.6782
+wednesday.csv,DoS Hulk,158468,31.908
+wednesday.csv,DoS Hulk - Attempted,581,0.117
+wednesday.csv,DoS GoldenEye,7567,1.5236
+wednesday.csv,Heartbleed,11,0.0022
+wednesday.csv,DoS GoldenEye - Attempted,80,0.0161
+wednesday_plus.csv,BENIGN,319119,64.2556
+wednesday_plus.csv,DoS Slowloris,3859,0.777
+wednesday_plus.csv,DoS Slowloris - Attempted,1847,0.3719
+wednesday_plus.csv,DoS Slowhttptest,1740,0.3504
+wednesday_plus.csv,DoS Slowhttptest - Attempted,3368,0.6782
+wednesday_plus.csv,DoS Hulk,158468,31.908
+wednesday_plus.csv,DoS Hulk - Attempted,581,0.117
+wednesday_plus.csv,DoS GoldenEye,7567,1.5236
+wednesday_plus.csv,Heartbleed,11,0.0022
+wednesday_plus.csv,DoS GoldenEye - Attempted,80,0.0161

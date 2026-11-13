@@ -1,0 +1,10 @@
+================================================================================
+COMMAND: hdfs dfs -count -q -h -v /netsentinel/input/original /netsentinel/output
+TITLE:   HDFS Directory Block & Byte Quota Counts (dfs -count -q -h -v)
+TIME:    2026-11-14 00:37:27
+EXIT:    0
+================================================================================
+
+       QUOTA       REM_QUOTA     SPACE_QUOTA REM_SPACE_QUOTA    DIR_COUNT   FILE_COUNT       CONTENT_SIZE PATHNAME
+        none             inf            none             inf            1            5            773.4 M /netsentinel/input/original
+        none             inf            none             inf           14           26              5.8 M /netsentinel/output

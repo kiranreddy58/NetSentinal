@@ -1,0 +1,210 @@
+{
+  "report_name": "NetSentinel HDFS Block Topology & Integrity Report",
+  "generation_timestamp": "2026-11-13 23:12:08",
+  "cluster_nodes": 1,
+  "active_datanodes": 1,
+  "default_block_size_mb": 128,
+  "total_blocks_managed": 18,
+  "files": [
+    {
+      "file_name": "monday.csv",
+      "group": "Standard",
+      "hdfs_path": "/netsentinel/input/original/monday.csv",
+      "file_size_bytes": 146143601,
+      "block_size_bytes": 134217728,
+      "block_size_mb": 128,
+      "block_count": 2,
+      "replication_factor": 1,
+      "permissions": "-rw-r--r--",
+      "owner_group": "kiran:supergroup",
+      "modification_time": "2026-11-13 23:02",
+      "hdfs_checksum_info": "/netsentinel/input/original/monday.csv\tMD5-of-262144MD5-of-512CRC32C\t0000020000000000000400006d0be4dcff4795e5830bded09444520a",
+      "fsck_summary": [
+        "Status: HEALTHY",
+        "Total size:\t146143601 B",
+        "Total blocks (validated):\t2 (avg. block size 73071800 B)",
+        "Total size:\t0 B"
+      ]
+    },
+    {
+      "file_name": "tuesday.csv",
+      "group": "Standard",
+      "hdfs_path": "/netsentinel/input/original/tuesday.csv",
+      "file_size_bytes": 125393583,
+      "block_size_bytes": 134217728,
+      "block_size_mb": 128,
+      "block_count": 1,
+      "replication_factor": 1,
+      "permissions": "-rw-r--r--",
+      "owner_group": "kiran:supergroup",
+      "modification_time": "2026-11-13 23:05",
+      "hdfs_checksum_info": "/netsentinel/input/original/tuesday.csv\tMD5-of-0MD5-of-512CRC32C\t000002000000000000000000a1c5c6a77dbcef4297dbaa8b341cd428",
+      "fsck_summary": [
+        "Status: HEALTHY",
+        "Total size:\t125393583 B",
+        "Total blocks (validated):\t1 (avg. block size 125393583 B)",
+        "Total size:\t0 B"
+      ]
+    },
+    {
+      "file_name": "wednesday.csv",
+      "group": "Standard",
+      "hdfs_path": "/netsentinel/input/original/wednesday.csv",
+      "file_size_bytes": 206984560,
+      "block_size_bytes": 134217728,
+      "block_size_mb": 128,
+      "block_count": 2,
+      "replication_factor": 1,
+      "permissions": "-rw-r--r--",
+      "owner_group": "kiran:supergroup",
+      "modification_time": "2026-11-13 23:05",
+      "hdfs_checksum_info": "/netsentinel/input/original/wednesday.csv\tMD5-of-262144MD5-of-512CRC32C\t00000200000000000004000033b74faf60332423220b856966be5380",
+      "fsck_summary": [
+        "Status: HEALTHY",
+        "Total size:\t206984560 B",
+        "Total blocks (validated):\t2 (avg. block size 103492280 B)",
+        "Total size:\t0 B"
+      ]
+    },
+    {
+      "file_name": "thursday.csv",
+      "group": "Standard",
+      "hdfs_path": "/netsentinel/input/original/thursday.csv",
+      "file_size_bytes": 132500204,
+      "block_size_bytes": 134217728,
+      "block_size_mb": 128,
+      "block_count": 1,
+      "replication_factor": 1,
+      "permissions": "-rw-r--r--",
+      "owner_group": "kiran:supergroup",
+      "modification_time": "2026-11-13 23:05",
+      "hdfs_checksum_info": "/netsentinel/input/original/thursday.csv\tMD5-of-0MD5-of-512CRC32C\t000002000000000000000000d90072846e4e88886c7aa6057e5a085d",
+      "fsck_summary": [
+        "Status: HEALTHY",
+        "Total size:\t132500204 B",
+        "Total blocks (validated):\t1 (avg. block size 132500204 B)",
+        "Total size:\t0 B"
+      ]
+    },
+    {
+      "file_name": "friday.csv",
+      "group": "Standard",
+      "hdfs_path": "/netsentinel/input/original/friday.csv",
+      "file_size_bytes": 199983721,
+      "block_size_bytes": 134217728,
+      "block_size_mb": 128,
+      "block_count": 2,
+      "replication_factor": 1,
+      "permissions": "-rw-r--r--",
+      "owner_group": "kiran:supergroup",
+      "modification_time": "2026-11-13 23:06",
+      "hdfs_checksum_info": "/netsentinel/input/original/friday.csv\tMD5-of-262144MD5-of-512CRC32C\t000002000000000000040000780ff87993324d4793c10be2ee1aaba7",
+      "fsck_summary": [
+        "Status: HEALTHY",
+        "Total size:\t199983721 B",
+        "Total blocks (validated):\t2 (avg. block size 99991860 B)",
+        "Total size:\t0 B"
+      ]
+    },
+    {
+      "file_name": "monday_plus.csv",
+      "group": "Plus",
+      "hdfs_path": "/netsentinel/input/plus/monday_plus.csv",
+      "file_size_bytes": 174470811,
+      "block_size_bytes": 134217728,
+      "block_size_mb": 128,
+      "block_count": 2,
+      "replication_factor": 1,
+      "permissions": "-rw-r--r--",
+      "owner_group": "kiran:supergroup",
+      "modification_time": "2026-11-13 23:06",
+      "hdfs_checksum_info": "/netsentinel/input/plus/monday_plus.csv\tMD5-of-262144MD5-of-512CRC32C\t00000200000000000004000010872d18ff7f46fc66755b88eb5fcecd",
+      "fsck_summary": [
+        "Status: HEALTHY",
+        "Total size:\t174470811 B",
+        "Total blocks (validated):\t2 (avg. block size 87235405 B)",
+        "Total size:\t0 B"
+      ]
+    },
+    {
+      "file_name": "tuesday_plus.csv",
+      "group": "Plus",
+      "hdfs_path": "/netsentinel/input/plus/tuesday_plus.csv",
+      "file_size_bytes": 149301905,
+      "block_size_bytes": 134217728,
+      "block_size_mb": 128,
+      "block_count": 2,
+      "replication_factor": 1,
+      "permissions": "-rw-r--r--",
+      "owner_group": "kiran:supergroup",
+      "modification_time": "2026-11-13 23:06",
+      "hdfs_checksum_info": "/netsentinel/input/plus/tuesday_plus.csv\tMD5-of-262144MD5-of-512CRC32C\t000002000000000000040000be2ca34464a6fb8551e8fa9a911ce937",
+      "fsck_summary": [
+        "Status: HEALTHY",
+        "Total size:\t149301905 B",
+        "Total blocks (validated):\t2 (avg. block size 74650952 B)",
+        "Total size:\t0 B"
+      ]
+    },
+    {
+      "file_name": "wednesday_plus.csv",
+      "group": "Plus",
+      "hdfs_path": "/netsentinel/input/plus/wednesday_plus.csv",
+      "file_size_bytes": 246436566,
+      "block_size_bytes": 134217728,
+      "block_size_mb": 128,
+      "block_count": 2,
+      "replication_factor": 1,
+      "permissions": "-rw-r--r--",
+      "owner_group": "kiran:supergroup",
+      "modification_time": "2026-11-13 23:06",
+      "hdfs_checksum_info": "/netsentinel/input/plus/wednesday_plus.csv\tMD5-of-262144MD5-of-512CRC32C\t000002000000000000040000601d6d93e971d16b5d4aa1a41df59904",
+      "fsck_summary": [
+        "Status: HEALTHY",
+        "Total size:\t246436566 B",
+        "Total blocks (validated):\t2 (avg. block size 123218283 B)",
+        "Total size:\t0 B"
+      ]
+    },
+    {
+      "file_name": "thursday_plus.csv",
+      "group": "Plus",
+      "hdfs_path": "/netsentinel/input/plus/thursday_plus.csv",
+      "file_size_bytes": 161084118,
+      "block_size_bytes": 134217728,
+      "block_size_mb": 128,
+      "block_count": 2,
+      "replication_factor": 1,
+      "permissions": "-rw-r--r--",
+      "owner_group": "kiran:supergroup",
+      "modification_time": "2026-11-13 23:07",
+      "hdfs_checksum_info": "/netsentinel/input/plus/thursday_plus.csv\tMD5-of-262144MD5-of-512CRC32C\t000002000000000000040000b5bbf84dbc2ae5b79eac1c6e351e5665",
+      "fsck_summary": [
+        "Status: HEALTHY",
+        "Total size:\t161084118 B",
+        "Total blocks (validated):\t2 (avg. block size 80542059 B)",
+        "Total size:\t0 B"
+      ]
+    },
+    {
+      "file_name": "friday_plus.csv",
+      "group": "Plus",
+      "hdfs_path": "/netsentinel/input/plus/friday_plus.csv",
+      "file_size_bytes": 244226354,
+      "block_size_bytes": 134217728,
+      "block_size_mb": 128,
+      "block_count": 2,
+      "replication_factor": 1,
+      "permissions": "-rw-r--r--",
+      "owner_group": "kiran:supergroup",
+      "modification_time": "2026-11-13 23:07",
+      "hdfs_checksum_info": "/netsentinel/input/plus/friday_plus.csv\tMD5-of-262144MD5-of-512CRC32C\t0000020000000000000400007212e49fb237972a83465d8cc3d9ef70",
+      "fsck_summary": [
+        "Status: HEALTHY",
+        "Total size:\t244226354 B",
+        "Total blocks (validated):\t2 (avg. block size 122113177 B)",
+        "Total size:\t0 B"
+      ]
+    }
+  ]
+}

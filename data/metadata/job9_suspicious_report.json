@@ -1,0 +1,14 @@
+{
+  "job_name": "Job 9: Suspicious Behavior Analytics",
+  "job_id": "job_local185308766_0001",
+  "timestamp": "2026-11-14 00:15:21",
+  "status": "COMPLETED_AND_VERIFIED",
+  "execution_duration_sec": 69.45,
+  "map_input_records": 2099976,
+  "map_output_records": 2613251,
+  "reduce_input_records": 2613251,
+  "reduce_input_groups": 5,
+  "reduce_output_records": 5,
+  "total_heuristics": 5,
+  "results_file": "C:\\Users\\kiran\\OneDrive\\Documents\\bda\\results\\attack_analytics\\suspicious_behavior_summary.csv"
+}

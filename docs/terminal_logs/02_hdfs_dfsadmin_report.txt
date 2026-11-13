@@ -1,0 +1,49 @@
+================================================================================
+COMMAND: hdfs dfsadmin -report
+TITLE:   HDFS DFSAdmin Live Cluster & Node Report
+TIME:    2026-11-14 00:37:06
+EXIT:    0
+================================================================================
+
+Configured Capacity: 475705372672 (443.04 GB)
+Present Capacity: 360341623767 (335.59 GB)
+DFS Remaining: 358535053312 (333.91 GB)
+DFS Used: 1806570455 (1.68 GB)
+DFS Used%: 0.50%
+Replicated Blocks:
+	Under replicated blocks: 0
+	Blocks with corrupt replicas: 0
+	Missing blocks: 0
+	Missing blocks (with replication factor 1): 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+Erasure Coded Block Groups: 
+	Low redundancy block groups: 0
+	Block groups with corrupt internal blocks: 0
+	Missing block groups: 0
+	Low redundancy blocks with highest priority to recover: 0
+	Pending deletion blocks: 0
+
+-------------------------------------------------
+Live datanodes (1):
+
+Name: 127.0.0.1:9866 (127.0.0.1)
+Hostname: Kiran_Reddy
+Decommission Status : Normal
+Configured Capacity: 475705372672 (443.04 GB)
+DFS Used: 1806570455 (1.68 GB)
+Non DFS Used: 115363814441 (107.44 GB)
+DFS Remaining: 358535053312 (333.91 GB)
+DFS Used%: 0.38%
+DFS Remaining%: 75.37%
+Configured Cache Capacity: 0 (0 B)
+Cache Used: 0 (0 B)
+Cache Remaining: 0 (0 B)
+Cache Used%: 100.00%
+Cache Remaining%: 0.00%
+Xceivers: 0
+Last contact: Sat Nov 14 00:37:03 IST 2026
+Last Block Report: Fri Nov 13 22:43:53 IST 2026
+Num of Blocks: 33
+
+

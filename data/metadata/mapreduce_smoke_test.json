@@ -1,0 +1,39 @@
+{
+  "test_name": "NetSentinel Hadoop Streaming MapReduce Smoke Test",
+  "timestamp": "2026-11-13 23:40:05",
+  "status": "PASSED",
+  "hadoop_version": "Hadoop 3.3.6",
+  "java_version": "openjdk version \"11.0.33\" 2026-10-20",
+  "streaming_jar_path": "C:\\Users\\kiran\\OneDrive\\Documents\\bda\\tools\\hadoop-3.3.6\\share\\hadoop\\tools\\lib\\hadoop-streaming-3.3.6.jar",
+  "streaming_jar_size_bytes": 141267,
+  "mapreduce_framework": "local (Hadoop LocalJobRunner)",
+  "full_command": "hadoop.cmd jar C:\\Users\\kiran\\OneDrive\\Documents\\bda\\tools\\hadoop-3.3.6\\share\\hadoop\\tools\\lib\\hadoop-streaming-3.3.6.jar -D mapreduce.framework.name=local -file hadoop/mapper/smoke_mapper.py -file hadoop/reducer/smoke_reducer.py -mapper python smoke_mapper.py -reducer python smoke_reducer.py -input /netsentinel/test/smoke_input/smoke_test_flows.csv -output /netsentinel/test/smoke_output_20261113_233933",
+  "exit_code": 0,
+  "job_id": "job_local1027516389_0001",
+  "execution_duration_sec": 16.68,
+  "hdfs_input_path": "/netsentinel/test/smoke_input/smoke_test_flows.csv",
+  "hdfs_output_path": "/netsentinel/test/smoke_output_20261113_233933",
+  "map_input_records": 13,
+  "reduce_input_records": 12,
+  "reduce_input_groups": 4,
+  "reduce_output_records": 4,
+  "expected_counts": {
+    "TCP": 6,
+    "UDP": 3,
+    "ICMP": 2,
+    "HOPOPT": 1
+  },
+  "actual_counts": {
+    "HOPOPT": 1,
+    "ICMP": 2,
+    "TCP": 6,
+    "UDP": 3
+  },
+  "counts_match": true,
+  "hdfs_output_content": "HOPOPT\t1\nICMP\t2\nTCP\t6\nUDP\t3",
+  "diagnostics": {
+    "yarn_status": "OFFLINE (Single-node pseudo-distributed environment uses Hadoop LocalJobRunner for MapReduce)",
+    "streaming_pipe": "Standard Unix I/O Pipes (sys.stdin / sys.stdout) via Python runtime",
+    "sorting_engine": "Apache Hadoop native MapOutputBuffer QuickSort / MergeSorter"
+  }
+}

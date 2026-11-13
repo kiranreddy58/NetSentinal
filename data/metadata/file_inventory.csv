@@ -1,0 +1,11 @@
+File,File_Size_Bytes,File_Size_MB,Total_Rows,Total_Cols,Encoding,Schema_Type
+friday.csv,199983721,190.72,547557,89,utf-8,standard
+friday_plus.csv,244226354,232.91,547557,105,utf-8,plus
+monday.csv,146143601,139.37,371621,89,utf-8,standard
+monday_plus.csv,174470811,166.39,371621,105,utf-8,plus
+thursday.csv,132500204,126.36,362075,89,utf-8,standard
+thursday_plus.csv,161084118,153.62,362075,105,utf-8,plus
+tuesday.csv,125393583,119.58,322078,89,utf-8,standard
+tuesday_plus.csv,149301905,142.39,322078,105,utf-8,plus
+wednesday.csv,206984560,197.4,496640,89,utf-8,standard
+wednesday_plus.csv,246436566,235.02,496640,105,utf-8,plus

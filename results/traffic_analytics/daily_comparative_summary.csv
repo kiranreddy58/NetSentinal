@@ -1,0 +1,6 @@
+day_name,total_flows,total_fwd_packets,total_bwd_packets,total_packets,total_bytes,benign_flows,attack_flows,attack_percentage
+1_BENIGN_BASELINE (Normal Operations Across Week),1582561,23640372,27787177,51427549,43989121601,1582561,0,0.00
+2_TUESDAY (Patator Attacks),6972,109364,165035,274399,15323263,0,6972,100.00
+3_WEDNESDAY (DoS & Heartbleed Attacks),177521,1411260,1077321,2488581,2066216810,0,177521,100.00
+4_THURSDAY (Web & Infiltration Attacks),73904,202206,124158,326364,40568706,0,73904,100.00
+"5_FRIDAY (DDoS, Botnet & Portscan)",259013,930386,682618,1613004,1117796076,0,259013,100.00

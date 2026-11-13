@@ -1,0 +1,210 @@
+{
+  "verification_timestamp": "2026-11-13 22:56:57",
+  "elapsed_seconds": 74.23,
+  "standard_physical_records": 2099971,
+  "plus_physical_records": 2099971,
+  "combined_physical_records": 4199942,
+  "unique_underlying_network_flows": 2099971,
+  "correspondence_verified_100_percent": true,
+  "total_mismatched_rows": 0,
+  "label_distributions_identical": true,
+  "standard_label_distribution": {
+    "BENIGN": 1582561,
+    "FTP-Patator - Attempted": 12,
+    "FTP-Patator": 3972,
+    "SSH-Patator": 2961,
+    "SSH-Patator - Attempted": 27,
+    "DoS Slowloris": 3859,
+    "DoS Slowloris - Attempted": 1847,
+    "DoS Slowhttptest": 1740,
+    "DoS Slowhttptest - Attempted": 3368,
+    "DoS Hulk": 158468,
+    "DoS Hulk - Attempted": 581,
+    "DoS GoldenEye": 7567,
+    "Heartbleed": 11,
+    "DoS GoldenEye - Attempted": 80,
+    "Web Attack - Brute Force - Attempted": 1292,
+    "Web Attack - Brute Force": 73,
+    "Infiltration - Attempted": 45,
+    "Infiltration": 36,
+    "Infiltration - Portscan": 71767,
+    "Web Attack - XSS - Attempted": 655,
+    "Web Attack - XSS": 18,
+    "Web Attack - SQL Injection - Attempted": 5,
+    "Web Attack - SQL Injection": 13,
+    "Botnet - Attempted": 4067,
+    "Botnet": 736,
+    "Portscan": 159066,
+    "DDoS": 95144
+  },
+  "plus_label_distribution": {
+    "BENIGN": 1582561,
+    "FTP-Patator - Attempted": 12,
+    "FTP-Patator": 3972,
+    "SSH-Patator": 2961,
+    "SSH-Patator - Attempted": 27,
+    "DoS Slowloris": 3859,
+    "DoS Slowloris - Attempted": 1847,
+    "DoS Slowhttptest": 1740,
+    "DoS Slowhttptest - Attempted": 3368,
+    "DoS Hulk": 158468,
+    "DoS Hulk - Attempted": 581,
+    "DoS GoldenEye": 7567,
+    "Heartbleed": 11,
+    "DoS GoldenEye - Attempted": 80,
+    "Web Attack - Brute Force - Attempted": 1292,
+    "Web Attack - Brute Force": 73,
+    "Infiltration - Attempted": 45,
+    "Infiltration": 36,
+    "Infiltration - Portscan": 71767,
+    "Web Attack - XSS - Attempted": 655,
+    "Web Attack - XSS": 18,
+    "Web Attack - SQL Injection - Attempted": 5,
+    "Web Attack - SQL Injection": 13,
+    "Botnet - Attempted": 4067,
+    "Botnet": 736,
+    "Portscan": 159066,
+    "DDoS": 95144
+  },
+  "pair_verifications": {
+    "monday.csv": {
+      "standard_file": "monday.csv",
+      "plus_file": "monday_plus.csv",
+      "standard_rows": 371621,
+      "plus_rows": 371621,
+      "row_count_match": true,
+      "common_columns_checked": 89,
+      "exact_matching_rows": 371621,
+      "mismatch_rows": 0,
+      "first_mismatch_detail": null,
+      "identical_common_values": true
+    },
+    "tuesday.csv": {
+      "standard_file": "tuesday.csv",
+      "plus_file": "tuesday_plus.csv",
+      "standard_rows": 322078,
+      "plus_rows": 322078,
+      "row_count_match": true,
+      "common_columns_checked": 89,
+      "exact_matching_rows": 322078,
+      "mismatch_rows": 0,
+      "first_mismatch_detail": null,
+      "identical_common_values": true
+    },
+    "wednesday.csv": {
+      "standard_file": "wednesday.csv",
+      "plus_file": "wednesday_plus.csv",
+      "standard_rows": 496640,
+      "plus_rows": 496640,
+      "row_count_match": true,
+      "common_columns_checked": 89,
+      "exact_matching_rows": 496640,
+      "mismatch_rows": 0,
+      "first_mismatch_detail": null,
+      "identical_common_values": true
+    },
+    "thursday.csv": {
+      "standard_file": "thursday.csv",
+      "plus_file": "thursday_plus.csv",
+      "standard_rows": 362075,
+      "plus_rows": 362075,
+      "row_count_match": true,
+      "common_columns_checked": 89,
+      "exact_matching_rows": 362075,
+      "mismatch_rows": 0,
+      "first_mismatch_detail": null,
+      "identical_common_values": true
+    },
+    "friday.csv": {
+      "standard_file": "friday.csv",
+      "plus_file": "friday_plus.csv",
+      "standard_rows": 547557,
+      "plus_rows": 547557,
+      "row_count_match": true,
+      "common_columns_checked": 89,
+      "exact_matching_rows": 547557,
+      "mismatch_rows": 0,
+      "first_mismatch_detail": null,
+      "identical_common_values": true
+    }
+  },
+  "duplicate_analysis": {
+    "monday.csv": {
+      "total_rows": 371621,
+      "identical_complete_records": 4,
+      "identical_complete_record_pct": 0.0011
+    },
+    "tuesday.csv": {
+      "total_rows": 322078,
+      "identical_complete_records": 6,
+      "identical_complete_record_pct": 0.0019
+    },
+    "wednesday.csv": {
+      "total_rows": 496640,
+      "identical_complete_records": 6,
+      "identical_complete_record_pct": 0.0012
+    },
+    "thursday.csv": {
+      "total_rows": 362075,
+      "identical_complete_records": 3145,
+      "identical_complete_record_pct": 0.8686
+    },
+    "friday.csv": {
+      "total_rows": 547557,
+      "identical_complete_records": 2,
+      "identical_complete_record_pct": 0.0004
+    }
+  },
+  "timestamp_analysis": {
+    "monday.csv": {
+      "sample_timestamps": [
+        "56:34.2",
+        "56:55.4",
+        "57:21.1",
+        "57:31.6",
+        "57:30.6"
+      ],
+      "format": "MM:SS.s"
+    },
+    "tuesday.csv": {
+      "sample_timestamps": [
+        "53:44.4",
+        "54:12.4",
+        "54:32.2",
+        "55:07.6",
+        "54:12.4"
+      ],
+      "format": "MM:SS.s"
+    },
+    "wednesday.csv": {
+      "sample_timestamps": [
+        "43:34.8",
+        "43:35.5",
+        "43:36.4",
+        "43:37.1",
+        "43:38.0"
+      ],
+      "format": "MM:SS.s"
+    },
+    "thursday.csv": {
+      "sample_timestamps": [
+        "59:05.7",
+        "59:00.5",
+        "59:00.5",
+        "00:43.3",
+        "00:44.6"
+      ],
+      "format": "MM:SS.s"
+    },
+    "friday.csv": {
+      "sample_timestamps": [
+        "59:50.3",
+        "59:50.3",
+        "00:31.4",
+        "00:42.9",
+        "00:42.4"
+      ],
+      "format": "MM:SS.s"
+    }
+  }
+}

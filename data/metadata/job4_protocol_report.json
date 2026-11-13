@@ -1,0 +1,18 @@
+{
+  "job_name": "Job 4: Protocol Analytics",
+  "job_id": "job_local1922488540_0001",
+  "timestamp": "2026-11-14 00:03:42",
+  "status": "COMPLETED_AND_VERIFIED",
+  "execution_duration_sec": 62.76,
+  "map_input_records": 2099976,
+  "map_output_records": 2099971,
+  "reduce_input_records": 2099971,
+  "reduce_input_groups": 4,
+  "reduce_output_records": 4,
+  "validation": {
+    "status": "PASSED",
+    "unique_protocols": 4,
+    "total_flows": 2099971,
+    "discrepancies": []
+  }
+}

@@ -1,0 +1,25 @@
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Python bytecode & caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Node & Frontend build artifacts
+node_modules/
+frontend/node_modules/
+
+# Raw massive datasets (preserve in local data/raw and HDFS, avoid pushing >1GB to GitHub)
+data/raw/
+hadoop_data/
+tools/hadoop-3.3.6/
+tools/jdk-11.0.22/
+
+# Temporary logs & OS files
+*.log
+.DS_Store
+Thumbs.db

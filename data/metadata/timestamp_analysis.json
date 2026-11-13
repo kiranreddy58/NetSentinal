@@ -1,0 +1,192 @@
+{
+  "friday.csv": {
+    "total_timestamps": 547557,
+    "length_distribution": {
+      "7": 547557
+    },
+    "sample_formats": [
+      "00:42.4",
+      "01:07.2",
+      "59:50.3",
+      "00:53.3",
+      "00:57.9",
+      "00:42.9",
+      "00:50.2",
+      "00:55.3",
+      "00:31.4",
+      "00:48.9"
+    ],
+    "inferred_format": "MM:SS.s (Windowed session elapsed time)"
+  },
+  "friday_plus.csv": {
+    "total_timestamps": 547557,
+    "length_distribution": {
+      "7": 547557
+    },
+    "sample_formats": [
+      "00:42.4",
+      "01:07.2",
+      "59:50.3",
+      "00:53.3",
+      "00:57.9",
+      "00:42.9",
+      "00:50.2",
+      "00:55.3",
+      "00:31.4",
+      "00:48.9"
+    ],
+    "inferred_format": "MM:SS.s (Windowed session elapsed time)"
+  },
+  "monday.csv": {
+    "total_timestamps": 371621,
+    "length_distribution": {
+      "7": 371621
+    },
+    "sample_formats": [
+      "57:51.9",
+      "57:30.6",
+      "57:28.6",
+      "57:32.6",
+      "57:31.6",
+      "56:34.2",
+      "57:29.6",
+      "57:48.7",
+      "56:55.4",
+      "57:21.1"
+    ],
+    "inferred_format": "MM:SS.s (Windowed session elapsed time)"
+  },
+  "monday_plus.csv": {
+    "total_timestamps": 371621,
+    "length_distribution": {
+      "7": 371621
+    },
+    "sample_formats": [
+      "57:51.9",
+      "57:30.6",
+      "57:28.6",
+      "57:32.6",
+      "57:31.6",
+      "56:34.2",
+      "57:29.6",
+      "57:48.7",
+      "56:55.4",
+      "57:21.1"
+    ],
+    "inferred_format": "MM:SS.s (Windowed session elapsed time)"
+  },
+  "thursday.csv": {
+    "total_timestamps": 362075,
+    "length_distribution": {
+      "7": 362075
+    },
+    "sample_formats": [
+      "00:51.5",
+      "00:36.3",
+      "01:06.2",
+      "59:05.7",
+      "00:52.3",
+      "00:56.3",
+      "00:44.6",
+      "59:00.5",
+      "00:55.3",
+      "00:43.3"
+    ],
+    "inferred_format": "MM:SS.s (Windowed session elapsed time)"
+  },
+  "thursday_plus.csv": {
+    "total_timestamps": 362075,
+    "length_distribution": {
+      "7": 362075
+    },
+    "sample_formats": [
+      "00:51.5",
+      "00:36.3",
+      "01:06.2",
+      "59:05.7",
+      "00:52.3",
+      "00:56.3",
+      "00:44.6",
+      "59:00.5",
+      "00:55.3",
+      "00:43.3"
+    ],
+    "inferred_format": "MM:SS.s (Windowed session elapsed time)"
+  },
+  "tuesday.csv": {
+    "total_timestamps": 322078,
+    "length_distribution": {
+      "7": 322078
+    },
+    "sample_formats": [
+      "55:44.4",
+      "56:21.7",
+      "56:27.0",
+      "54:17.1",
+      "55:07.6",
+      "54:12.4",
+      "54:32.2",
+      "54:10.1",
+      "58:02.0",
+      "53:44.4"
+    ],
+    "inferred_format": "MM:SS.s (Windowed session elapsed time)"
+  },
+  "tuesday_plus.csv": {
+    "total_timestamps": 322078,
+    "length_distribution": {
+      "7": 322078
+    },
+    "sample_formats": [
+      "55:44.4",
+      "56:21.7",
+      "56:27.0",
+      "54:17.1",
+      "55:07.6",
+      "54:12.4",
+      "54:32.2",
+      "54:10.1",
+      "58:02.0",
+      "53:44.4"
+    ],
+    "inferred_format": "MM:SS.s (Windowed session elapsed time)"
+  },
+  "wednesday.csv": {
+    "total_timestamps": 496640,
+    "length_distribution": {
+      "7": 496640
+    },
+    "sample_formats": [
+      "43:39.6",
+      "43:38.9",
+      "43:35.5",
+      "43:38.0",
+      "43:36.4",
+      "43:34.8",
+      "43:38.2",
+      "43:38.7",
+      "43:39.8",
+      "43:37.1"
+    ],
+    "inferred_format": "MM:SS.s (Windowed session elapsed time)"
+  },
+  "wednesday_plus.csv": {
+    "total_timestamps": 496640,
+    "length_distribution": {
+      "7": 496640
+    },
+    "sample_formats": [
+      "43:39.6",
+      "43:38.9",
+      "43:35.5",
+      "43:38.0",
+      "43:36.4",
+      "43:34.8",
+      "43:38.2",
+      "43:38.7",
+      "43:39.8",
+      "43:37.1"
+    ],
+    "inferred_format": "MM:SS.s (Windowed session elapsed time)"
+  }
+}

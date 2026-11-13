@@ -1,0 +1,18 @@
+{
+  "job_name": "Job 8: Source-Destination Correlation",
+  "job_id": "job_local1170705224_0001",
+  "timestamp": "2026-11-14 00:11:32",
+  "status": "COMPLETED_AND_VERIFIED",
+  "execution_duration_sec": 73.31,
+  "map_input_records": 2099976,
+  "map_output_records": 2099971,
+  "reduce_input_records": 2099971,
+  "reduce_input_groups": 62107,
+  "reduce_output_records": 62107,
+  "validation": {
+    "status": "PASSED",
+    "unique_pairs": 62107,
+    "total_flows": 2099971,
+    "discrepancies": []
+  }
+}

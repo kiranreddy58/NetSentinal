@@ -1,0 +1,13 @@
+================================================================================
+COMMAND: hdfs dfs -ls -h /netsentinel/input/plus
+TITLE:   HDFS Plus Datasets (/netsentinel/input/plus)
+TIME:    2026-11-14 00:37:19
+EXIT:    0
+================================================================================
+
+Found 5 items
+-rw-r--r--   1 kiran supergroup    232.9 M 2026-11-13 23:07 /netsentinel/input/plus/friday_plus.csv
+-rw-r--r--   1 kiran supergroup    166.4 M 2026-11-13 23:06 /netsentinel/input/plus/monday_plus.csv
+-rw-r--r--   1 kiran supergroup    153.6 M 2026-11-13 23:07 /netsentinel/input/plus/thursday_plus.csv
+-rw-r--r--   1 kiran supergroup    142.4 M 2026-11-13 23:06 /netsentinel/input/plus/tuesday_plus.csv
+-rw-r--r--   1 kiran supergroup    235.0 M 2026-11-13 23:06 /netsentinel/input/plus/wednesday_plus.csv

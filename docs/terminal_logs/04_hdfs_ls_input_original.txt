@@ -1,0 +1,13 @@
+================================================================================
+COMMAND: hdfs dfs -ls -h /netsentinel/input/original
+TITLE:   HDFS Ingested Canonical Standard Datasets (/netsentinel/input/original)
+TIME:    2026-11-14 00:37:14
+EXIT:    0
+================================================================================
+
+Found 5 items
+-rw-r--r--   1 kiran supergroup    190.7 M 2026-11-13 23:06 /netsentinel/input/original/friday.csv
+-rw-r--r--   1 kiran supergroup    139.4 M 2026-11-13 23:02 /netsentinel/input/original/monday.csv
+-rw-r--r--   1 kiran supergroup    126.4 M 2026-11-13 23:05 /netsentinel/input/original/thursday.csv
+-rw-r--r--   1 kiran supergroup    119.6 M 2026-11-13 23:05 /netsentinel/input/original/tuesday.csv
+-rw-r--r--   1 kiran supergroup    197.4 M 2026-11-13 23:05 /netsentinel/input/original/wednesday.csv
