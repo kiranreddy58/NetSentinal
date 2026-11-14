@@ -69,6 +69,17 @@
 
 ---
 
+### Responsive Multi-Device UI (Tablet & Mobile)
+> Full responsive compatibility across desktop (1920x1080), tablet (768x1024), and mobile viewports (390x844) with slide-out navigation drawers, scrollable module pills, and adaptive flex layouts.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kiranreddy58/NetSentinal/main/output/tablet_overview.png" alt="Tablet View" width="48%" />
+  &nbsp;
+  <img src="https://raw.githubusercontent.com/kiranreddy58/NetSentinal/main/output/mobile_overview.png" alt="Mobile View" width="48%" />
+</p>
+
+---
+
 ## 1. System Highlights & Benchmark Results
 
 - **Dataset:** Canonical CICIDS-2017 Version 2 (5 Standard CSVs: Monday to Friday)

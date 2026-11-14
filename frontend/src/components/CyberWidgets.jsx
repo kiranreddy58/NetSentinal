@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 // Semicircular Threat Severity Gauge matching reference image
 export function ThreatSeverityGauge({ score = 92.4, status = 'CRITICAL', critical = 203, high = 10470, medium = 243, low = 13213 }) {
-  // Semicircle arc angles from 180 to 360 deg
-  const radius = 80;
   const strokeWidth = 14;
-  const cx = 110;
-  const cy = 105;
 
   return (
-    <div className="flex items-center justify-between h-full pt-1">
+    <div className="flex flex-col sm:flex-row items-center justify-between h-full pt-1 gap-2">
       {/* Semicircle SVG */}
       <div className="relative flex flex-col items-center justify-center">
-        <svg width="220" height="125" viewBox="0 0 220 125" className="overflow-visible">
+        <svg width="220" height="120" viewBox="0 0 220 120" className="overflow-visible">
           <defs>
             <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#00D68F" />     {/* Green */}
-              <stop offset="40%" stopColor="#FF9F32" />    {/* Orange */}
-              <stop offset="75%" stopColor="#FF405B" />    {/* Red */}
-              <stop offset="100%" stopColor="#FF2A4D" />
+              <stop offset="35%" stopColor="#FFD032" />    {/* Yellow */}
+              <stop offset="65%" stopColor="#FF9F32" />    {/* Orange */}
+              <stop offset="100%" stopColor="#FF405B" />   {/* Red */}
             </linearGradient>
-            <filter id="gaugeGlow">
-              <feGaussianBlur stdDeviation="3" result="blur" />
+            <filter id="gaugeGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
@@ -48,36 +44,44 @@ export function ThreatSeverityGauge({ score = 92.4, status = 'CRITICAL', critica
 
         {/* Center Labels */}
         <div className="absolute bottom-1 flex flex-col items-center">
-          <span className="text-xl font-black tracking-wider text-[#FF405B] drop-shadow-md">
+          <span className="text-xl font-black tracking-wider text-[#FF405B] drop-shadow-[0_0_8px_rgba(255,64,91,0.5)]">
             {status}
           </span>
-          <span className="text-[11px] text-[#91A4C2] font-mono mt-0.5">
+          <span className="text-[11px] text-[#91A4C2] font-mono mt-0.5 font-medium">
             Risk Score: <strong className="text-white">{score}/100</strong>
           </span>
         </div>
       </div>
 
       {/* Legend Column on Right */}
-      <div className="space-y-2 pr-3 text-xs">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FF405B]" />
-          <span className="text-[#91A4C2]">Critical</span>
-          <span className="text-white font-mono ml-auto font-semibold">{critical.toLocaleString()}</span>
+      <div className="space-y-2 pr-2 text-xs w-full sm:w-auto">
+        <div className="flex items-center justify-between sm:justify-start gap-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FF405B] shadow-[0_0_6px_#FF405B]" />
+            <span className="text-[#91A4C2]">Critical</span>
+          </div>
+          <span className="text-white font-mono font-semibold ml-auto">{critical.toLocaleString()}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FF9F32]" />
-          <span className="text-[#91A4C2]">High</span>
-          <span className="text-white font-mono ml-auto font-semibold">{high.toLocaleString()}</span>
+        <div className="flex items-center justify-between sm:justify-start gap-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FF9F32] shadow-[0_0_6px_#FF9F32]" />
+            <span className="text-[#91A4C2]">High</span>
+          </div>
+          <span className="text-white font-mono font-semibold ml-auto">{high.toLocaleString()}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FFD032]" />
-          <span className="text-[#91A4C2]">Medium</span>
-          <span className="text-white font-mono ml-auto font-semibold">{medium.toLocaleString()}</span>
+        <div className="flex items-center justify-between sm:justify-start gap-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FFD032] shadow-[0_0_6px_#FFD032]" />
+            <span className="text-[#91A4C2]">Medium</span>
+          </div>
+          <span className="text-white font-mono font-semibold ml-auto">{medium.toLocaleString()}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#00D68F]" />
-          <span className="text-[#91A4C2]">Low</span>
-          <span className="text-white font-mono ml-auto font-semibold">{low.toLocaleString()}</span>
+        <div className="flex items-center justify-between sm:justify-start gap-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#00D68F] shadow-[0_0_6px_#00D68F]" />
+            <span className="text-[#91A4C2]">Low</span>
+          </div>
+          <span className="text-white font-mono font-semibold ml-auto">{low.toLocaleString()}</span>
         </div>
       </div>
     </div>
@@ -88,7 +92,7 @@ export function ThreatSeverityGauge({ score = 92.4, status = 'CRITICAL', critica
 export function TrafficDonutWidget({ benign = 1582561, attack = 517410 }) {
   const total = benign + attack || 1;
   const benignPct = ((benign / total) * 100).toFixed(2);
-  const strokeWidth = 14;
+  const strokeWidth = 16;
   const radius = 54;
   const circumference = 2 * Math.PI * radius;
   const benignStroke = (benign / total) * circumference;
@@ -108,6 +112,7 @@ export function TrafficDonutWidget({ benign = 1582561, attack = 517410 }) {
             strokeWidth={strokeWidth}
             strokeDasharray={`${benignStroke} ${circumference}`}
             strokeDashoffset="0"
+            className="transition-all duration-500 drop-shadow-[0_0_6px_rgba(0,200,255,0.4)]"
           />
           {/* Attack Arc (Red) */}
           <circle
@@ -119,23 +124,24 @@ export function TrafficDonutWidget({ benign = 1582561, attack = 517410 }) {
             strokeWidth={strokeWidth}
             strokeDasharray={`${attackStroke} ${circumference}`}
             strokeDashoffset={-benignStroke}
+            className="transition-all duration-500 drop-shadow-[0_0_6px_rgba(255,64,91,0.4)]"
           />
         </svg>
         <div className="absolute flex flex-col items-center justify-center text-center pointer-events-none">
-          <span className="text-lg font-bold text-white font-mono">{benignPct}%</span>
-          <span className="text-[10px] text-[#91A4C2] uppercase font-semibold tracking-wider">Benign</span>
+          <span className="text-lg font-black text-white font-mono tracking-tight">{benignPct}%</span>
+          <span className="text-[11px] text-[#91A4C2] font-semibold tracking-wide">Benign</span>
         </div>
       </div>
 
       {/* Bottom Legend */}
-      <div className="flex items-center justify-center gap-5 w-full pt-2 border-t border-[#1A3558]/60 text-xs">
+      <div className="flex items-center justify-center gap-6 w-full pt-2 border-t border-[#1A3558]/60 text-xs">
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#00C8FF]" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#00C8FF] shadow-[0_0_6px_#00C8FF]" />
           <span className="text-[#91A4C2]">Benign</span>
           <span className="text-white font-mono font-medium">{benign.toLocaleString()}</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FF405B]" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#FF405B] shadow-[0_0_6px_#FF405B]" />
           <span className="text-[#91A4C2]">Attack</span>
           <span className="text-white font-mono font-medium">{attack.toLocaleString()}</span>
         </div>
@@ -146,10 +152,9 @@ export function TrafficDonutWidget({ benign = 1582561, attack = 517410 }) {
 
 // Dual Curve Model Performance Widget matching reference image
 export function ModelPerformanceWidget({ rfAcc = "99.95%", gbtAcc = "99.97%", f1 = "99.96%", auc = "1.0000" }) {
-  // SVG points for curves
-  const width = 180;
+  const width = 190;
   const height = 95;
-  const padding = 15;
+  const padding = 16;
 
   // RF curve points (cyan)
   const rfPoints = [
@@ -170,9 +175,9 @@ export function ModelPerformanceWidget({ rfAcc = "99.95%", gbtAcc = "99.97%", f1
   const gbtPath = gbtPoints.map(toCoord).join(' ');
 
   return (
-    <div className="flex items-center justify-between h-full pt-1 gap-4">
+    <div className="flex flex-col sm:flex-row items-center justify-between h-full pt-1 gap-4">
       {/* Metric List on Left */}
-      <div className="space-y-2.5 flex-1 font-mono text-xs">
+      <div className="space-y-2 flex-1 font-mono text-xs w-full sm:w-auto">
         <div className="flex items-center justify-between">
           <span className="text-[#91A4C2]">RF Accuracy</span>
           <span className="text-white font-semibold">{rfAcc}</span>
@@ -192,14 +197,14 @@ export function ModelPerformanceWidget({ rfAcc = "99.95%", gbtAcc = "99.97%", f1
       </div>
 
       {/* Mini Performance Curves on Right */}
-      <div className="flex flex-col items-end">
+      <div className="flex flex-col items-end shrink-0">
         {/* Legend */}
         <div className="flex items-center gap-3 text-[10px] mb-1 font-mono">
-          <span className="flex items-center gap-1 text-[#00C8FF]">
-            <span className="w-2 h-2 rounded-full bg-[#00C8FF]" /> RF
+          <span className="flex items-center gap-1.5 text-[#00C8FF]">
+            <span className="w-2 h-2 rounded-full bg-[#00C8FF] shadow-[0_0_4px_#00C8FF]" /> RF
           </span>
-          <span className="flex items-center gap-1 text-[#925CFF]">
-            <span className="w-2 h-2 rounded-full bg-[#925CFF]" /> GBT
+          <span className="flex items-center gap-1.5 text-[#925CFF]">
+            <span className="w-2 h-2 rounded-full bg-[#925CFF] shadow-[0_0_4px_#925CFF]" /> GBT
           </span>
         </div>
         <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="overflow-visible">
@@ -208,7 +213,7 @@ export function ModelPerformanceWidget({ rfAcc = "99.95%", gbtAcc = "99.97%", f1
           <line x1={padding} y1={0} x2={padding} y2={height - padding} stroke="#1A3558" strokeWidth="1" />
 
           {/* Grid lines */}
-          {[0.2, 0.4, 0.6, 0.8].map((f, i) => (
+          {[0.25, 0.5, 0.75, 1.0].map((f, i) => (
             <line
               key={i}
               x1={padding}
@@ -239,11 +244,11 @@ export function ModelPerformanceWidget({ rfAcc = "99.95%", gbtAcc = "99.97%", f1
           <text x={padding + (width - 2 * padding) * 0.25} y={height - 2} fill="#627794" fontSize="8">5k</text>
           <text x={padding + (width - 2 * padding) * 0.5} y={height - 2} fill="#627794" fontSize="8">10k</text>
           <text x={padding + (width - 2 * padding) * 0.75} y={height - 2} fill="#627794" fontSize="8">15k</text>
-          <text x={width - 10} y={height - 2} fill="#627794" fontSize="8">20k</text>
+          <text x={width - 8} y={height - 2} fill="#627794" fontSize="8">20k</text>
 
           {/* Y Axis ticks */}
-          <text x={2} y={height - padding} fill="#627794" fontSize="8">0.6</text>
-          <text x={2} y={padding + 5} fill="#627794" fontSize="8">1.0</text>
+          <text x={1} y={height - padding} fill="#627794" fontSize="8">0.6</text>
+          <text x={1} y={padding + 5} fill="#627794" fontSize="8">1.0</text>
         </svg>
       </div>
     </div>
@@ -295,7 +300,6 @@ export function TemporalTrafficArea() {
   const height = 150;
   const pad = 20;
 
-  // Realistic time data points
   const points = [
     { t: '00:00', normal: 60, attack: 15 },
     { t: '02:00', normal: 68, attack: 22 },
@@ -330,7 +334,6 @@ export function TemporalTrafficArea() {
 
   const normalLineD = normalCoords.reduce((acc, c, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${c.x.toFixed(1)} ${c.y.toFixed(1)}`, '');
   const normalAreaD = `${normalLineD} L ${(width - pad).toFixed(1)} ${height - pad} L ${pad} ${height - pad} Z`;
-
   const attackLineD = attackCoords.reduce((acc, c, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${c.x.toFixed(1)} ${c.y.toFixed(1)}`, '');
 
   return (
@@ -338,10 +341,10 @@ export function TemporalTrafficArea() {
       {/* Legend on top right */}
       <div className="flex items-center justify-end gap-4 text-[10px] mb-1 font-mono">
         <span className="flex items-center gap-1.5 text-[#00C8FF]">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#00C8FF]" /> Normal
+          <span className="w-2.5 h-2.5 rounded-full bg-[#00C8FF] shadow-[0_0_6px_#00C8FF]" /> Normal
         </span>
         <span className="flex items-center gap-1.5 text-[#FF405B]">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FF405B]" /> Attack
+          <span className="w-2.5 h-2.5 rounded-full bg-[#FF405B] shadow-[0_0_6px_#FF405B]" /> Attack
         </span>
       </div>
 
@@ -420,8 +423,12 @@ export function TopSourceIPsTable({ onViewAll }) {
             {sources.map((s, i) => (
               <tr key={i} className="hover:bg-[#11223F]/50 transition-colors">
                 <td className="py-2 text-[#EAF2FF] font-semibold">{s.ip}</td>
-                <td className="py-2 text-center text-[#FF9F32]">{s.flows}</td>
-                <td className="py-2 text-right text-[#FF405B] font-bold">{s.score}</td>
+                <td className="py-2 text-center text-[#FF9F32] font-semibold">{s.flows}</td>
+                <td className={`py-2 text-right font-bold ${
+                  s.score >= 50 ? 'text-[#FF405B]' : s.score >= 40 ? 'text-[#FF9F32]' : 'text-[#FFD032]'
+                }`}>
+                  {s.score.toFixed(2)}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -431,7 +438,7 @@ export function TopSourceIPsTable({ onViewAll }) {
       <div className="pt-2 text-right">
         <button
           onClick={onViewAll}
-          className="text-xs text-[#00C8FF] hover:text-[#52d6ff] transition-colors font-medium inline-flex items-center gap-1"
+          className="text-xs text-[#00C8FF] hover:text-[#52d6ff] transition-colors font-semibold inline-flex items-center gap-1 hover:underline"
         >
           View All &rarr;
         </button>

@@ -6,7 +6,7 @@ import {
   FileText, Settings, Play, ChevronLeft, ChevronRight, Eye, Info,
   ExternalLink, ChevronDown, Bell, User, LayoutDashboard, Binary,
   Sliders, AlertOctagon, HelpCircle, HardDrive, Share2, Compass,
-  Award, ArrowUpRight
+  Award, ArrowUpRight, Menu, X
 } from 'lucide-react';
 
 import { 
@@ -33,6 +33,7 @@ import {
 export default function App() {
   const [activeTab, setActiveTab] = useState('overview');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [timeRange, setTimeRange] = useState('24h');
   const [liveUpdating, setLiveUpdating] = useState(true);
   const [currentTime, setCurrentTime] = useState('24 Apr 2025, 14:32:17');
@@ -238,11 +239,27 @@ export default function App() {
 
   return (
     <div className="flex flex-col h-screen bg-[#060D1A] text-[#EAF2FF] font-sans overflow-hidden select-none">
+      {/* Mobile Drawer Backdrop */}
+      {mobileSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 md:hidden"
+          onClick={() => setMobileSidebarOpen(false)}
+        />
+      )}
+
       {/* 1. TOP HEADER BAR matching reference image */}
-      <header className="h-16 bg-[#081224] border-b border-[#1A3558] px-6 flex items-center justify-between shrink-0 z-30">
-        {/* Brand with Shield Logo */}
+      <header className="h-16 bg-[#081224] border-b border-[#1A3558] px-4 sm:px-6 flex items-center justify-between shrink-0 z-30">
+        {/* Left Section: Mobile Menu + Brand Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00C8FF]/20 to-[#2585FF]/30 border border-[#00C8FF]/50 flex items-center justify-center shadow-glow-cyan">
+          <button 
+            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)} 
+            className="md:hidden p-2 rounded-lg bg-[#0D1B32] border border-[#1A3558] text-[#91A4C2] hover:text-white"
+            aria-label="Toggle navigation menu"
+          >
+            {mobileSidebarOpen ? <X className="w-5 h-5 text-[#00C8FF]" /> : <Menu className="w-5 h-5" />}
+          </button>
+
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00C8FF]/20 to-[#2585FF]/30 border border-[#00C8FF]/50 flex items-center justify-center shadow-glow-cyan shrink-0">
             <ShieldAlert className="w-5 h-5 text-[#00C8FF]" />
           </div>
           <div>
@@ -250,22 +267,22 @@ export default function App() {
               <span className="text-lg font-black tracking-wide text-white">NetSentinel</span>
               <span className="text-xs font-bold font-mono text-[#00C8FF] bg-[#00C8FF]/15 px-1.5 py-0.5 rounded border border-[#00C8FF]/40">2.0</span>
             </div>
-            <p className="text-[10px] text-[#91A4C2] font-medium tracking-tight">Enterprise Big Data & Machine Learning Cybersecurity Intelligence Platform</p>
+            <p className="hidden sm:block text-[10px] text-[#91A4C2] font-medium tracking-tight">Enterprise Big Data & Machine Learning Cybersecurity Intelligence Platform</p>
           </div>
         </div>
 
-        {/* Center Navigation Tabs with Glowing Pills */}
-        <div className="hidden lg:flex items-center gap-1.5 bg-[#0B1830] border border-[#1A3558]/80 rounded-full px-2 py-1">
+        {/* Center Navigation Tabs with Glowing Pills (Scrollable on tablet) */}
+        <div className="hidden md:flex items-center gap-1.5 bg-[#0B1830] border border-[#1A3558]/80 rounded-full px-2 py-1 overflow-x-auto scrollbar-none max-w-xl">
           {topModulePills.map(pill => {
             const Icon = pill.icon;
             const isSelected = activeTab === pill.id;
             return (
               <button
                 key={pill.id}
-                onClick={() => { setActiveTab(pill.id); setPage(1); setSearch(''); }}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                onClick={() => { setActiveTab(pill.id); setPage(1); setSearch(''); setMobileSidebarOpen(false); }}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
                   isSelected
-                    ? 'bg-gradient-to-r from-[#00C8FF] to-[#2585FF] text-white shadow-glow-cyan'
+                    ? 'bg-[#0066FF] text-white shadow-[0_0_12px_rgba(0,102,255,0.5)]'
                     : 'text-[#91A4C2] hover:text-white hover:bg-[#1A3558]/40'
                 }`}
               >
@@ -277,51 +294,57 @@ export default function App() {
         </div>
 
         {/* Right Section: User & Live Status */}
-        <div className="flex items-center gap-5">
-          <button className="flex items-center gap-2 text-xs font-medium text-[#EAF2FF] bg-[#0D1B32] border border-[#1A3558] hover:border-[#00C8FF]/50 px-3 py-1.5 rounded-md transition-colors">
+        <div className="flex items-center gap-3 sm:gap-5 shrink-0">
+          <button className="flex items-center gap-2 text-xs font-medium text-[#EAF2FF] bg-[#0D1B32] border border-[#1A3558] hover:border-[#00C8FF]/50 px-2.5 sm:px-3 py-1.5 rounded-md transition-colors">
             <User className="w-4 h-4 text-[#91A4C2]" />
-            <span>admin</span>
+            <span className="hidden sm:inline">admin</span>
             <ChevronDown className="w-3.5 h-3.5 text-[#91A4C2]" />
           </button>
           <div className="flex items-center gap-1.5 text-xs font-semibold text-[#00D68F] bg-[#00D68F]/10 border border-[#00D68F]/30 px-2.5 py-1 rounded-full">
             <span className="w-2 h-2 rounded-full bg-[#00D68F] animate-pulse" />
-            <span>Live</span>
+            <span className="hidden sm:inline">Live</span>
           </div>
         </div>
       </header>
 
       {/* 2. BODY LAYOUT: SIDEBAR + MAIN WORKSPACE */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* Left Sidebar */}
-        <aside className={`${sidebarCollapsed ? 'w-16' : 'w-64'} bg-[#0B1830] border-r border-[#1A3558] flex flex-col justify-between transition-all duration-200 shrink-0 z-20`}>
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* Left Sidebar (Desktop + Mobile Responsive Drawer) */}
+        <aside className={`
+          ${mobileSidebarOpen ? 'fixed inset-y-0 left-0 z-50 w-72 flex shadow-2xl' : 'hidden'}
+          md:flex md:static flex-col justify-between shrink-0 z-20
+          ${sidebarCollapsed ? 'md:w-16' : 'md:w-64'}
+          bg-[#0B1830] border-r border-[#1A3558] transition-all duration-200
+        `}>
           <div className="overflow-y-auto py-3 px-2 space-y-1">
-            {navItems.map((item, idx) => {
+            {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
               return (
                 <button
                   key={item.id}
-                  onClick={() => { setActiveTab(item.id); setPage(1); setSearch(''); }}
+                  onClick={() => { setActiveTab(item.id); setPage(1); setSearch(''); setMobileSidebarOpen(false); }}
                   title={item.label}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#2585FF]/20 to-[#00C8FF]/10 text-white border border-[#00C8FF]/50 shadow-glow-cyan font-semibold'
+                      ? 'bg-[#0066FF] text-white shadow-[0_0_12px_rgba(0,102,255,0.4)] font-semibold'
                       : 'text-[#91A4C2] hover:text-[#EAF2FF] hover:bg-[#0D1B32]'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#00C8FF]' : 'text-[#627794]'}`} />
-                  {!sidebarCollapsed && <span className="truncate">{item.label}</span>}
+                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-[#627794]'}`} />
+                  {(!sidebarCollapsed || mobileSidebarOpen) && <span className="truncate">{item.label}</span>}
                 </button>
               );
             })}
           </div>
 
-          {/* Toggle sidebar button */}
+          {/* Toggle sidebar button (desktop only) */}
           <div className="p-3 border-t border-[#1A3558] flex items-center justify-between text-xs text-[#91A4C2]">
-            {!sidebarCollapsed && <span className="font-mono text-[10px]">v2.0.0 PROD</span>}
+            {(!sidebarCollapsed || mobileSidebarOpen) && <span className="font-mono text-[10px]">v2.0.0 PROD</span>}
             <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="p-1 rounded hover:bg-[#1A3558] text-[#91A4C2] hover:text-white ml-auto"
+              className="hidden md:block p-1 rounded hover:bg-[#1A3558] text-[#91A4C2] hover:text-white ml-auto"
+              aria-label="Collapse sidebar"
             >
               {sidebarCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
             </button>
@@ -331,24 +354,24 @@ export default function App() {
         {/* Main Content Workspace */}
         <main className="flex-1 flex flex-col overflow-hidden bg-[#060D1A]">
           {/* Subheader: Title + Time Range Filters */}
-          <div className="h-16 px-8 flex items-center justify-between border-b border-[#1A3558]/40 shrink-0">
+          <div className="h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between border-b border-[#1A3558]/40 shrink-0">
             <div>
-              <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+              <h2 className="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2">
                 {navItems.find(i => i.id === activeTab)?.label || 'Executive Overview'}
               </h2>
-              <p className="text-xs text-[#91A4C2] mt-0.5">Real-time Network Threat Intelligence Dashboard</p>
+              <p className="text-[11px] sm:text-xs text-[#91A4C2] mt-0.5 truncate">Real-time Network Threat Intelligence Dashboard</p>
             </div>
 
             {/* Time Filter Pills & Live Updates Indicator */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="flex items-center bg-[#0B1830] border border-[#1A3558] rounded-md p-0.5 text-xs font-semibold">
                 {['1h', '6h', '24h', '7d'].map(range => (
                   <button
                     key={range}
                     onClick={() => setTimeRange(range)}
-                    className={`px-3 py-1 rounded transition-colors ${
+                    className={`px-2.5 sm:px-3 py-1 rounded transition-colors ${
                       timeRange === range
-                        ? 'bg-[#2585FF] text-white shadow-sm'
+                        ? 'bg-[#0066FF] text-white shadow-sm'
                         : 'text-[#91A4C2] hover:text-white'
                     }`}
                   >
@@ -357,7 +380,7 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="flex items-center gap-1.5 text-xs font-medium text-[#00D68F] bg-[#0B1830] border border-[#1A3558] px-3 py-1.5 rounded-md">
+              <div className="hidden sm:flex items-center gap-1.5 text-xs font-medium text-[#00D68F] bg-[#0B1830] border border-[#1A3558] px-3 py-1.5 rounded-md">
                 <span className="w-2 h-2 rounded-full bg-[#00D68F] animate-pulse" />
                 <span>Live Updates</span>
               </div>
@@ -365,71 +388,71 @@ export default function App() {
           </div>
 
           {/* Scrollable View Content */}
-          <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6">
+          <div className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
             {/* ========================================================================= */}
             {/* PAGE 1 — EXECUTIVE OVERVIEW (EXACT VISUAL MATCH TO REFERENCE IMAGE)        */}
             {/* ========================================================================= */}
             {activeTab === 'overview' && (
               <div className="space-y-6">
-                {/* 1. TOP 5 KPI CARDS matching reference image */}
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                  {/* Total Flows Card */}
-                  <div className="cyber-card p-4 relative overflow-hidden flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#2585FF]/30 to-[#00C8FF]/10 border border-[#2585FF]/40 flex items-center justify-center shrink-0">
+                {/* 1. TOP 5 KPI CARDS with exact colors & borders matching reference image */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
+                  {/* Card 1: Total Flows */}
+                  <div className="bg-[#0B1E38] border border-[#1A3B66] rounded-xl p-4 relative overflow-hidden flex items-center gap-4 shadow-lg hover:border-[#2585FF]/60 transition-all">
+                    <div className="w-12 h-12 rounded-xl bg-[#0D2A54] border border-[#205191] flex items-center justify-center shrink-0">
                       <Database className="w-6 h-6 text-[#00C8FF]" />
                     </div>
                     <div>
                       <span className="text-xs text-[#91A4C2] font-medium">Total Flows</span>
-                      <p className="text-xl font-bold font-mono text-white mt-0.5">2,099,971</p>
-                      <span className="text-[10px] text-[#00D68F] flex items-center gap-1 mt-0.5 font-medium">
+                      <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-0.5">2,099,971</p>
+                      <span className="text-[10px] text-[#00D68F] flex items-center gap-1 mt-0.5 font-medium font-mono">
                         &uarr; +0.0%
                       </span>
                     </div>
                   </div>
 
-                  {/* Benign Traffic Card */}
-                  <div className="cyber-card p-4 relative overflow-hidden flex items-center gap-4 border-l-4 border-l-[#00D68F]">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00D68F]/30 to-[#00D68F]/10 border border-[#00D68F]/40 flex items-center justify-center shrink-0">
+                  {/* Card 2: Benign Traffic */}
+                  <div className="bg-[#06281E] border border-[#0E4D38] rounded-xl p-4 relative overflow-hidden flex items-center gap-4 shadow-lg hover:border-[#00D68F]/60 transition-all">
+                    <div className="w-12 h-12 rounded-xl bg-[#0A3D2D] border border-[#146C4F] flex items-center justify-center shrink-0">
                       <ShieldCheck className="w-6 h-6 text-[#00D68F]" />
                     </div>
                     <div>
                       <span className="text-xs text-[#91A4C2] font-medium">Benign Traffic</span>
-                      <p className="text-xl font-bold font-mono text-white mt-0.5">1,582,561</p>
+                      <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-0.5">1,582,561</p>
                       <span className="text-[10px] text-[#00D68F] font-mono font-medium">75.36%</span>
                     </div>
                   </div>
 
-                  {/* Attack Traffic Card */}
-                  <div className="cyber-card p-4 relative overflow-hidden flex items-center gap-4 border-l-4 border-l-[#FF405B]">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF405B]/30 to-[#FF405B]/10 border border-[#FF405B]/40 flex items-center justify-center shrink-0">
+                  {/* Card 3: Attack Traffic */}
+                  <div className="bg-[#2A0E15] border border-[#581C26] rounded-xl p-4 relative overflow-hidden flex items-center gap-4 shadow-lg hover:border-[#FF405B]/60 transition-all">
+                    <div className="w-12 h-12 rounded-xl bg-[#40121D] border border-[#7A2335] flex items-center justify-center shrink-0">
                       <AlertTriangle className="w-6 h-6 text-[#FF405B]" />
                     </div>
                     <div>
                       <span className="text-xs text-[#91A4C2] font-medium">Attack Traffic</span>
-                      <p className="text-xl font-bold font-mono text-[#FF405B] mt-0.5">517,410</p>
+                      <p className="text-xl sm:text-2xl font-bold font-mono text-[#FF405B] mt-0.5">517,410</p>
                       <span className="text-[10px] text-[#FF405B] font-mono font-medium">24.64%</span>
                     </div>
                   </div>
 
-                  {/* Total Packets Card */}
-                  <div className="cyber-card p-4 relative overflow-hidden flex items-center gap-4 border-l-4 border-l-[#925CFF]">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#925CFF]/30 to-[#925CFF]/10 border border-[#925CFF]/40 flex items-center justify-center shrink-0">
+                  {/* Card 4: Total Packets */}
+                  <div className="bg-[#1C1133] border border-[#3E2368] rounded-xl p-4 relative overflow-hidden flex items-center gap-4 shadow-lg hover:border-[#925CFF]/60 transition-all">
+                    <div className="w-12 h-12 rounded-xl bg-[#2C194E] border border-[#562E94] flex items-center justify-center shrink-0">
                       <Globe className="w-6 h-6 text-[#925CFF]" />
                     </div>
                     <div>
                       <span className="text-xs text-[#91A4C2] font-medium">Total Packets</span>
-                      <p className="text-xl font-bold font-mono text-white mt-0.5">56,129,897</p>
+                      <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-0.5">56,129,897</p>
                     </div>
                   </div>
 
-                  {/* Network Volume Card */}
-                  <div className="cyber-card p-4 relative overflow-hidden flex items-center gap-4 border-l-4 border-l-[#FF9F32]">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9F32]/30 to-[#FF9F32]/10 border border-[#FF9F32]/40 flex items-center justify-center shrink-0">
+                  {/* Card 5: Network Volume */}
+                  <div className="bg-[#2A1A08] border border-[#583610] rounded-xl p-4 relative overflow-hidden flex items-center gap-4 shadow-lg hover:border-[#FF9F32]/60 transition-all">
+                    <div className="w-12 h-12 rounded-xl bg-[#422709] border border-[#784812] flex items-center justify-center shrink-0">
                       <Layers className="w-6 h-6 text-[#FF9F32]" />
                     </div>
                     <div>
                       <span className="text-xs text-[#91A4C2] font-medium">Network Volume</span>
-                      <p className="text-xl font-bold font-mono text-white mt-0.5">47.23 GB</p>
+                      <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-0.5">47.23 GB</p>
                     </div>
                   </div>
                 </div>
@@ -1323,22 +1346,22 @@ export default function App() {
           </div>
 
           {/* 3. BOTTOM FOOTER STATUS BAR matching reference image */}
-          <footer className="h-10 bg-[#081224] border-t border-[#1A3558] px-8 flex items-center justify-between text-xs font-mono shrink-0 z-30">
-            <div className="flex items-center gap-4 text-[#91A4C2]">
+          <footer className="h-10 bg-[#081224] border-t border-[#1A3558] px-4 sm:px-8 flex items-center justify-between text-[11px] font-mono shrink-0 z-30 overflow-x-auto scrollbar-none">
+            <div className="flex items-center gap-2 sm:gap-4 text-[#91A4C2] whitespace-nowrap">
               <span className="flex items-center gap-1.5 text-[#00D68F] font-semibold">
                 <span className="w-2 h-2 rounded-full bg-[#00D68F] animate-pulse" />
                 System Healthy
               </span>
               <span>|</span>
               <span>Hadoop: <strong className="text-[#00D68F]">RUNNING</strong></span>
-              <span>|</span>
-              <span>Last Updated: <span className="text-[#EAF2FF]">{currentTime}</span></span>
+              <span className="hidden sm:inline">|</span>
+              <span className="hidden sm:inline">Last Updated: <span className="text-[#EAF2FF]">{currentTime}</span></span>
             </div>
 
-            <div className="flex items-center gap-2 text-[#91A4C2]">
+            <div className="flex items-center gap-2 text-[#91A4C2] whitespace-nowrap ml-4">
               <span className="font-semibold text-white">NetSentinel 2.0</span>
-              <span>|</span>
-              <span>Powered by Apache Hadoop, scikit-learn &amp; FastAPI</span>
+              <span className="hidden md:inline">|</span>
+              <span className="hidden md:inline">Powered by Apache Hadoop, scikit-learn &amp; FastAPI</span>
             </div>
           </footer>
         </main>
