@@ -4,9 +4,9 @@
 
 @layer base {
   body {
-    background-color: #060D1A;
-    color: #EAF2FF;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Inter', sans-serif;
+    background-color: #070D18;
+    color: #EAF1FF;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
@@ -19,32 +19,32 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A1425;
+  background: #0A1424;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1A3558;
+  background: #20334D;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2585FF;
+  background: #3185FF;
 }
 
-/* Glowing cyber borders */
-.cyber-card {
-  background-color: #0D1B32;
-  border: 1px solid #1A3558;
-  border-radius: 0.625rem;
-  box-shadow: 0 4px 20px -2px rgba(2, 6, 15, 0.7);
+/* Professional SOC card styling */
+.soc-card {
+  background-color: #101D31;
+  border: 1px solid #20334D;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 16px -2px rgba(2, 6, 15, 0.4);
   transition: all 0.2s ease-in-out;
 }
 
-.cyber-card:hover {
-  border-color: #234674;
+.soc-card:hover {
+  border-color: #2D486B;
 }
 
-.cyber-card-active {
+.soc-card-active {
   border-color: rgba(0, 200, 255, 0.6);
   box-shadow: 0 0 15px -3px rgba(0, 200, 255, 0.25);
 }

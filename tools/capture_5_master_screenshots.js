@@ -21,44 +21,55 @@ async function captureScreenshots() {
   await page.setViewport({ width: 1920, height: 1080 });
 
   // 1. Home Page / Executive Overview
-  console.log('[1/5] Capturing Home Page (Executive Overview)...');
+  console.log('[1/6] Capturing Executive Overview...');
   await page.goto('http://127.0.0.1:3000', { waitUntil: 'networkidle0', timeout: 30000 });
   await new Promise(r => setTimeout(r, 2000));
   await page.screenshot({ path: path.join(OUT_DIR, '1_home_page_overview.png') });
 
-  // Helper to click sidebar or module button by text prefix/includes
-  async function scrollToTab(text) {
-    const buttons = await page.$$('button');
+  // Helper to click sidebar module button by text prefix/includes
+  async function clickNav(text) {
+    const buttons = await page.$$('aside button');
     for (const btn of buttons) {
       const textContent = await page.evaluate(el => el.textContent, btn);
       if (textContent && textContent.includes(text)) {
-        console.log(`    -> Clicked module: "${text}"`);
+        console.log(`    -> Clicked nav item: "${text}"`);
         await btn.click();
         await new Promise(r => setTimeout(r, 1500));
         return true;
       }
     }
-    console.log(`    [-] Module not found: "${text}"`);
+    console.log(`    [-] Nav item not found: "${text}"`);
     return false;
   }
 
   // 2. Machine Learning Overview & Models
-  console.log('[2/5] Capturing Machine Learning & Models...');
-  await scrollToTab('Model Insights');
+  console.log('[2/6] Capturing Machine Learning Overview...');
+  await clickNav('Model Overview');
   await page.screenshot({ path: path.join(OUT_DIR, '3_machine_learning_models.png') });
 
   // 3. Hadoop & Big Data Analytics
-  console.log('[3/5] Capturing Hadoop & Big Data Analytics...');
-  await scrollToTab('Big Data Analytics');
+  console.log('[3/6] Capturing Big Data Analytics...');
+  await clickNav('Big Data Analytics');
   await page.screenshot({ path: path.join(OUT_DIR, '4_hadoop_bigdata_analytics.png') });
 
-  // 4. Threat Intelligence & Severity Tiers
-  console.log('[4/5] Capturing Threat Intelligence & Severity Tiers...');
-  await scrollToTab('Threat Intelligence');
+  // 4. Hadoop Monitoring
+  console.log('[4/6] Capturing Hadoop Monitoring...');
+  await clickNav('Hadoop Monitoring');
+  await page.screenshot({ path: path.join(OUT_DIR, 'hadoop_monitoring.png') });
+
+  // 5. Threat Intelligence
+  console.log('[5/6] Capturing Threat Intelligence...');
+  await clickNav('Threat Intelligence');
   await page.screenshot({ path: path.join(OUT_DIR, '5_threat_intelligence_operations.png') });
 
-  // 5. Responsive Views
+  // 6. Anomaly Detection
+  console.log('[6/6] Capturing Anomaly Detection...');
+  await clickNav('Anomaly Detection');
+  await page.screenshot({ path: path.join(OUT_DIR, 'anomaly_detection.png') });
+
+  // Responsive Views
   console.log('[+] Capturing Tablet & Mobile responsive views...');
+  await clickNav('Executive Overview');
   await page.setViewport({ width: 768, height: 1024 });
   await page.goto('http://127.0.0.1:3000', { waitUntil: 'networkidle0' });
   await new Promise(r => setTimeout(r, 1500));

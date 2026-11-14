@@ -7,24 +7,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: {
-          dark: '#060D1A',
-          base: '#0A1425',
-          sidebar: '#0B1830',
-          card: '#0D1B32',
-          cardhover: '#11223F',
-          border: '#1A3558',
-          borderlight: '#234674'
-        },
-        cyber: {
+        soc: {
+          bg: '#070D18',
+          sidebar: '#0A1424',
+          header: '#0B1628',
+          card: '#101D31',
+          card2: '#13233B',
+          border: '#20334D',
+          borderHover: '#2D486B',
           cyan: '#00C8FF',
-          blue: '#2585FF',
+          blue: '#3185FF',
           green: '#00D68F',
-          red: '#FF405B',
-          orange: '#FF9F32',
-          purple: '#925CFF',
-          text: '#EAF2FF',
-          muted: '#91A4C2'
+          red: '#FF475D',
+          orange: '#FFA33A',
+          purple: '#9565FF',
+          text: '#EAF1FF',
+          muted: '#91A4BE'
         }
       },
       fontFamily: {
@@ -33,10 +31,8 @@ export default {
       },
       boxShadow: {
         'glow-cyan': '0 0 15px -3px rgba(0, 200, 255, 0.3)',
-        'glow-blue': '0 0 15px -3px rgba(37, 133, 255, 0.3)',
-        'glow-red': '0 0 15px -3px rgba(255, 64, 91, 0.3)',
-        'glow-green': '0 0 15px -3px rgba(0, 214, 143, 0.3)',
-        'card': '0 4px 20px -2px rgba(2, 6, 15, 0.7)'
+        'glow-blue': '0 0 15px -3px rgba(49, 133, 255, 0.3)',
+        'card': '0 4px 16px -2px rgba(2, 6, 15, 0.4)'
       }
     },
   },
