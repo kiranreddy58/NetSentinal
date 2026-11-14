@@ -26,39 +26,51 @@ async function captureScreenshots() {
   await new Promise(r => setTimeout(r, 2000));
   await page.screenshot({ path: path.join(OUT_DIR, '1_home_page_overview.png') });
 
-  // Helper to click sidebar tab by exact text
-  async function clickTab(text) {
+  // Helper to click sidebar or module button by text prefix/includes
+  async function scrollToTab(text) {
     const buttons = await page.$$('button');
     for (const btn of buttons) {
       const textContent = await page.evaluate(el => el.textContent, btn);
-      if (textContent && textContent.trim() === text) {
-        console.log(`    -> Clicked tab: "${text}"`);
+      if (textContent && textContent.includes(text)) {
+        console.log(`    -> Clicked module: "${text}"`);
         await btn.click();
-        await new Promise(r => setTimeout(r, 2000));
+        await new Promise(r => setTimeout(r, 1500));
         return true;
       }
     }
-    console.log(`    [-] Tab not found: "${text}"`);
+    console.log(`    [-] Module not found: "${text}"`);
     return false;
   }
 
   // 2. Machine Learning Overview & Models
   console.log('[2/5] Capturing Machine Learning & Models...');
-  await clickTab('Model Insights');
+  await scrollToTab('Model Insights');
   await page.screenshot({ path: path.join(OUT_DIR, '3_machine_learning_models.png') });
 
   // 3. Hadoop & Big Data Analytics
   console.log('[3/5] Capturing Hadoop & Big Data Analytics...');
-  await clickTab('Big Data Analytics');
+  await scrollToTab('Big Data Analytics');
   await page.screenshot({ path: path.join(OUT_DIR, '4_hadoop_bigdata_analytics.png') });
 
   // 4. Threat Intelligence & Severity Tiers
   console.log('[4/5] Capturing Threat Intelligence & Severity Tiers...');
-  await clickTab('Threat Intelligence');
+  await scrollToTab('Threat Intelligence');
   await page.screenshot({ path: path.join(OUT_DIR, '5_threat_intelligence_operations.png') });
 
+  // 5. Responsive Views
+  console.log('[+] Capturing Tablet & Mobile responsive views...');
+  await page.setViewport({ width: 768, height: 1024 });
+  await page.goto('http://127.0.0.1:3000', { waitUntil: 'networkidle0' });
+  await new Promise(r => setTimeout(r, 1500));
+  await page.screenshot({ path: path.join(OUT_DIR, 'tablet_overview.png') });
+
+  await page.setViewport({ width: 390, height: 844 });
+  await page.goto('http://127.0.0.1:3000', { waitUntil: 'networkidle0' });
+  await new Promise(r => setTimeout(r, 1500));
+  await page.screenshot({ path: path.join(OUT_DIR, 'mobile_overview.png') });
+
   await browser.close();
-  console.log('[+] Browser screenshots captured successfully in output/ !');
+  console.log('[+] All master screenshots updated successfully in output/ !');
 }
 
 captureScreenshots().catch(err => {
