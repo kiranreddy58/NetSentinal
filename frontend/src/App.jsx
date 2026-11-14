@@ -374,7 +374,7 @@ export default function App() {
 
         {/* PHASE 2.C — MAIN CONTENT AREA beside the sidebar */}
         <main className="flex-1 flex flex-col overflow-hidden bg-[#070D18]">
-          <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
+          <div className="flex-1 overflow-y-auto px-3 sm:px-5 lg:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
 
             {/* ========================================================================= */}
             {/* PHASE 4 — EXECUTIVE OVERVIEW (PRIMARY SOC DASHBOARD)                      */}
@@ -416,79 +416,89 @@ export default function App() {
                 </div>
 
                 {/* 5 KPI CARDS in one responsive row */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3.5 sm:gap-4">
                   {/* Card 1: Total Flows */}
-                  <div className="bg-[#0B1E38] border border-[#1A3B66] rounded-xl p-4 flex items-center gap-4 shadow-sm hover:border-[#3185FF]/60 transition-all">
-                    <div className="w-12 h-12 rounded-xl bg-[#0D2A54] border border-[#205191] flex items-center justify-center shrink-0">
-                      <Database className="w-6 h-6 text-[#00C8FF]" />
+                  <div className="bg-[#0B1E38] border border-[#1A3B66] rounded-xl p-3.5 sm:p-4 flex items-center gap-3.5 sm:gap-4 shadow-sm hover:border-[#3185FF]/60 transition-all min-w-0">
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#0D2A54] border border-[#205191] flex items-center justify-center shrink-0">
+                      <Database className="w-5 h-5 sm:w-6 sm:h-6 text-[#00C8FF]" />
                     </div>
-                    <div>
-                      <span className="text-xs text-[#91A4BE] font-medium">Total Flows</span>
-                      <p className="text-2xl font-bold font-mono text-white mt-0.5">{overview.total_flows.toLocaleString()}</p>
-                      <span className="text-[11px] text-[#00D68F] font-mono font-medium">↑ +0.0%</span>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-xs sm:text-[13px] text-[#91A4BE] font-medium block truncate">Total Flows</span>
+                      <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-0.5 tracking-tight truncate">
+                        {overview.total_flows.toLocaleString()}
+                      </p>
+                      <span className="text-[11px] sm:text-xs text-[#00D68F] font-mono font-medium block truncate">↑ +0.0%</span>
                     </div>
                   </div>
 
                   {/* Card 2: Benign Traffic */}
-                  <div className="bg-[#06281E] border border-[#0E4D38] rounded-xl p-4 flex items-center gap-4 shadow-sm hover:border-[#00D68F]/60 transition-all">
-                    <div className="w-12 h-12 rounded-xl bg-[#0A3D2D] border border-[#146C4F] flex items-center justify-center shrink-0">
-                      <ShieldCheck className="w-6 h-6 text-[#00D68F]" />
+                  <div className="bg-[#06281E] border border-[#0E4D38] rounded-xl p-3.5 sm:p-4 flex items-center gap-3.5 sm:gap-4 shadow-sm hover:border-[#00D68F]/60 transition-all min-w-0">
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#0A3D2D] border border-[#146C4F] flex items-center justify-center shrink-0">
+                      <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#00D68F]" />
                     </div>
-                    <div>
-                      <span className="text-xs text-[#91A4BE] font-medium">Benign Traffic</span>
-                      <p className="text-2xl font-bold font-mono text-white mt-0.5">{overview.benign_flows.toLocaleString()}</p>
-                      <span className="text-[11px] text-[#00D68F] font-mono font-medium">75.36%</span>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-xs sm:text-[13px] text-[#91A4BE] font-medium block truncate">Benign Traffic</span>
+                      <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-0.5 tracking-tight truncate">
+                        {overview.benign_flows.toLocaleString()}
+                      </p>
+                      <span className="text-[11px] sm:text-xs text-[#00D68F] font-mono font-medium block truncate">75.36%</span>
                     </div>
                   </div>
 
                   {/* Card 3: Attack Traffic */}
-                  <div className="bg-[#2A0E15] border border-[#581C26] rounded-xl p-4 flex items-center gap-4 shadow-sm hover:border-[#FF475D]/60 transition-all">
-                    <div className="w-12 h-12 rounded-xl bg-[#40121D] border border-[#7A2335] flex items-center justify-center shrink-0">
-                      <AlertTriangle className="w-6 h-6 text-[#FF475D]" />
+                  <div className="bg-[#2A0E15] border border-[#581C26] rounded-xl p-3.5 sm:p-4 flex items-center gap-3.5 sm:gap-4 shadow-sm hover:border-[#FF475D]/60 transition-all min-w-0">
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#40121D] border border-[#7A2335] flex items-center justify-center shrink-0">
+                      <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF475D]" />
                     </div>
-                    <div>
-                      <span className="text-xs text-[#91A4BE] font-medium">Attack Traffic</span>
-                      <p className="text-2xl font-bold font-mono text-[#FF475D] mt-0.5">{overview.attack_flows.toLocaleString()}</p>
-                      <span className="text-[11px] text-[#FF475D] font-mono font-medium">24.64%</span>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-xs sm:text-[13px] text-[#91A4BE] font-medium block truncate">Attack Traffic</span>
+                      <p className="text-xl sm:text-2xl font-bold font-mono text-[#FF475D] mt-0.5 tracking-tight truncate">
+                        {overview.attack_flows.toLocaleString()}
+                      </p>
+                      <span className="text-[11px] sm:text-xs text-[#FF475D] font-mono font-medium block truncate">24.64%</span>
                     </div>
                   </div>
 
                   {/* Card 4: Total Packets */}
-                  <div className="bg-[#1C1133] border border-[#3E2368] rounded-xl p-4 flex items-center gap-4 shadow-sm hover:border-[#9565FF]/60 transition-all">
-                    <div className="w-12 h-12 rounded-xl bg-[#2C194E] border border-[#562E94] flex items-center justify-center shrink-0">
-                      <Globe className="w-6 h-6 text-[#9565FF]" />
+                  <div className="bg-[#1C1133] border border-[#3E2368] rounded-xl p-3.5 sm:p-4 flex items-center gap-3.5 sm:gap-4 shadow-sm hover:border-[#9565FF]/60 transition-all min-w-0">
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#2C194E] border border-[#562E94] flex items-center justify-center shrink-0">
+                      <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-[#9565FF]" />
                     </div>
-                    <div>
-                      <span className="text-xs text-[#91A4BE] font-medium">Total Packets</span>
-                      <p className="text-2xl font-bold font-mono text-white mt-0.5">{overview.total_packets.toLocaleString()}</p>
-                      <span className="text-[11px] text-[#91A4BE] font-mono">56.13M Canonical</span>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-xs sm:text-[13px] text-[#91A4BE] font-medium block truncate">Total Packets</span>
+                      <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-0.5 tracking-tight truncate">
+                        {overview.total_packets.toLocaleString()}
+                      </p>
+                      <span className="text-[11px] sm:text-xs text-[#91A4BE] font-mono block truncate">56.13M Canonical</span>
                     </div>
                   </div>
 
                   {/* Card 5: Network Volume */}
-                  <div className="bg-[#2A1A08] border border-[#583610] rounded-xl p-4 flex items-center gap-4 shadow-sm hover:border-[#FFA33A]/60 transition-all">
-                    <div className="w-12 h-12 rounded-xl bg-[#422709] border border-[#784812] flex items-center justify-center shrink-0">
-                      <Layers className="w-6 h-6 text-[#FFA33A]" />
+                  <div className="bg-[#2A1A08] border border-[#583610] rounded-xl p-3.5 sm:p-4 flex items-center gap-3.5 sm:gap-4 shadow-sm hover:border-[#FFA33A]/60 transition-all min-w-0">
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#422709] border border-[#784812] flex items-center justify-center shrink-0">
+                      <Layers className="w-5 h-5 sm:w-6 sm:h-6 text-[#FFA33A]" />
                     </div>
-                    <div>
-                      <span className="text-xs text-[#91A4BE] font-medium">Network Volume</span>
-                      <p className="text-2xl font-bold font-mono text-white mt-0.5">47.23 GB</p>
-                      <span className="text-[11px] text-[#91A4BE] font-mono">810 MB CSV Wire</span>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-xs sm:text-[13px] text-[#91A4BE] font-medium block truncate">Network Volume</span>
+                      <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-0.5 tracking-tight truncate">
+                        47.23 GB
+                      </p>
+                      <span className="text-[11px] sm:text-xs text-[#91A4BE] font-mono block truncate">810 MB CSV Wire</span>
                     </div>
                   </div>
                 </div>
 
                 {/* MIDDLE ROW (3 Widgets) */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {/* Card 1: Traffic Distribution Donut */}
-                  <div className="soc-card p-5 flex flex-col justify-between h-[280px]">
-                    <h3 className="text-sm font-semibold text-white">Traffic Distribution</h3>
+                  <div className="soc-card p-4 sm:p-5 flex flex-col justify-between min-h-[290px]">
+                    <h3 className="text-xs sm:text-sm font-semibold text-white">Traffic Distribution</h3>
                     <TrafficDonutWidget benign={overview.benign_flows} attack={overview.attack_flows} />
                   </div>
 
                   {/* Card 2: Threat Severity Gauge */}
-                  <div className="soc-card p-5 flex flex-col justify-between h-[280px]">
-                    <h3 className="text-sm font-semibold text-white">Threat Severity</h3>
+                  <div className="soc-card p-4 sm:p-5 flex flex-col justify-between min-h-[290px]">
+                    <h3 className="text-xs sm:text-sm font-semibold text-white">Threat Severity</h3>
                     <ThreatSeverityGauge 
                       score={92.4}
                       status="CRITICAL"
@@ -500,9 +510,9 @@ export default function App() {
                   </div>
 
                   {/* Card 3: Model Performance */}
-                  <div className="soc-card p-5 flex flex-col justify-between h-[280px]">
+                  <div className="soc-card p-4 sm:p-5 flex flex-col justify-between min-h-[290px] md:col-span-2 lg:col-span-1">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                      <h3 className="text-xs sm:text-sm font-semibold text-white flex items-center gap-2">
                         <Award className="w-4 h-4 text-[#FFA33A]" />
                         <span>Model Performance</span>
                       </h3>
@@ -520,22 +530,22 @@ export default function App() {
                 </div>
 
                 {/* BOTTOM ROW (3 Widgets) */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {/* Card 1: Top Attack Categories */}
-                  <div className="soc-card p-5 flex flex-col justify-between h-[260px]">
-                    <h3 className="text-sm font-semibold text-white">Top Attack Categories</h3>
+                  <div className="soc-card p-4 sm:p-5 flex flex-col justify-between min-h-[270px]">
+                    <h3 className="text-xs sm:text-sm font-semibold text-white">Top Attack Categories</h3>
                     <TopAttackCategoriesBar />
                   </div>
 
                   {/* Card 2: Temporal Traffic Pattern */}
-                  <div className="soc-card p-5 flex flex-col justify-between h-[260px]">
-                    <h3 className="text-sm font-semibold text-white">Temporal Traffic Pattern</h3>
+                  <div className="soc-card p-4 sm:p-5 flex flex-col justify-between min-h-[270px]">
+                    <h3 className="text-xs sm:text-sm font-semibold text-white">Temporal Traffic Pattern</h3>
                     <TemporalTrafficArea />
                   </div>
 
                   {/* Card 3: Top Source IPs */}
-                  <div className="soc-card p-5 flex flex-col justify-between h-[260px]">
-                    <h3 className="text-sm font-semibold text-white">Top Source IPs</h3>
+                  <div className="soc-card p-4 sm:p-5 flex flex-col justify-between min-h-[270px] md:col-span-2 lg:col-span-1">
+                    <h3 className="text-xs sm:text-sm font-semibold text-white">Top Source IPs</h3>
                     <TopSourceIPsTable onViewAll={() => setActivePage('source-ips')} />
                   </div>
                 </div>
@@ -552,22 +562,22 @@ export default function App() {
                   <p className="text-xs text-[#91A4BE] mt-0.5">HDFS Distributed Data Pipeline &amp; MapReduce Provenance</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                  <div className="soc-card p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Canonical Records</span>
-                    <p className="text-xl font-bold font-mono text-white mt-1">2,099,971</p>
+                    <p className="text-lg sm:text-xl font-bold font-mono text-white mt-1">2,099,971</p>
                   </div>
-                  <div className="soc-card p-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Standard CSVs Ingested</span>
-                    <p className="text-xl font-bold font-mono text-[#00C8FF] mt-1">5 Files (810 MB)</p>
+                    <p className="text-lg sm:text-xl font-bold font-mono text-[#00C8FF] mt-1">5 Files (810 MB)</p>
                   </div>
-                  <div className="soc-card p-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Hadoop Streaming Jobs</span>
-                    <p className="text-xl font-bold font-mono text-[#00D68F] mt-1">11 Jobs Complete</p>
+                    <p className="text-lg sm:text-xl font-bold font-mono text-[#00D68F] mt-1">11 Jobs Complete</p>
                   </div>
-                  <div className="soc-card p-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Execution Parity</span>
-                    <p className="text-xl font-bold font-mono text-[#00D68F] mt-1">100.00% Zero Discrepancy</p>
+                    <p className="text-lg sm:text-xl font-bold font-mono text-[#00D68F] mt-1">100% Discrepancy-Free</p>
                   </div>
                 </div>
 
@@ -685,25 +695,25 @@ export default function App() {
                   <p className="text-xs text-[#91A4BE] mt-0.5">Distributed Storage and LocalJobRunner Execution Health</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                  <div className="soc-card p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Hadoop Framework</span>
-                    <p className="text-lg font-bold font-mono text-[#00C8FF] mt-1">Apache Hadoop 3.3.6</p>
+                    <p className="text-base sm:text-lg font-bold font-mono text-[#00C8FF] mt-1">Apache Hadoop 3.3.6</p>
                     <span className="text-[10px] text-[#91A4BE]">Windows 11 Native winutils</span>
                   </div>
-                  <div className="soc-card p-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Storage Engine</span>
-                    <p className="text-lg font-bold font-mono text-[#00D68F] mt-1">HDFS 3.3.6</p>
+                    <p className="text-base sm:text-lg font-bold font-mono text-[#00D68F] mt-1">HDFS 3.3.6</p>
                     <span className="text-[10px] text-[#91A4BE]">NameNode &amp; DataNode Active</span>
                   </div>
-                  <div className="soc-card p-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Execution Paradigm</span>
-                    <p className="text-lg font-bold font-mono text-[#9565FF] mt-1">LocalJobRunner</p>
-                    <span className="text-[10px] text-[#91A4BE]">Multi-threaded In-Memory Streaming</span>
+                    <p className="text-base sm:text-lg font-bold font-mono text-[#9565FF] mt-1">LocalJobRunner</p>
+                    <span className="text-[10px] text-[#91A4BE]">Multi-threaded Streaming</span>
                   </div>
-                  <div className="soc-card p-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Canonical Data Ingested</span>
-                    <p className="text-lg font-bold font-mono text-white mt-1">5 Standard CSVs</p>
+                    <p className="text-base sm:text-lg font-bold font-mono text-white mt-1">5 Standard CSVs</p>
                     <span className="text-[10px] text-[#91A4BE]">810 MB Ingested into HDFS</span>
                   </div>
                 </div>
@@ -866,18 +876,18 @@ export default function App() {
                   <p className="text-xs text-[#91A4BE] mt-0.5">Network Service Mapping and Target Port Vulnerability Distribution</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="soc-card p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Unique Active Ports</span>
-                    <p className="text-2xl font-bold font-mono text-[#00C8FF] mt-1">5,066</p>
+                    <p className="text-xl sm:text-2xl font-bold font-mono text-[#00C8FF] mt-1">5,066</p>
                   </div>
-                  <div className="soc-card p-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Top Service Port</span>
-                    <p className="text-2xl font-bold font-mono text-[#00D68F] mt-1">Port 80 (HTTP)</p>
+                    <p className="text-xl sm:text-2xl font-bold font-mono text-[#00D68F] mt-1">Port 80 (HTTP)</p>
                   </div>
-                  <div className="soc-card p-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Top Attack Target Port</span>
-                    <p className="text-2xl font-bold font-mono text-[#FF475D] mt-1">Port 80 / 4444</p>
+                    <p className="text-xl sm:text-2xl font-bold font-mono text-[#FF475D] mt-1">Port 80 / 4444</p>
                   </div>
                 </div>
 
@@ -1202,25 +1212,25 @@ export default function App() {
                   <p className="text-xs text-[#91A4BE] mt-0.5">Isolation Forest (8% Contamination) for Zero-Day Attack Discovery</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                  <div className="soc-card p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Algorithm</span>
-                    <p className="text-lg font-bold font-mono text-[#00C8FF] mt-1">Isolation Forest</p>
+                    <p className="text-base sm:text-lg font-bold font-mono text-[#00C8FF] mt-1">Isolation Forest</p>
                     <span className="text-[10px] text-[#91A4BE]">Unsupervised Ensembles</span>
                   </div>
-                  <div className="soc-card p-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Total Flagged Anomalies</span>
-                    <p className="text-lg font-bold font-mono text-[#FFA33A] mt-1">{anomalySummary?.total_anomalies_flagged?.toLocaleString() || '1,811'}</p>
+                    <p className="text-base sm:text-lg font-bold font-mono text-[#FFA33A] mt-1">{anomalySummary?.total_anomalies_flagged?.toLocaleString() || '1,811'}</p>
                     <span className="text-[10px] text-[#91A4BE]">{anomalySummary?.anomaly_percentage || 7.51}% of holdout traffic</span>
                   </div>
-                  <div className="soc-card p-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Attack Capture Rate</span>
-                    <p className="text-lg font-bold font-mono text-[#00D68F] mt-1">{anomalySummary?.attack_capture_rate_unsupervised || 9.06}%</p>
+                    <p className="text-base sm:text-lg font-bold font-mono text-[#00D68F] mt-1">{anomalySummary?.attack_capture_rate_unsupervised || 9.06}%</p>
                     <span className="text-[10px] text-[#91A4BE]">Unsupervised Zero-day capture</span>
                   </div>
-                  <div className="soc-card p-4">
+                  <div className="soc-card p-3.5 sm:p-4">
                     <span className="text-xs text-[#91A4BE]">Contamination Calibration</span>
-                    <p className="text-lg font-bold font-mono text-white mt-1">0.08 (8%)</p>
+                    <p className="text-base sm:text-lg font-bold font-mono text-white mt-1">0.08 (8%)</p>
                     <span className="text-[10px] text-[#91A4BE]">Baseline enterprise threshold</span>
                   </div>
                 </div>
@@ -1318,25 +1328,25 @@ export default function App() {
                   <p className="text-xs text-[#91A4BE] mt-0.5">Multi-Factor Risk Scoring Fusing ML (50%), Anomaly (30%), Probes (10%), Bursts (10%)</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                  <div className="soc-card p-4 border-l-4 border-l-[#FF475D]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+                  <div className="soc-card p-3.5 sm:p-4 border-l-4 border-l-[#FF475D]">
                     <span className="text-xs text-[#FF475D] uppercase font-bold">Critical Threats</span>
-                    <p className="text-2xl font-bold font-mono text-white mt-1">203</p>
+                    <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-1">203</p>
                     <span className="text-[10px] text-[#91A4BE]">Risk Score &ge; 70.0</span>
                   </div>
-                  <div className="soc-card p-4 border-l-4 border-l-[#FFA33A]">
+                  <div className="soc-card p-3.5 sm:p-4 border-l-4 border-l-[#FFA33A]">
                     <span className="text-xs text-[#FFA33A] uppercase font-bold">High Threats</span>
-                    <p className="text-2xl font-bold font-mono text-white mt-1">10,470</p>
+                    <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-1">10,470</p>
                     <span className="text-[10px] text-[#91A4BE]">Risk Score 45.0–69.9</span>
                   </div>
-                  <div className="soc-card p-4 border-l-4 border-l-[#FFD032]">
+                  <div className="soc-card p-3.5 sm:p-4 border-l-4 border-l-[#FFD032]">
                     <span className="text-xs text-[#FFD032] uppercase font-bold">Medium Threats</span>
-                    <p className="text-2xl font-bold font-mono text-white mt-1">243</p>
+                    <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-1">243</p>
                     <span className="text-[10px] text-[#91A4BE]">Risk Score 20.0–44.9</span>
                   </div>
-                  <div className="soc-card p-4 border-l-4 border-l-[#00D68F]">
+                  <div className="soc-card p-3.5 sm:p-4 border-l-4 border-l-[#00D68F]">
                     <span className="text-xs text-[#00D68F] uppercase font-bold">Low Threats / Nominal</span>
-                    <p className="text-2xl font-bold font-mono text-white mt-1">13,213</p>
+                    <p className="text-xl sm:text-2xl font-bold font-mono text-white mt-1">13,213</p>
                     <span className="text-[10px] text-[#91A4BE]">Risk Score &lt; 20.0</span>
                   </div>
                 </div>

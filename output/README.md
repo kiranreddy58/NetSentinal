@@ -23,3 +23,11 @@ This directory contains the **five primary high-resolution deliverable screensho
 ## 5. Threat Intelligence — Multi-Factor Risk Operations & Severity Tiers
 - **File:** `output/5_threat_intelligence_operations.png`
 - **Focus:** Unified threat intelligence operations, 4 calibrated risk tiers (Critical, High, Medium, Low), multi-factor scoring fusion, and paginated, searchable, explainable threat records.
+
+---
+
+## 6. Responsive Multi-Device UI (Tablet & Mobile)
+- **Tablet Overview:** `output/tablet_overview.png` (768x1024 viewport, responsive sidebar drawer, stacked grid cards, adaptive charts)
+- **Mobile Overview:** `output/mobile_overview.png` (390x844 viewport, touch-friendly navigation, responsive KPI text and fluid charts)
+- **Hadoop Monitoring:** `output/hadoop_monitoring.png`
+- **Anomaly Detection:** `output/anomaly_detection.png`

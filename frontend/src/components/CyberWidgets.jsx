@@ -5,16 +5,16 @@ export function ThreatSeverityGauge({ score = 92.4, status = 'CRITICAL', critica
   const strokeWidth = 14;
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between h-full pt-1 gap-2">
+    <div className="flex flex-col sm:flex-row items-center justify-between h-full pt-1 gap-3 sm:gap-2">
       {/* Semicircle SVG */}
-      <div className="relative flex flex-col items-center justify-center">
-        <svg width="220" height="120" viewBox="0 0 220 120" className="overflow-visible">
+      <div className="relative flex flex-col items-center justify-center shrink-0">
+        <svg width="220" height="120" viewBox="0 0 220 120" className="overflow-visible w-[180px] sm:w-[210px] md:w-[220px] h-auto">
           <defs>
             <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#00D68F" />     {/* Green */}
               <stop offset="35%" stopColor="#FFD032" />    {/* Yellow */}
-              <stop offset="65%" stopColor="#FF9F32" />    {/* Orange */}
-              <stop offset="100%" stopColor="#FF405B" />   {/* Red */}
+              <stop offset="65%" stopColor="#FFA33A" />    {/* Orange */}
+              <stop offset="100%" stopColor="#FF475D" />   {/* Red */}
             </linearGradient>
             <filter id="gaugeGlow" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="4" result="blur" />
@@ -43,45 +43,45 @@ export function ThreatSeverityGauge({ score = 92.4, status = 'CRITICAL', critica
         </svg>
 
         {/* Center Labels */}
-        <div className="absolute bottom-1 flex flex-col items-center">
-          <span className="text-xl font-black tracking-wider text-[#FF405B] drop-shadow-[0_0_8px_rgba(255,64,91,0.5)]">
+        <div className="absolute bottom-1 flex flex-col items-center pointer-events-none">
+          <span className="text-lg sm:text-xl font-black tracking-wider text-[#FF475D] drop-shadow-[0_0_8px_rgba(255,71,93,0.5)]">
             {status}
           </span>
-          <span className="text-[11px] text-[#91A4C2] font-mono mt-0.5 font-medium">
+          <span className="text-[10px] sm:text-[11px] text-[#91A4BE] font-mono mt-0.5 font-medium">
             Risk Score: <strong className="text-white">{score}/100</strong>
           </span>
         </div>
       </div>
 
       {/* Legend Column on Right */}
-      <div className="space-y-2 pr-2 text-xs w-full sm:w-auto">
+      <div className="space-y-1.5 sm:space-y-2 pr-1 sm:pr-2 text-xs w-full sm:w-auto font-mono">
         <div className="flex items-center justify-between sm:justify-start gap-3">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#FF405B] shadow-[0_0_6px_#FF405B]" />
-            <span className="text-[#91A4C2]">Critical</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FF475D] shadow-[0_0_6px_#FF475D]" />
+            <span className="text-[#91A4BE]">Critical</span>
           </div>
-          <span className="text-white font-mono font-semibold ml-auto">{critical.toLocaleString()}</span>
+          <span className="text-white font-semibold ml-auto">{critical.toLocaleString()}</span>
         </div>
         <div className="flex items-center justify-between sm:justify-start gap-3">
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#FF9F32] shadow-[0_0_6px_#FF9F32]" />
-            <span className="text-[#91A4C2]">High</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FFA33A] shadow-[0_0_6px_#FFA33A]" />
+            <span className="text-[#91A4BE]">High</span>
           </div>
-          <span className="text-white font-mono font-semibold ml-auto">{high.toLocaleString()}</span>
+          <span className="text-white font-semibold ml-auto">{high.toLocaleString()}</span>
         </div>
         <div className="flex items-center justify-between sm:justify-start gap-3">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#FFD032] shadow-[0_0_6px_#FFD032]" />
-            <span className="text-[#91A4C2]">Medium</span>
+            <span className="text-[#91A4BE]">Medium</span>
           </div>
-          <span className="text-white font-mono font-semibold ml-auto">{medium.toLocaleString()}</span>
+          <span className="text-white font-semibold ml-auto">{medium.toLocaleString()}</span>
         </div>
         <div className="flex items-center justify-between sm:justify-start gap-3">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#00D68F] shadow-[0_0_6px_#00D68F]" />
-            <span className="text-[#91A4C2]">Low</span>
+            <span className="text-[#91A4BE]">Low</span>
           </div>
-          <span className="text-white font-mono font-semibold ml-auto">{low.toLocaleString()}</span>
+          <span className="text-white font-semibold ml-auto">{low.toLocaleString()}</span>
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@ export function TrafficDonutWidget({ benign = 1582561, attack = 517410 }) {
   return (
     <div className="flex flex-col items-center justify-between h-full pt-1">
       <div className="relative flex items-center justify-center my-auto">
-        <svg width="150" height="150" viewBox="0 0 150 150" className="-rotate-90">
+        <svg width="150" height="150" viewBox="0 0 150 150" className="-rotate-90 w-[130px] sm:w-[145px] md:w-[150px] h-auto">
           {/* Benign Arc (Blue/Cyan) */}
           <circle
             cx="75"
@@ -120,30 +120,30 @@ export function TrafficDonutWidget({ benign = 1582561, attack = 517410 }) {
             cy="75"
             r={radius}
             fill="none"
-            stroke="#FF405B"
+            stroke="#FF475D"
             strokeWidth={strokeWidth}
             strokeDasharray={`${attackStroke} ${circumference}`}
             strokeDashoffset={-benignStroke}
-            className="transition-all duration-500 drop-shadow-[0_0_6px_rgba(255,64,91,0.4)]"
+            className="transition-all duration-500 drop-shadow-[0_0_6px_rgba(255,71,93,0.4)]"
           />
         </svg>
         <div className="absolute flex flex-col items-center justify-center text-center pointer-events-none">
-          <span className="text-lg font-black text-white font-mono tracking-tight">{benignPct}%</span>
-          <span className="text-[11px] text-[#91A4C2] font-semibold tracking-wide">Benign</span>
+          <span className="text-base sm:text-lg lg:text-xl font-black text-white font-mono tracking-tight">{benignPct}%</span>
+          <span className="text-[10px] sm:text-[11px] text-[#91A4BE] font-semibold tracking-wide">Benign</span>
         </div>
       </div>
 
       {/* Bottom Legend */}
-      <div className="flex items-center justify-center gap-6 w-full pt-2 border-t border-[#1A3558]/60 text-xs">
+      <div className="flex items-center justify-center gap-4 sm:gap-6 w-full pt-2 border-t border-[#20334D]/60 text-xs font-mono">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#00C8FF] shadow-[0_0_6px_#00C8FF]" />
-          <span className="text-[#91A4C2]">Benign</span>
-          <span className="text-white font-mono font-medium">{benign.toLocaleString()}</span>
+          <span className="text-[#91A4BE]">Benign</span>
+          <span className="text-white font-medium">{benign.toLocaleString()}</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FF405B] shadow-[0_0_6px_#FF405B]" />
-          <span className="text-[#91A4C2]">Attack</span>
-          <span className="text-white font-mono font-medium">{attack.toLocaleString()}</span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#FF475D] shadow-[0_0_6px_#FF475D]" />
+          <span className="text-[#91A4BE]">Attack</span>
+          <span className="text-white font-medium">{attack.toLocaleString()}</span>
         </div>
       </div>
     </div>
@@ -175,42 +175,42 @@ export function ModelPerformanceWidget({ rfAcc = "99.95%", gbtAcc = "99.97%", f1
   const gbtPath = gbtPoints.map(toCoord).join(' ');
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between h-full pt-1 gap-4">
+    <div className="flex flex-col sm:flex-row items-center justify-between h-full pt-1 gap-3 sm:gap-4">
       {/* Metric List on Left */}
-      <div className="space-y-2 flex-1 font-mono text-xs w-full sm:w-auto">
+      <div className="space-y-1.5 sm:space-y-2 flex-1 font-mono text-xs w-full sm:w-auto">
         <div className="flex items-center justify-between">
-          <span className="text-[#91A4C2]">RF Accuracy</span>
+          <span className="text-[#91A4BE]">RF Accuracy</span>
           <span className="text-white font-semibold">{rfAcc}</span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-[#91A4C2]">GBT Accuracy</span>
+          <span className="text-[#91A4BE]">GBT Accuracy</span>
           <span className="text-[#00D68F] font-bold">{gbtAcc}</span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-[#91A4C2]">F1-Score</span>
+          <span className="text-[#91A4BE]">F1-Score</span>
           <span className="text-[#00C8FF] font-bold">{f1}</span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-[#91A4C2]">AUC-ROC</span>
+          <span className="text-[#91A4BE]">AUC-ROC</span>
           <span className="text-[#00D68F] font-semibold">{auc}</span>
         </div>
       </div>
 
       {/* Mini Performance Curves on Right */}
-      <div className="flex flex-col items-end shrink-0">
+      <div className="flex flex-col items-end shrink-0 w-full sm:w-auto">
         {/* Legend */}
-        <div className="flex items-center gap-3 text-[10px] mb-1 font-mono">
+        <div className="flex items-center gap-3 text-[10px] mb-1 font-mono self-end">
           <span className="flex items-center gap-1.5 text-[#00C8FF]">
             <span className="w-2 h-2 rounded-full bg-[#00C8FF] shadow-[0_0_4px_#00C8FF]" /> RF
           </span>
-          <span className="flex items-center gap-1.5 text-[#925CFF]">
-            <span className="w-2 h-2 rounded-full bg-[#925CFF] shadow-[0_0_4px_#925CFF]" /> GBT
+          <span className="flex items-center gap-1.5 text-[#9565FF]">
+            <span className="w-2 h-2 rounded-full bg-[#9565FF] shadow-[0_0_4px_#9565FF]" /> GBT
           </span>
         </div>
-        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="overflow-visible">
+        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="overflow-visible w-[150px] sm:w-[170px] md:w-[190px] h-auto">
           {/* Axis lines */}
-          <line x1={padding} y1={height - padding} x2={width} y2={height - padding} stroke="#1A3558" strokeWidth="1" />
-          <line x1={padding} y1={0} x2={padding} y2={height - padding} stroke="#1A3558" strokeWidth="1" />
+          <line x1={padding} y1={height - padding} x2={width} y2={height - padding} stroke="#20334D" strokeWidth="1" />
+          <line x1={padding} y1={0} x2={padding} y2={height - padding} stroke="#20334D" strokeWidth="1" />
 
           {/* Grid lines */}
           {[0.25, 0.5, 0.75, 1.0].map((f, i) => (
@@ -220,35 +220,35 @@ export function ModelPerformanceWidget({ rfAcc = "99.95%", gbtAcc = "99.97%", f1
               y1={height - padding - f * (height - 2 * padding)}
               x2={width}
               y2={height - padding - f * (height - 2 * padding)}
-              stroke="#132742"
+              stroke="#13233B"
               strokeDasharray="2 2"
             />
           ))}
 
           {/* GBT Curve */}
-          <polyline fill="none" stroke="#925CFF" strokeWidth="2.5" points={gbtPath} />
+          <polyline fill="none" stroke="#9565FF" strokeWidth="2.5" points={gbtPath} />
           {gbtPoints.map((p, idx) => {
             const [x, y] = toCoord(p).split(',');
-            return <circle key={idx} cx={x} cy={y} r="2.5" fill="#925CFF" stroke="#0D1B32" strokeWidth="1" />;
+            return <circle key={idx} cx={x} cy={y} r="2.5" fill="#9565FF" stroke="#101D31" strokeWidth="1" />;
           })}
 
           {/* RF Curve */}
           <polyline fill="none" stroke="#00C8FF" strokeWidth="2.5" points={rfPath} />
           {rfPoints.map((p, idx) => {
             const [x, y] = toCoord(p).split(',');
-            return <circle key={idx} cx={x} cy={y} r="2.5" fill="#00C8FF" stroke="#0D1B32" strokeWidth="1" />;
+            return <circle key={idx} cx={x} cy={y} r="2.5" fill="#00C8FF" stroke="#101D31" strokeWidth="1" />;
           })}
 
           {/* X Axis ticks */}
-          <text x={padding} y={height - 2} fill="#627794" fontSize="8">0</text>
-          <text x={padding + (width - 2 * padding) * 0.25} y={height - 2} fill="#627794" fontSize="8">5k</text>
-          <text x={padding + (width - 2 * padding) * 0.5} y={height - 2} fill="#627794" fontSize="8">10k</text>
-          <text x={padding + (width - 2 * padding) * 0.75} y={height - 2} fill="#627794" fontSize="8">15k</text>
-          <text x={width - 8} y={height - 2} fill="#627794" fontSize="8">20k</text>
+          <text x={padding} y={height - 2} fill="#91A4BE" fontSize="8">0</text>
+          <text x={padding + (width - 2 * padding) * 0.25} y={height - 2} fill="#91A4BE" fontSize="8">5k</text>
+          <text x={padding + (width - 2 * padding) * 0.5} y={height - 2} fill="#91A4BE" fontSize="8">10k</text>
+          <text x={padding + (width - 2 * padding) * 0.75} y={height - 2} fill="#91A4BE" fontSize="8">15k</text>
+          <text x={width - 8} y={height - 2} fill="#91A4BE" fontSize="8">20k</text>
 
           {/* Y Axis ticks */}
-          <text x={1} y={height - padding} fill="#627794" fontSize="8">0.6</text>
-          <text x={1} y={padding + 5} fill="#627794" fontSize="8">1.0</text>
+          <text x={1} y={height - padding} fill="#91A4BE" fontSize="8">0.6</text>
+          <text x={1} y={padding + 5} fill="#91A4BE" fontSize="8">1.0</text>
         </svg>
       </div>
     </div>
@@ -258,33 +258,33 @@ export function ModelPerformanceWidget({ rfAcc = "99.95%", gbtAcc = "99.97%", f1
 // Top Attack Categories Bar Chart matching reference image
 export function TopAttackCategoriesBar() {
   const categories = [
-    { label: 'C (Web Attacks)', pct: 11.69, color: '#FF405B' },
-    { label: 'DDoS', pct: 10.24, color: '#FF9F32' },
+    { label: 'C (Web Attacks)', pct: 11.69, color: '#FF475D' },
+    { label: 'DDoS', pct: 10.24, color: '#FFA33A' },
     { label: 'PortScan', pct: 8.72, color: '#FFD032' },
-    { label: 'Brute Force', pct: 7.31, color: '#2585FF' },
-    { label: 'Botnet', pct: 6.85, color: '#925CFF' }
+    { label: 'Brute Force', pct: 7.31, color: '#3185FF' },
+    { label: 'Botnet', pct: 6.85, color: '#9565FF' }
   ];
 
   const maxPct = 14;
 
   return (
-    <div className="flex items-end justify-between h-44 pt-5 pb-2 px-3 border-b border-[#1A3558]/60">
+    <div className="flex items-end justify-between h-40 sm:h-44 pt-3 pb-2 px-1 sm:px-3 border-b border-[#20334D]/60 gap-1.5 sm:gap-2">
       {categories.map((c, i) => {
         const heightPct = (c.pct / maxPct) * 100;
         return (
-          <div key={i} className="flex-1 flex flex-col items-center h-full justify-end group px-2">
-            <span className="text-[11px] font-mono font-bold text-white mb-1.5 transition-all group-hover:scale-110">
+          <div key={i} className="flex-1 flex flex-col items-center h-full justify-end group px-0.5 sm:px-1.5 min-w-0">
+            <span className="text-[10px] sm:text-[11px] font-mono font-bold text-white mb-1.5 transition-all group-hover:scale-110 truncate">
               {c.pct.toFixed(2)}%
             </span>
             <div 
-              className="w-full rounded-t-md transition-all duration-300 group-hover:brightness-125"
+              className="w-full rounded-t-md transition-all duration-300 group-hover:brightness-125 min-h-[4px]"
               style={{
                 height: `${heightPct}%`,
                 backgroundColor: c.color,
-                boxShadow: `0 0 12px -2px ${c.color}66`
+                boxShadow: `0 0 10px -2px ${c.color}66`
               }}
             />
-            <span className="text-[10px] text-[#91A4C2] mt-2 truncate w-full text-center group-hover:text-white">
+            <span className="text-[9px] sm:text-[10px] text-[#91A4BE] mt-2 truncate w-full text-center group-hover:text-white font-mono" title={c.label}>
               {c.label}
             </span>
           </div>
@@ -343,15 +343,15 @@ export function TemporalTrafficArea() {
         <span className="flex items-center gap-1.5 text-[#00C8FF]">
           <span className="w-2.5 h-2.5 rounded-full bg-[#00C8FF] shadow-[0_0_6px_#00C8FF]" /> Normal
         </span>
-        <span className="flex items-center gap-1.5 text-[#FF405B]">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FF405B] shadow-[0_0_6px_#FF405B]" /> Attack
+        <span className="flex items-center gap-1.5 text-[#FF475D]">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#FF475D] shadow-[0_0_6px_#FF475D]" /> Attack
         </span>
       </div>
 
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto overflow-visible">
         <defs>
           <linearGradient id="temporalGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#00C8FF" stopOpacity="0.45" />
+            <stop offset="0%" stopColor="#00C8FF" stopOpacity="0.4" />
             <stop offset="100%" stopColor="#00C8FF" stopOpacity="0.02" />
           </linearGradient>
         </defs>
@@ -364,7 +364,7 @@ export function TemporalTrafficArea() {
             y1={height - pad - f * (height - 2 * pad)}
             x2={width - pad}
             y2={height - pad - f * (height - 2 * pad)}
-            stroke="#132742"
+            stroke="#13233B"
             strokeDasharray="2 2"
           />
         ))}
@@ -376,19 +376,19 @@ export function TemporalTrafficArea() {
         <path d={normalLineD} fill="none" stroke="#00C8FF" strokeWidth="2.5" strokeLinecap="round" />
 
         {/* Attack Line */}
-        <path d={attackLineD} fill="none" stroke="#FF405B" strokeWidth="2" strokeDasharray="3 3" />
+        <path d={attackLineD} fill="none" stroke="#FF475D" strokeWidth="2" strokeDasharray="3 3" />
 
         {/* Y Axis Labels */}
-        <text x="0" y={height - pad} fill="#627794" fontSize="8" fontMono="true">0k</text>
-        <text x="0" y={height - pad - 0.33 * (height - 2 * pad)} fill="#627794" fontSize="8">50k</text>
-        <text x="0" y={height - pad - 0.66 * (height - 2 * pad)} fill="#627794" fontSize="8">100k</text>
-        <text x="0" y={pad + 8} fill="#627794" fontSize="8">150k</text>
+        <text x="0" y={height - pad} fill="#91A4BE" fontSize="8" fontMono="true">0k</text>
+        <text x="0" y={height - pad - 0.33 * (height - 2 * pad)} fill="#91A4BE" fontSize="8">50k</text>
+        <text x="0" y={height - pad - 0.66 * (height - 2 * pad)} fill="#91A4BE" fontSize="8">100k</text>
+        <text x="0" y={pad + 8} fill="#91A4BE" fontSize="8">150k</text>
 
         {/* X Axis Labels */}
         {['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'].map((label, i) => {
           const x = pad + (i / 5) * (width - 2 * pad);
           return (
-            <text key={i} x={x} y={height - 2} fill="#627794" fontSize="8" textAnchor="middle">
+            <text key={i} x={x} y={height - 2} fill="#91A4BE" fontSize="8" textAnchor="middle">
               {label}
             </text>
           );
@@ -410,22 +410,22 @@ export function TopSourceIPsTable({ onViewAll }) {
 
   return (
     <div className="flex flex-col justify-between h-full">
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto w-full">
         <table className="w-full text-left text-xs font-mono">
-          <thead className="text-[#627794] text-[10px] uppercase border-b border-[#1A3558]/60">
+          <thead className="text-[#91A4BE] text-[10px] uppercase border-b border-[#20334D]/60">
             <tr>
               <th className="pb-2 font-medium">Source IP</th>
               <th className="pb-2 font-medium text-center">Attack Flows</th>
               <th className="pb-2 font-medium text-right">Risk Score</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#1A3558]/40">
+          <tbody className="divide-y divide-[#20334D]/40">
             {sources.map((s, i) => (
-              <tr key={i} className="hover:bg-[#11223F]/50 transition-colors">
-                <td className="py-2 text-[#EAF2FF] font-semibold">{s.ip}</td>
-                <td className="py-2 text-center text-[#FF9F32] font-semibold">{s.flows}</td>
+              <tr key={i} className="hover:bg-[#13233B]/50 transition-colors">
+                <td className="py-2 text-[#EAF1FF] font-semibold">{s.ip}</td>
+                <td className="py-2 text-center text-[#FFA33A] font-semibold">{s.flows}</td>
                 <td className={`py-2 text-right font-bold ${
-                  s.score >= 50 ? 'text-[#FF405B]' : s.score >= 40 ? 'text-[#FF9F32]' : 'text-[#FFD032]'
+                  s.score >= 50 ? 'text-[#FF475D]' : s.score >= 40 ? 'text-[#FFA33A]' : 'text-[#FFD032]'
                 }`}>
                   {s.score.toFixed(2)}
                 </td>
