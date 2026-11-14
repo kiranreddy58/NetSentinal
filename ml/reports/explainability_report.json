@@ -1,0 +1,657 @@
+{
+  "title": "NetSentinel Model Explainability & Feature Impact",
+  "methodology": {
+    "global_tree_importance": "Mean Decrease in Impurity (Gini MDI) computed across all decision trees",
+    "permutation_importance": "Permutation drop in classification metric when feature column is shuffled",
+    "statistical_correlation": "Linear Pearson correlation coefficient (Note: Correlation does NOT imply causation)",
+    "local_explanations": "Feature anomaly contributions for individual flagged suspicious flows"
+  },
+  "global_importance_ranking": [
+    {
+      "feature": "Bwd Packet Length Std",
+      "importance": 0.1162
+    },
+    {
+      "feature": "Packet Length Std",
+      "importance": 0.0631
+    },
+    {
+      "feature": "Bwd Packet Length Mean",
+      "importance": 0.0532
+    },
+    {
+      "feature": "Bwd Packet Length Min",
+      "importance": 0.04
+    },
+    {
+      "feature": "Bwd Init Win Bytes",
+      "importance": 0.0395
+    },
+    {
+      "feature": "Packet Length Min",
+      "importance": 0.0384
+    },
+    {
+      "feature": "Dst Port",
+      "importance": 0.0371
+    },
+    {
+      "feature": "Fwd Seg Size Min",
+      "importance": 0.0363
+    },
+    {
+      "feature": "Protocol",
+      "importance": 0.0363
+    },
+    {
+      "feature": "Packet Length Variance",
+      "importance": 0.0342
+    },
+    {
+      "feature": "Bwd Packet Length Max",
+      "importance": 0.03
+    },
+    {
+      "feature": "Bwd Segment Size Avg",
+      "importance": 0.0291
+    },
+    {
+      "feature": "Subflow Bwd Bytes",
+      "importance": 0.026
+    },
+    {
+      "feature": "RST Flag Count",
+      "importance": 0.0253
+    },
+    {
+      "feature": "Fwd Packet Length Min",
+      "importance": 0.0243
+    },
+    {
+      "feature": "Packet Length Max",
+      "importance": 0.0243
+    },
+    {
+      "feature": "Total TCP Flow Time",
+      "importance": 0.02
+    },
+    {
+      "feature": "Fwd Header Length",
+      "importance": 0.0174
+    },
+    {
+      "feature": "Bwd PSH Flags",
+      "importance": 0.0163
+    },
+    {
+      "feature": "Fwd Packet Length Max",
+      "importance": 0.0153
+    },
+    {
+      "feature": "Total Length of Fwd Packet",
+      "importance": 0.0151
+    },
+    {
+      "feature": "Fwd Segment Size Avg",
+      "importance": 0.0149
+    },
+    {
+      "feature": "Subflow Fwd Bytes",
+      "importance": 0.0134
+    },
+    {
+      "feature": "Total Bwd packets",
+      "importance": 0.0132
+    },
+    {
+      "feature": "Packet Length Mean",
+      "importance": 0.012
+    }
+  ],
+  "permutation_impact_ranking": [
+    {
+      "feature": "Fwd Seg Size Min",
+      "f1_drop": 0.0047
+    },
+    {
+      "feature": "Dst Port",
+      "f1_drop": 0.0036
+    },
+    {
+      "feature": "Flow Duration",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Total Fwd Packet",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Total Bwd packets",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Total Length of Fwd Packet",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Total Length of Bwd Packet",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Fwd Packet Length Max",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Fwd Packet Length Min",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Fwd Packet Length Mean",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Fwd Packet Length Std",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Bwd Packet Length Max",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Bwd Packet Length Min",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Bwd Packet Length Mean",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Bwd Packet Length Std",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Flow Bytes/s",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Flow Packets/s",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Flow IAT Mean",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Flow IAT Std",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Flow IAT Max",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Flow IAT Min",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Fwd IAT Total",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Fwd IAT Mean",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Fwd IAT Std",
+      "f1_drop": 0.0
+    },
+    {
+      "feature": "Fwd IAT Max",
+      "f1_drop": 0.0
+    }
+  ],
+  "statistical_correlations": [
+    {
+      "feature": "Protocol",
+      "pearson_r": -0.6403
+    },
+    {
+      "feature": "Packet Length Std",
+      "pearson_r": 0.6172
+    },
+    {
+      "feature": "Bwd Packet Length Std",
+      "pearson_r": 0.6099
+    },
+    {
+      "feature": "Bwd Packet Length Mean",
+      "pearson_r": 0.6064
+    },
+    {
+      "feature": "Bwd Segment Size Avg",
+      "pearson_r": 0.6064
+    },
+    {
+      "feature": "Bwd Packet Length Max",
+      "pearson_r": 0.5976
+    },
+    {
+      "feature": "Packet Length Max",
+      "pearson_r": 0.5928
+    },
+    {
+      "feature": "Fwd Seg Size Min",
+      "pearson_r": 0.5915
+    },
+    {
+      "feature": "Subflow Bwd Bytes",
+      "pearson_r": 0.5836
+    },
+    {
+      "feature": "Packet Length Mean",
+      "pearson_r": 0.5733
+    },
+    {
+      "feature": "Average Packet Size",
+      "pearson_r": 0.5733
+    },
+    {
+      "feature": "Packet Length Variance",
+      "pearson_r": 0.5691
+    },
+    {
+      "feature": "SYN Flag Count",
+      "pearson_r": 0.5537
+    },
+    {
+      "feature": "Packet Length Min",
+      "pearson_r": -0.5371
+    },
+    {
+      "feature": "Bwd Packet Length Min",
+      "pearson_r": -0.4879
+    },
+    {
+      "feature": "RST Flag Count",
+      "pearson_r": 0.4779
+    },
+    {
+      "feature": "Fwd RST Flags",
+      "pearson_r": 0.41
+    },
+    {
+      "feature": "FWD Init Win Bytes",
+      "pearson_r": 0.3804
+    },
+    {
+      "feature": "Fwd Packet Length Min",
+      "pearson_r": -0.361
+    },
+    {
+      "feature": "Down/Up Ratio",
+      "pearson_r": -0.2679
+    },
+    {
+      "feature": "FIN Flag Count",
+      "pearson_r": 0.2427
+    },
+    {
+      "feature": "Active Mean",
+      "pearson_r": 0.2132
+    },
+    {
+      "feature": "Bwd RST Flags",
+      "pearson_r": 0.1982
+    },
+    {
+      "feature": "Active Min",
+      "pearson_r": 0.1816
+    },
+    {
+      "feature": "Fwd IAT Std",
+      "pearson_r": 0.1721
+    }
+  ],
+  "local_flow_explanations": [
+    {
+      "flow_index": 199,
+      "attack_probability": 1.0,
+      "ground_truth_label": "DDoS",
+      "prediction": "ATTACK",
+      "top_contributing_features": [
+        {
+          "feature": "Bwd Packet Length Std",
+          "value": 1.69,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Packet Length Std",
+          "value": 1.33,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Mean",
+          "value": 1.12,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Min",
+          "value": 0.0,
+          "influence": "BASELINE_SIGNAL"
+        },
+        {
+          "feature": "Bwd Init Win Bytes",
+          "value": 0.49,
+          "influence": "BASELINE_SIGNAL"
+        }
+      ],
+      "explanation_summary": "Flow flagged with 100.0% confidence driven primarily by anomalous Bwd Packet Length Std and Packet Length Std values."
+    },
+    {
+      "flow_index": 198,
+      "attack_probability": 1.0,
+      "ground_truth_label": "DoS Hulk",
+      "prediction": "ATTACK",
+      "top_contributing_features": [
+        {
+          "feature": "Bwd Packet Length Std",
+          "value": 1.22,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Packet Length Std",
+          "value": 1.07,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Mean",
+          "value": 1.12,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Min",
+          "value": 0.0,
+          "influence": "BASELINE_SIGNAL"
+        },
+        {
+          "feature": "Bwd Init Win Bytes",
+          "value": 0.51,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        }
+      ],
+      "explanation_summary": "Flow flagged with 100.0% confidence driven primarily by anomalous Bwd Packet Length Std and Packet Length Std values."
+    },
+    {
+      "flow_index": 196,
+      "attack_probability": 1.0,
+      "ground_truth_label": "DDoS",
+      "prediction": "ATTACK",
+      "top_contributing_features": [
+        {
+          "feature": "Bwd Packet Length Std",
+          "value": 2.0,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Packet Length Std",
+          "value": 1.6,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Mean",
+          "value": 1.73,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Min",
+          "value": 0.0,
+          "influence": "BASELINE_SIGNAL"
+        },
+        {
+          "feature": "Bwd Init Win Bytes",
+          "value": 0.49,
+          "influence": "BASELINE_SIGNAL"
+        }
+      ],
+      "explanation_summary": "Flow flagged with 100.0% confidence driven primarily by anomalous Bwd Packet Length Std and Packet Length Std values."
+    },
+    {
+      "flow_index": 192,
+      "attack_probability": 1.0,
+      "ground_truth_label": "DoS GoldenEye",
+      "prediction": "ATTACK",
+      "top_contributing_features": [
+        {
+          "feature": "Bwd Packet Length Std",
+          "value": 1.88,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Packet Length Std",
+          "value": 1.38,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Mean",
+          "value": 1.37,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Min",
+          "value": 0.0,
+          "influence": "BASELINE_SIGNAL"
+        },
+        {
+          "feature": "Bwd Init Win Bytes",
+          "value": 0.51,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        }
+      ],
+      "explanation_summary": "Flow flagged with 100.0% confidence driven primarily by anomalous Bwd Packet Length Std and Packet Length Std values."
+    },
+    {
+      "flow_index": 193,
+      "attack_probability": 1.0,
+      "ground_truth_label": "DoS GoldenEye",
+      "prediction": "ATTACK",
+      "top_contributing_features": [
+        {
+          "feature": "Bwd Packet Length Std",
+          "value": 1.43,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Packet Length Std",
+          "value": 1.13,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Mean",
+          "value": 1.12,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Min",
+          "value": 0.0,
+          "influence": "BASELINE_SIGNAL"
+        },
+        {
+          "feature": "Bwd Init Win Bytes",
+          "value": 0.51,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        }
+      ],
+      "explanation_summary": "Flow flagged with 100.0% confidence driven primarily by anomalous Bwd Packet Length Std and Packet Length Std values."
+    },
+    {
+      "flow_index": 177,
+      "attack_probability": 1.0,
+      "ground_truth_label": "DDoS",
+      "prediction": "ATTACK",
+      "top_contributing_features": [
+        {
+          "feature": "Bwd Packet Length Std",
+          "value": 1.76,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Packet Length Std",
+          "value": 1.38,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Mean",
+          "value": 1.12,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Min",
+          "value": 0.0,
+          "influence": "BASELINE_SIGNAL"
+        },
+        {
+          "feature": "Bwd Init Win Bytes",
+          "value": 0.49,
+          "influence": "BASELINE_SIGNAL"
+        }
+      ],
+      "explanation_summary": "Flow flagged with 100.0% confidence driven primarily by anomalous Bwd Packet Length Std and Packet Length Std values."
+    },
+    {
+      "flow_index": 180,
+      "attack_probability": 1.0,
+      "ground_truth_label": "DDoS",
+      "prediction": "ATTACK",
+      "top_contributing_features": [
+        {
+          "feature": "Bwd Packet Length Std",
+          "value": 1.43,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Packet Length Std",
+          "value": 1.25,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Mean",
+          "value": 1.12,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Min",
+          "value": 0.0,
+          "influence": "BASELINE_SIGNAL"
+        },
+        {
+          "feature": "Bwd Init Win Bytes",
+          "value": 0.49,
+          "influence": "BASELINE_SIGNAL"
+        }
+      ],
+      "explanation_summary": "Flow flagged with 100.0% confidence driven primarily by anomalous Bwd Packet Length Std and Packet Length Std values."
+    },
+    {
+      "flow_index": 186,
+      "attack_probability": 1.0,
+      "ground_truth_label": "DoS GoldenEye",
+      "prediction": "ATTACK",
+      "top_contributing_features": [
+        {
+          "feature": "Bwd Packet Length Std",
+          "value": 1.43,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Packet Length Std",
+          "value": 1.17,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Mean",
+          "value": 1.12,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Min",
+          "value": 0.0,
+          "influence": "BASELINE_SIGNAL"
+        },
+        {
+          "feature": "Bwd Init Win Bytes",
+          "value": 0.51,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        }
+      ],
+      "explanation_summary": "Flow flagged with 100.0% confidence driven primarily by anomalous Bwd Packet Length Std and Packet Length Std values."
+    },
+    {
+      "flow_index": 141,
+      "attack_probability": 1.0,
+      "ground_truth_label": "DDoS",
+      "prediction": "ATTACK",
+      "top_contributing_features": [
+        {
+          "feature": "Bwd Packet Length Std",
+          "value": 1.37,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Packet Length Std",
+          "value": 1.1,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Mean",
+          "value": 0.95,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Min",
+          "value": 0.0,
+          "influence": "BASELINE_SIGNAL"
+        },
+        {
+          "feature": "Bwd Init Win Bytes",
+          "value": 0.49,
+          "influence": "BASELINE_SIGNAL"
+        }
+      ],
+      "explanation_summary": "Flow flagged with 100.0% confidence driven primarily by anomalous Bwd Packet Length Std and Packet Length Std values."
+    },
+    {
+      "flow_index": 144,
+      "attack_probability": 1.0,
+      "ground_truth_label": "DoS Hulk",
+      "prediction": "ATTACK",
+      "top_contributing_features": [
+        {
+          "feature": "Bwd Packet Length Std",
+          "value": 1.22,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Packet Length Std",
+          "value": 0.97,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Mean",
+          "value": 1.12,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        },
+        {
+          "feature": "Bwd Packet Length Min",
+          "value": 0.0,
+          "influence": "BASELINE_SIGNAL"
+        },
+        {
+          "feature": "Bwd Init Win Bytes",
+          "value": 0.51,
+          "influence": "HIGH_ATTACK_SIGNAL"
+        }
+      ],
+      "explanation_summary": "Flow flagged with 100.0% confidence driven primarily by anomalous Bwd Packet Length Std and Packet Length Std values."
+    }
+  ]
+}

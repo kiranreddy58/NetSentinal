@@ -1,0 +1,38 @@
+[
+  {
+    "ip": "172.16.0.1",
+    "high_risk_flows": 10000
+  },
+  {
+    "ip": "192.168.10.8",
+    "high_risk_flows": 429
+  },
+  {
+    "ip": "192.168.10.15",
+    "high_risk_flows": 94
+  },
+  {
+    "ip": "192.168.10.5",
+    "high_risk_flows": 55
+  },
+  {
+    "ip": "192.168.10.14",
+    "high_risk_flows": 53
+  },
+  {
+    "ip": "192.168.10.9",
+    "high_risk_flows": 36
+  },
+  {
+    "ip": "192.168.10.25",
+    "high_risk_flows": 4
+  },
+  {
+    "ip": "192.168.10.51",
+    "high_risk_flows": 1
+  },
+  {
+    "ip": "192.168.10.17",
+    "high_risk_flows": 1
+  }
+]

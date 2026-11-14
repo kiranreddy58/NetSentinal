@@ -17,7 +17,9 @@ frontend/node_modules/
 data/raw/
 hadoop_data/
 tools/hadoop-3.3.6/
+tools/jdk-11/
 tools/jdk-11.0.22/
+tools/winutils-bin/
 
 # Temporary logs & OS files
 *.log

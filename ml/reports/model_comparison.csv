@@ -1,0 +1,4 @@
+Model,Accuracy,Precision,Recall,F1-Score,Macro F1,Weighted F1,ROC-AUC,PR-AUC,FPR,FNR,Train Time (s),Pred Time (s),Model Size (MB)
+Random Forest,0.9995,0.9995,0.9993,0.9994,0.9995,0.9995,1.0000,1.0000,0.0004,0.0007,4.69,0.0574,4.23
+Gradient Boosting,0.9997,0.9994,0.9998,0.9996,0.9997,0.9997,1.0000,1.0000,0.0004,0.0002,16.74,0.0416,0.42
+Baseline Decision Tree,0.9935,0.9925,0.9928,0.9927,0.9934,0.9935,0.9963,0.9956,0.0059,0.0072,2.86,0.0080,0.01

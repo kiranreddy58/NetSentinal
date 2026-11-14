@@ -1,0 +1,54 @@
+[
+  {
+    "ip": "192.168.10.50",
+    "high_risk_flows": 10041
+  },
+  {
+    "ip": "205.174.165.73",
+    "high_risk_flows": 315
+  },
+  {
+    "ip": "192.168.10.9",
+    "high_risk_flows": 81
+  },
+  {
+    "ip": "192.168.10.25",
+    "high_risk_flows": 41
+  },
+  {
+    "ip": "192.168.10.19",
+    "high_risk_flows": 40
+  },
+  {
+    "ip": "192.168.10.16",
+    "high_risk_flows": 37
+  },
+  {
+    "ip": "192.168.10.51",
+    "high_risk_flows": 34
+  },
+  {
+    "ip": "192.168.10.12",
+    "high_risk_flows": 33
+  },
+  {
+    "ip": "192.168.10.17",
+    "high_risk_flows": 32
+  },
+  {
+    "ip": "192.168.10.14",
+    "high_risk_flows": 7
+  },
+  {
+    "ip": "192.168.10.15",
+    "high_risk_flows": 5
+  },
+  {
+    "ip": "192.168.10.5",
+    "high_risk_flows": 5
+  },
+  {
+    "ip": "114.80.165.63",
+    "high_risk_flows": 2
+  }
+]

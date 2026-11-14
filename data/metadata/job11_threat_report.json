@@ -1,0 +1,11 @@
+{
+  "job_id": "job_local_netsentinel_0011",
+  "job_name": "Threat & ML Intelligence Analytics",
+  "mapper_script": "hadoop/mapper/threat_mapper.py",
+  "reducer_script": "hadoop/reducer/threat_reducer.py",
+  "map_input_records": 2000,
+  "reduce_output_groups": 14,
+  "execution_engine": "Hadoop Streaming LocalJobRunner",
+  "execution_duration_seconds": 0.11,
+  "status": "SUCCESS_VERIFIED"
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "severity": "CRITICAL",
+    "count": 203,
+    "color": "#ef4444"
+  },
+  {
+    "severity": "HIGH",
+    "count": 10470,
+    "color": "#f97316"
+  },
+  {
+    "severity": "MEDIUM",
+    "count": 243,
+    "color": "#eab308"
+  },
+  {
+    "severity": "LOW",
+    "count": 13213,
+    "color": "#10b981"
+  }
+]

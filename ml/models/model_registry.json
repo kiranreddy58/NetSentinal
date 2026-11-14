@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Random Forest",
+    "algorithm": "RandomForestClassifier",
+    "version": "1.0.0",
+    "status": "ACTIVE",
+    "artifact": "random_forest.joblib",
+    "parameters": {
+      "n_estimators": 100,
+      "max_depth": 16,
+      "class_weight": "balanced"
+    },
+    "accuracy": 0.999502673131916,
+    "f1_score": 0.9994381496394793,
+    "roc_auc": 0.9999956626267131,
+    "model_size_mb": 4.227120399475098
+  },
+  {
+    "name": "Gradient Boosting",
+    "algorithm": "HistGradientBoostingClassifier",
+    "version": "1.0.0",
+    "status": "ACTIVE",
+    "artifact": "gradient_boosting.joblib",
+    "parameters": {
+      "max_iter": 100,
+      "max_depth": 12,
+      "learning_rate": 0.1,
+      "class_weight": "balanced"
+    },
+    "accuracy": 0.9996684487546106,
+    "f1_score": 0.9996255382887099,
+    "roc_auc": 0.9999971873213357,
+    "model_size_mb": 0.41762542724609375
+  },
+  {
+    "name": "Baseline Decision Tree",
+    "algorithm": "DecisionTreeClassifier",
+    "version": "1.0.0",
+    "status": "ACTIVE",
+    "artifact": "baseline_dt.joblib",
+    "parameters": {
+      "max_depth": 8,
+      "class_weight": "balanced"
+    },
+    "accuracy": 0.9934933068092338,
+    "f1_score": 0.9926508449187849,
+    "roc_auc": 0.9963336315886648,
+    "model_size_mb": 0.014351844787597656
+  }
+]

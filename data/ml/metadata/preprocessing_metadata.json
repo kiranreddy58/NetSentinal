@@ -1,0 +1,51 @@
+{
+  "total_canonical_raw_rows": 2099971,
+  "curated_sample_rows": 160857,
+  "train_rows": 112599,
+  "validation_rows": 24129,
+  "test_rows": 24129,
+  "feature_count": 71,
+  "numeric_features": 69,
+  "categorical_features": 2,
+  "class_distribution_sample": {
+    "BENIGN": 89657,
+    "ATTACK": 71200,
+    "attack_ratio": 0.44262916752146314
+  },
+  "day_holdout_summary": {
+    "strategy": "Chronological_Day_Holdout",
+    "train_days": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday"
+    ],
+    "holdout_day": "Friday",
+    "train_samples": 111398,
+    "holdout_samples": 49459
+  },
+  "feature_descriptions": {
+    "Flow Duration": "Duration of the bidirectional network flow in microseconds",
+    "Total Fwd Packet": "Total number of packets transmitted in forward direction (source to dest)",
+    "Total Bwd packets": "Total number of packets transmitted in backward direction (dest to source)",
+    "Total Length of Fwd Packet": "Total payload bytes in forward direction",
+    "Total Length of Bwd Packet": "Total payload bytes in backward direction",
+    "Fwd Packet Length Mean": "Mean size of packets in forward direction",
+    "Bwd Packet Length Mean": "Mean size of packets in backward direction",
+    "Flow Bytes/s": "Data throughput rate in bytes per second",
+    "Flow Packets/s": "Packet throughput rate in packets per second",
+    "Flow IAT Mean": "Mean inter-arrival time between consecutive packets in microseconds",
+    "Flow IAT Std": "Standard deviation of inter-arrival time between packets",
+    "SYN Flag Count": "Number of packets with SYN flag set (connection establishment / SYN scan)",
+    "RST Flag Count": "Number of packets with RST flag set (connection reset / scan probe)",
+    "PSH Flag Count": "Number of packets with PSH flag set (push data buffer immediately)",
+    "ACK Flag Count": "Number of packets with ACK flag set (acknowledgement)",
+    "FWD Init Win Bytes": "Initial TCP window advertisement size in forward direction",
+    "Bwd Init Win Bytes": "Initial TCP window advertisement size in backward direction",
+    "Average Packet Size": "Overall average packet size in bytes across flow",
+    "Active Mean": "Mean time flow was active before becoming idle",
+    "Idle Mean": "Mean time flow was idle before becoming active",
+    "Protocol": "Transport layer protocol (6=TCP, 17=UDP, 0=HOPOPT/ICMP)",
+    "Dst Port": "Destination port representing target network service"
+  }
+}

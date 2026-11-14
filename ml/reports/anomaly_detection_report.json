@@ -1,0 +1,279 @@
+{
+  "model_name": "Isolation Forest",
+  "contamination": 0.08,
+  "training_time_seconds": 0.6372854709625244,
+  "total_test_flows_evaluated": 24129,
+  "total_anomalies_flagged": 1811,
+  "anomaly_percentage": 7.51,
+  "attack_capture_rate_unsupervised": 9.06,
+  "benign_false_alarm_rate": 6.27,
+  "score_distribution": [
+    {
+      "range": "0-20",
+      "count": 17914,
+      "percentage": 74.24
+    },
+    {
+      "range": "20-40",
+      "count": 3805,
+      "percentage": 15.77
+    },
+    {
+      "range": "40-60",
+      "count": 1629,
+      "percentage": 6.75
+    },
+    {
+      "range": "60-80",
+      "count": 751,
+      "percentage": 3.11
+    },
+    {
+      "range": "80-100",
+      "count": 30,
+      "percentage": 0.12
+    }
+  ],
+  "sample_anomalies": [
+    {
+      "flow_index": 23,
+      "anomaly_score": 57.13,
+      "is_anomaly": true,
+      "source_ip_dec": 3232238089,
+      "dest_ip_dec": 911414204,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "BENIGN",
+      "flow_duration": 2.9105158680169514,
+      "day": "Monday"
+    },
+    {
+      "flow_index": 49,
+      "anomaly_score": 60.07,
+      "is_anomaly": true,
+      "source_ip_dec": 3232238105,
+      "dest_ip_dec": 1145287338,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "BENIGN",
+      "flow_duration": 8.29723772483085,
+      "day": "Monday"
+    },
+    {
+      "flow_index": 57,
+      "anomaly_score": 63.76,
+      "is_anomaly": true,
+      "source_ip_dec": 3232238094,
+      "dest_ip_dec": 2899905282,
+      "protocol": 6,
+      "dst_port": 443,
+      "ground_truth_label": "BENIGN",
+      "flow_duration": 11.582744095869533,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 59,
+      "anomaly_score": 71.29,
+      "is_anomaly": true,
+      "source_ip_dec": 3232238085,
+      "dest_ip_dec": 1145287306,
+      "protocol": 6,
+      "dst_port": 443,
+      "ground_truth_label": "BENIGN",
+      "flow_duration": 0.517796626536072,
+      "day": "Monday"
+    },
+    {
+      "flow_index": 96,
+      "anomaly_score": 53.97,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowhttptest",
+      "flow_duration": 5.229395919637379,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 97,
+      "anomaly_score": 61.16,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowloris",
+      "flow_duration": 10.25178545642306,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 103,
+      "anomaly_score": 58.26,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowloris",
+      "flow_duration": 10.059892675077469,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 115,
+      "anomaly_score": 59.04,
+      "is_anomaly": true,
+      "source_ip_dec": 3232238105,
+      "dest_ip_dec": 3232238083,
+      "protocol": 17,
+      "dst_port": 88,
+      "ground_truth_label": "BENIGN",
+      "flow_duration": -0.0986469146511097,
+      "day": "Tuesday"
+    },
+    {
+      "flow_index": 117,
+      "anomaly_score": 45.46,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowhttptest - Attempted",
+      "flow_duration": 6.085922091152757,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 127,
+      "anomaly_score": 45.09,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowhttptest - Attempted",
+      "flow_duration": 6.087102804507925,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 164,
+      "anomaly_score": 57.43,
+      "is_anomaly": true,
+      "source_ip_dec": 3232238097,
+      "dest_ip_dec": 2919233037,
+      "protocol": 17,
+      "dst_port": 123,
+      "ground_truth_label": "BENIGN",
+      "flow_duration": 6.575523059251439,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 226,
+      "anomaly_score": 55.88,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowloris",
+      "flow_duration": 10.294187417952235,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 231,
+      "anomaly_score": 44.55,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowhttptest - Attempted",
+      "flow_duration": 6.090637297974151,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 247,
+      "anomaly_score": 69.9,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowhttptest",
+      "flow_duration": 10.677646921807542,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 248,
+      "anomaly_score": 57.0,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowloris",
+      "flow_duration": 5.307010961007932,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 273,
+      "anomaly_score": 71.17,
+      "is_anomaly": true,
+      "source_ip_dec": 3232238083,
+      "dest_ip_dec": 3232238081,
+      "protocol": 17,
+      "dst_port": 53,
+      "ground_truth_label": "BENIGN",
+      "flow_duration": 10.375796434978957,
+      "day": "Monday"
+    },
+    {
+      "flow_index": 308,
+      "anomaly_score": 60.6,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowhttptest",
+      "flow_duration": 10.15861252652169,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 323,
+      "anomaly_score": 85.89,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS GoldenEye",
+      "flow_duration": 10.964802213357178,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 329,
+      "anomaly_score": 70.34,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowhttptest",
+      "flow_duration": 10.664408011557736,
+      "day": "Wednesday"
+    },
+    {
+      "flow_index": 343,
+      "anomaly_score": 65.01,
+      "is_anomaly": true,
+      "source_ip_dec": 2886729729,
+      "dest_ip_dec": 3232238130,
+      "protocol": 6,
+      "dst_port": 80,
+      "ground_truth_label": "DoS Slowloris",
+      "flow_duration": 9.70460187049543,
+      "day": "Wednesday"
+    }
+  ]
+}

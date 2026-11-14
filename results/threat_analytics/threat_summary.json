@@ -1,0 +1,14 @@
+{
+  "total_flows_evaluated": 24129,
+  "critical_threats": 203,
+  "high_threats": 10470,
+  "medium_threats": 243,
+  "low_threats": 13213,
+  "threat_percentage": 44.23,
+  "scoring_weights": {
+    "ml_ensemble": "50%",
+    "unsupervised_anomaly": "30%",
+    "port_scan_heuristic": "10%",
+    "volume_burst_heuristic": "10%"
+  }
+}
