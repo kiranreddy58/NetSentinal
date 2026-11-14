@@ -26,34 +26,36 @@ async function captureScreenshots() {
   await new Promise(r => setTimeout(r, 2000));
   await page.screenshot({ path: path.join(OUT_DIR, '1_home_page_overview.png') });
 
-  // Helper to click sidebar tab by text
+  // Helper to click sidebar tab by exact text
   async function clickTab(text) {
     const buttons = await page.$$('button');
     for (const btn of buttons) {
       const textContent = await page.evaluate(el => el.textContent, btn);
-      if (textContent.includes(text)) {
+      if (textContent && textContent.trim() === text) {
+        console.log(`    -> Clicked tab: "${text}"`);
         await btn.click();
-        await new Promise(r => setTimeout(r, 1500));
+        await new Promise(r => setTimeout(r, 2000));
         return true;
       }
     }
+    console.log(`    [-] Tab not found: "${text}"`);
     return false;
   }
 
-  // 2. Hadoop & Big Data Analytics
-  console.log('[2/5] Capturing Hadoop & Big Data Analytics...');
-  await clickTab('2. Big Data Analytics');
-  await page.screenshot({ path: path.join(OUT_DIR, '2_hadoop_bigdata_analytics.png') });
-
-  // 3. Machine Learning Overview & Models
-  console.log('[3/5] Capturing Machine Learning & Models...');
-  await clickTab('10. ML Overview');
+  // 2. Machine Learning Overview & Models
+  console.log('[2/5] Capturing Machine Learning & Models...');
+  await clickTab('Model Insights');
   await page.screenshot({ path: path.join(OUT_DIR, '3_machine_learning_models.png') });
 
-  // 4. Threat Intelligence & Risk Scoring
+  // 3. Hadoop & Big Data Analytics
+  console.log('[3/5] Capturing Hadoop & Big Data Analytics...');
+  await clickTab('Big Data Analytics');
+  await page.screenshot({ path: path.join(OUT_DIR, '4_hadoop_bigdata_analytics.png') });
+
+  // 4. Threat Intelligence & Severity Tiers
   console.log('[4/5] Capturing Threat Intelligence & Severity Tiers...');
-  await clickTab('16. Threat Intelligence');
-  await page.screenshot({ path: path.join(OUT_DIR, '4_threat_intelligence_operations.png') });
+  await clickTab('Threat Intelligence');
+  await page.screenshot({ path: path.join(OUT_DIR, '5_threat_intelligence_operations.png') });
 
   await browser.close();
   console.log('[+] Browser screenshots captured successfully in output/ !');

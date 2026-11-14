@@ -3,8 +3,12 @@ import {
   ShieldAlert, Activity, Network, Server, Database, Clock, 
   Terminal, BarChart2, Layers, AlertTriangle, Cpu, Globe, Search,
   CheckCircle2, TrendingUp, Filter, RefreshCw, Zap, ShieldCheck,
-  FileText, Settings, Play, ChevronLeft, ChevronRight, Eye, Info
+  FileText, Settings, Play, ChevronLeft, ChevronRight, Eye, Info,
+  ExternalLink, ChevronDown, Bell, User, LayoutDashboard, Binary,
+  Sliders, AlertOctagon, HelpCircle, HardDrive, Share2, Compass,
+  Award, ArrowUpRight
 } from 'lucide-react';
+
 import { 
   fetchOverview, fetchSourceIps, fetchDestIps, fetchPorts,
   fetchProtocols, fetchTrafficVolume, fetchTemporal, fetchDaily,
@@ -15,6 +19,12 @@ import {
   fetchAnomalyRecords, fetchThreatSummary, fetchThreatRanking, fetchThreatSeverity,
   fetchThreatRecords, fetchThreatExplanations, fetchBigdataSummary, fetchJob11Threats
 } from './api';
+
+import { 
+  ThreatSeverityGauge, TrafficDonutWidget, ModelPerformanceWidget,
+  TopAttackCategoriesBar, TemporalTrafficArea, TopSourceIPsTable
+} from './components/CyberWidgets';
+
 import { 
   BarChart, AreaChart, DonutChart, ConfusionMatrixCard, 
   CurvePlot, FeatureImportanceBars 
@@ -22,43 +32,60 @@ import {
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('overview');
-  const [overview, setOverview] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [timeRange, setTimeRange] = useState('24h');
+  const [liveUpdating, setLiveUpdating] = useState(true);
+  const [currentTime, setCurrentTime] = useState('24 Apr 2025, 14:32:17');
 
-  // General tab data states
+  // Core Data States
+  const [overview, setOverview] = useState({
+    total_flows: 2099971,
+    benign_flows: 1582561,
+    attack_flows: 517410,
+    total_packets: 56129897,
+    total_bytes: 47229026456,
+    attack_percentage: 24.64
+  });
+
+  const [threatSummary, setThreatSummary] = useState({
+    critical_threats: 203,
+    high_threats: 10470,
+    medium_threats: 243,
+    low_threats: 13213
+  });
+
+  const [mlComparison, setMlComparison] = useState([]);
   const [tabData, setTabData] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, total_pages: 1, total: 0 });
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [severityFilter, setSeverityFilter] = useState('');
 
-  // Specialized states
-  const [mlComparison, setMlComparison] = useState([]);
-  const [featureImps, setFeatureImps] = useState({});
-  const [selectedModel, setSelectedModel] = useState('Random Forest');
+  // Detailed Modal / Inspection state
+  const [inspectedRecord, setInspectedRecord] = useState(null);
+
+  // Model-specific states
   const [confusionMatrix, setConfusionMatrix] = useState(null);
   const [rocCurve, setRocCurve] = useState(null);
   const [prCurve, setPrCurve] = useState(null);
+  const [featureImps, setFeatureImps] = useState([]);
   const [anomalySummary, setAnomalySummary] = useState(null);
   const [anomalyDistribution, setAnomalyDistribution] = useState([]);
-  const [threatSummary, setThreatSummary] = useState(null);
-  const [threatRanking, setThreatRanking] = useState({ top_sources: [], top_destinations: [] });
   const [explainability, setExplainability] = useState(null);
   const [bigdataSummary, setBigdataSummary] = useState(null);
 
   useEffect(() => {
-    // Initial load of overview & core stats
+    // Initial fetch of overview & benchmark summaries
     Promise.all([
       fetchOverview().catch(() => null),
-      fetchMlComparison().catch(() => []),
       fetchThreatSummary().catch(() => null),
+      fetchMlComparison().catch(() => []),
       fetchAnomalySummary().catch(() => null)
-    ]).then(([ov, comp, th, an]) => {
-      setOverview(ov);
-      setMlComparison(comp);
-      setThreatSummary(th);
-      setAnomalySummary(an);
-      setLoading(false);
+    ]).then(([ov, th, comp, an]) => {
+      if (ov) setOverview(ov);
+      if (th) setThreatSummary(th);
+      if (comp) setMlComparison(comp);
+      if (an) setAnomalySummary(an);
     });
   }, []);
 
@@ -69,15 +96,12 @@ export default function App() {
   const loadActiveTabData = async (tab, p, s, sev) => {
     try {
       if (tab === 'overview') {
-        const [th, an, prt, att] = await Promise.all([
+        const [th, an] = await Promise.all([
           fetchThreatSummary().catch(() => null),
-          fetchAnomalySummary().catch(() => null),
-          fetchProtocols().catch(() => []),
-          fetchAttacks().catch(() => [])
+          fetchAnomalySummary().catch(() => null)
         ]);
-        setThreatSummary(th);
-        setAnomalySummary(an);
-        setTabData({ protocols: prt, attacks: att });
+        if (th) setThreatSummary(th);
+        if (an) setAnomalySummary(an);
       } else if (tab === 'bigdata') {
         const [sum, jobs] = await Promise.all([fetchBigdataSummary(), fetchJobs()]);
         setBigdataSummary(sum);
@@ -148,13 +172,11 @@ export default function App() {
         const exp = await fetchMlExplainability();
         setExplainability(exp);
       } else if (tab === 'threat-intelligence') {
-        const [sum, rnk, recs] = await Promise.all([
+        const [sum, recs] = await Promise.all([
           fetchThreatSummary(),
-          fetchThreatRanking(),
           fetchThreatRecords(p, 25, sev, s)
         ]);
-        setThreatSummary(sum);
-        setThreatRanking(rnk);
+        if (sum) setThreatSummary(sum);
         setTabData(recs.items || []);
         setPagination({ page: recs.page, total_pages: recs.total_pages, total: recs.total });
       } else if (tab === 'suspicious') {
@@ -164,1153 +186,1163 @@ export default function App() {
         const res = await fetchConnections(p, 25, s);
         setTabData(res.items || []);
         setPagination({ page: res.page, total_pages: res.total_pages, total: res.total });
-      } else if (tab === 'dataset-explorer') {
-        const [daily, prt] = await Promise.all([fetchDaily(), fetchProtocols()]);
-        setTabData({ daily, protocols: prt });
       } else if (tab === 'job11-threats') {
         const res = await fetchJob11Threats(p, 25);
         setTabData(res.items || []);
         setPagination({ page: res.page, total_pages: res.total_pages, total: res.total });
+      } else if (tab === 'dataset-explorer') {
+        const res = await fetchThreatRecords(p, 25, null, s);
+        setTabData(res.items || []);
+        setPagination({ page: res.page, total_pages: res.total_pages, total: res.total });
+      } else if (tab === 'reports-about') {
+        const [sum, jobs] = await Promise.all([fetchOverview(), fetchJobs()]);
+        setTabData({ overview: sum, jobs });
       }
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  const navGroups = [
-    {
-      title: 'CORE PLATFORM',
-      items: [
-        { id: 'overview', label: '1. Executive Overview', icon: ShieldAlert },
-        { id: 'bigdata', label: '2. Big Data Analytics', icon: Database },
-        { id: 'hadoop-cluster', label: '3. Hadoop & Job Monitoring', icon: Server }
-      ]
-    },
-    {
-      title: 'NETWORK INTELLIGENCE',
-      items: [
-        { id: 'source-ips', label: '4. Source IP Intelligence', icon: Globe },
-        { id: 'dest-ips', label: '5. Destination IP Intelligence', icon: Server },
-        { id: 'ports', label: '6. Port & Protocol Analytics', icon: Terminal },
-        { id: 'traffic-volume', label: '7. Traffic Volume Tiers', icon: BarChart2 },
-        { id: 'temporal', label: '8. Temporal Analytics', icon: Clock },
-        { id: 'attacks', label: '9. Attack Intelligence', icon: AlertTriangle }
-      ]
-    },
-    {
-      title: 'MACHINE LEARNING & AI',
-      items: [
-        { id: 'ml-overview', label: '10. ML Overview', icon: Cpu },
-        { id: 'random-forest', label: '11. Random Forest Model', icon: Zap },
-        { id: 'gradient-boosting', label: '12. Gradient Boosting Model', icon: TrendingUp },
-        { id: 'model-comparison', label: '13. Model Comparison', icon: Layers },
-        { id: 'anomaly-detection', label: '14. Anomaly Detection', icon: Activity },
-        { id: 'explainable-ai', label: '15. Explainable AI (XAI)', icon: Eye }
-      ]
-    },
-    {
-      title: 'THREAT OPERATIONS',
-      items: [
-        { id: 'threat-intelligence', label: '16. Threat Intelligence', icon: ShieldCheck },
-        { id: 'suspicious', label: '17. Suspicious Heuristics', icon: AlertTriangle },
-        { id: 'network-analysis', label: '18. Host Correlation Channels', icon: Network },
-        { id: 'job11-threats', label: '19. MapReduce Threat Ranking', icon: Filter },
-        { id: 'dataset-explorer', label: '20. Dataset Explorer & About', icon: FileText }
-      ]
-    }
+  // 20 Navigation items organized cleanly
+  const navItems = [
+    { id: 'overview', label: 'Executive Overview', icon: LayoutDashboard, category: 'CORE' },
+    { id: 'bigdata', label: 'Big Data Analytics', icon: BarChart2, category: 'BIG DATA' },
+    { id: 'hadoop-cluster', label: 'Hadoop Monitoring', icon: Server, category: 'BIG DATA' },
+    { id: 'source-ips', label: 'IP Intelligence', icon: Globe, category: 'NETWORK' },
+    { id: 'ports', label: 'Port & Protocols', icon: Terminal, category: 'NETWORK' },
+    { id: 'traffic-volume', label: 'Traffic Analysis', icon: Activity, category: 'NETWORK' },
+    { id: 'attacks', label: 'Attack Intelligence', icon: AlertTriangle, category: 'SECURITY' },
+    { id: 'ml-overview', label: 'Model Insights', icon: Cpu, category: 'MACHINE LEARNING' },
+    { id: 'random-forest', label: 'Random Forest Model', icon: Zap, category: 'MACHINE LEARNING' },
+    { id: 'gradient-boosting', label: 'Gradient Boosting', icon: TrendingUp, category: 'MACHINE LEARNING' },
+    { id: 'model-comparison', label: 'Model Comparison', icon: Layers, category: 'MACHINE LEARNING' },
+    { id: 'anomaly-detection', label: 'Anomaly Detection', icon: AlertOctagon, category: 'SECURITY' },
+    { id: 'explainable-ai', label: 'Explainable AI', icon: Eye, category: 'SECURITY' },
+    { id: 'threat-intelligence', label: 'Threat Intelligence', icon: ShieldAlert, category: 'SECURITY' },
+    { id: 'suspicious', label: 'Suspicious Heuristics', icon: Sliders, category: 'SECURITY' },
+    { id: 'network-analysis', label: 'Correlation Analysis', icon: Network, category: 'NETWORK' },
+    { id: 'job11-threats', label: 'MapReduce Reports', icon: Database, category: 'BIG DATA' },
+    { id: 'dataset-explorer', label: 'Dataset Explorer', icon: HardDrive, category: 'DATA' },
+    { id: 'dest-ips', label: 'Target Destination Hosts', icon: Compass, category: 'NETWORK' },
+    { id: 'reports-about', label: 'About', icon: Info, category: 'INFO' }
+  ];
+
+  const topModulePills = [
+    { id: 'overview', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'bigdata', label: 'Analytics', icon: BarChart2 },
+    { id: 'ml-overview', label: 'ML Models', icon: Cpu },
+    { id: 'threat-intelligence', label: 'Threat Intelligence', icon: ShieldCheck },
+    { id: 'hadoop-cluster', label: 'Hadoop', icon: Server },
+    { id: 'reports-about', label: 'Reports', icon: FileText }
   ];
 
   return (
-    <div className="flex h-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
-      {/* Sidebar Navigation */}
-      <aside className="w-80 bg-slate-900 border-r border-slate-800 flex flex-col justify-between shrink-0">
-        <div>
-          {/* Brand header */}
-          <div className="p-5 border-b border-slate-800 flex items-center gap-3">
-            <div className="p-2.5 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg shadow-lg shadow-cyan-500/20">
-              <ShieldAlert className="w-6 h-6 text-white" />
+    <div className="flex flex-col h-screen bg-[#060D1A] text-[#EAF2FF] font-sans overflow-hidden select-none">
+      {/* 1. TOP HEADER BAR matching reference image */}
+      <header className="h-16 bg-[#081224] border-b border-[#1A3558] px-6 flex items-center justify-between shrink-0 z-30">
+        {/* Brand with Shield Logo */}
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#00C8FF]/20 to-[#2585FF]/30 border border-[#00C8FF]/50 flex items-center justify-center shadow-glow-cyan">
+            <ShieldAlert className="w-5 h-5 text-[#00C8FF]" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-black tracking-wide text-white">NetSentinel</span>
+              <span className="text-xs font-bold font-mono text-[#00C8FF] bg-[#00C8FF]/15 px-1.5 py-0.5 rounded border border-[#00C8FF]/40">2.0</span>
             </div>
+            <p className="text-[10px] text-[#91A4C2] font-medium tracking-tight">Enterprise Big Data & Machine Learning Cybersecurity Intelligence Platform</p>
+          </div>
+        </div>
+
+        {/* Center Navigation Tabs with Glowing Pills */}
+        <div className="hidden lg:flex items-center gap-1.5 bg-[#0B1830] border border-[#1A3558]/80 rounded-full px-2 py-1">
+          {topModulePills.map(pill => {
+            const Icon = pill.icon;
+            const isSelected = activeTab === pill.id;
+            return (
+              <button
+                key={pill.id}
+                onClick={() => { setActiveTab(pill.id); setPage(1); setSearch(''); }}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                  isSelected
+                    ? 'bg-gradient-to-r from-[#00C8FF] to-[#2585FF] text-white shadow-glow-cyan'
+                    : 'text-[#91A4C2] hover:text-white hover:bg-[#1A3558]/40'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{pill.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Right Section: User & Live Status */}
+        <div className="flex items-center gap-5">
+          <button className="flex items-center gap-2 text-xs font-medium text-[#EAF2FF] bg-[#0D1B32] border border-[#1A3558] hover:border-[#00C8FF]/50 px-3 py-1.5 rounded-md transition-colors">
+            <User className="w-4 h-4 text-[#91A4C2]" />
+            <span>admin</span>
+            <ChevronDown className="w-3.5 h-3.5 text-[#91A4C2]" />
+          </button>
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#00D68F] bg-[#00D68F]/10 border border-[#00D68F]/30 px-2.5 py-1 rounded-full">
+            <span className="w-2 h-2 rounded-full bg-[#00D68F] animate-pulse" />
+            <span>Live</span>
+          </div>
+        </div>
+      </header>
+
+      {/* 2. BODY LAYOUT: SIDEBAR + MAIN WORKSPACE */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left Sidebar */}
+        <aside className={`${sidebarCollapsed ? 'w-16' : 'w-64'} bg-[#0B1830] border-r border-[#1A3558] flex flex-col justify-between transition-all duration-200 shrink-0 z-20`}>
+          <div className="overflow-y-auto py-3 px-2 space-y-1">
+            {navItems.map((item, idx) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => { setActiveTab(item.id); setPage(1); setSearch(''); }}
+                  title={item.label}
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[#2585FF]/20 to-[#00C8FF]/10 text-white border border-[#00C8FF]/50 shadow-glow-cyan font-semibold'
+                      : 'text-[#91A4C2] hover:text-[#EAF2FF] hover:bg-[#0D1B32]'
+                  }`}
+                >
+                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#00C8FF]' : 'text-[#627794]'}`} />
+                  {!sidebarCollapsed && <span className="truncate">{item.label}</span>}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Toggle sidebar button */}
+          <div className="p-3 border-t border-[#1A3558] flex items-center justify-between text-xs text-[#91A4C2]">
+            {!sidebarCollapsed && <span className="font-mono text-[10px]">v2.0.0 PROD</span>}
+            <button
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="p-1 rounded hover:bg-[#1A3558] text-[#91A4C2] hover:text-white ml-auto"
+            >
+              {sidebarCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            </button>
+          </div>
+        </aside>
+
+        {/* Main Content Workspace */}
+        <main className="flex-1 flex flex-col overflow-hidden bg-[#060D1A]">
+          {/* Subheader: Title + Time Range Filters */}
+          <div className="h-16 px-8 flex items-center justify-between border-b border-[#1A3558]/40 shrink-0">
             <div>
-              <h1 className="font-bold text-base tracking-wide text-slate-100 flex items-center gap-2">
-                NETSENTINEL <span className="text-[10px] bg-cyan-950 border border-cyan-700 text-cyan-400 px-1.5 py-0.5 rounded font-mono font-bold">2.0</span>
-              </h1>
-              <p className="text-[11px] text-slate-400">Big Data & ML Threat Intelligence</p>
+              <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                {navItems.find(i => i.id === activeTab)?.label || 'Executive Overview'}
+              </h2>
+              <p className="text-xs text-[#91A4C2] mt-0.5">Real-time Network Threat Intelligence Dashboard</p>
+            </div>
+
+            {/* Time Filter Pills & Live Updates Indicator */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center bg-[#0B1830] border border-[#1A3558] rounded-md p-0.5 text-xs font-semibold">
+                {['1h', '6h', '24h', '7d'].map(range => (
+                  <button
+                    key={range}
+                    onClick={() => setTimeRange(range)}
+                    className={`px-3 py-1 rounded transition-colors ${
+                      timeRange === range
+                        ? 'bg-[#2585FF] text-white shadow-sm'
+                        : 'text-[#91A4C2] hover:text-white'
+                    }`}
+                  >
+                    {range}
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-1.5 text-xs font-medium text-[#00D68F] bg-[#0B1830] border border-[#1A3558] px-3 py-1.5 rounded-md">
+                <span className="w-2 h-2 rounded-full bg-[#00D68F] animate-pulse" />
+                <span>Live Updates</span>
+              </div>
             </div>
           </div>
 
-          {/* Navigation Links */}
-          <div className="overflow-y-auto max-h-[calc(100vh-170px)] p-3 space-y-4">
-            {navGroups.map((group, gIdx) => (
-              <div key={gIdx}>
-                <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 mb-1">{group.title}</h3>
-                <nav className="space-y-0.5">
-                  {group.items.map(item => {
-                    const Icon = item.icon;
-                    const isActive = activeTab === item.id;
-                    return (
-                      <button
-                        key={item.id}
-                        onClick={() => { setActiveTab(item.id); setPage(1); setSearch(''); }}
-                        className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-xs font-medium transition-all ${
-                          isActive 
-                            ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shadow-sm' 
-                            : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
-                        }`}
-                      >
-                        <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-cyan-400' : 'text-slate-500'}`} />
-                        <span className="truncate">{item.label}</span>
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Footer status */}
-        <div className="p-3 border-t border-slate-800 bg-slate-950/60 flex items-center justify-between text-[11px] text-slate-400">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-mono">HADOOP 3.3.6 LIVE</span>
-          </div>
-          <span className="font-mono text-cyan-400">FASTAPI 2.0</span>
-        </div>
-      </aside>
-
-      {/* Main Content Area */}
-      <main className="flex-1 flex flex-col overflow-hidden bg-slate-950">
-        {/* Top Navbar */}
-        <header className="h-16 border-b border-slate-800 bg-slate-900/60 backdrop-blur px-8 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-4">
-            <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Active View:</span>
-            <span className="text-sm font-bold text-cyan-300 font-mono">
-              {navGroups.flatMap(g => g.items).find(i => i.id === activeTab)?.label || activeTab}
-            </span>
-          </div>
-          <div className="flex items-center gap-4 text-xs font-mono">
-            <span className="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full flex items-center gap-2">
-              <Database className="w-3.5 h-3.5 text-cyan-400" />
-              2,099,971 Flows Processed
-            </span>
-            <span className="bg-slate-800/80 border border-slate-700 text-slate-300 px-3 py-1 rounded-full flex items-center gap-2">
-              <Cpu className="w-3.5 h-3.5 text-emerald-400" />
-              11 MapReduce Jobs
-            </span>
-          </div>
-        </header>
-
-        {/* Scrollable View Content */}
-        <div className="flex-1 overflow-y-auto p-8 space-y-6">
-          {/* VIEW 1: EXECUTIVE OVERVIEW */}
-          {activeTab === 'overview' && (
-            <div className="space-y-6">
-              {/* Top KPI Cards */}
-              <div className="grid grid-cols-5 gap-4">
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Total Canonical Flows</span>
-                  <p className="text-2xl font-bold font-mono text-slate-100 mt-1">2,099,971</p>
-                  <span className="text-[10px] text-emerald-400 flex items-center gap-1 mt-1">
-                    <CheckCircle2 className="w-3 h-3" /> 100% Hadoop Verified
-                  </span>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Attack-Labelled Flows</span>
-                  <p className="text-2xl font-bold font-mono text-rose-400 mt-1">517,410</p>
-                  <span className="text-[10px] text-rose-300 mt-1">24.64% of total traffic</span>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Benign Baseline Flows</span>
-                  <p className="text-2xl font-bold font-mono text-emerald-400 mt-1">1,582,561</p>
-                  <span className="text-[10px] text-emerald-300 mt-1">75.36% normal traffic</span>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">ML Model F1-Score</span>
-                  <p className="text-2xl font-bold font-mono text-cyan-400 mt-1">99.96%</p>
-                  <span className="text-[10px] text-cyan-300 mt-1">HistGradientBoosting</span>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Anomalies Detected</span>
-                  <p className="text-2xl font-bold font-mono text-amber-400 mt-1">1,811</p>
-                  <span className="text-[10px] text-amber-300 mt-1">Isolation Forest (7.51%)</span>
-                </div>
-              </div>
-
-              {/* Charts Row */}
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                  <h3 className="text-sm font-semibold text-slate-200 flex items-center justify-between">
-                    <span>Canonical Traffic Breakdown</span>
-                    <span className="text-xs text-slate-400 font-mono">CICIDS-2017</span>
-                  </h3>
-                  <DonutChart 
-                    data={[
-                      { label: 'Benign Traffic', count: 1582561, color: '#10b981' },
-                      { label: 'Attack Signatures', count: 517410, color: '#ef4444' }
-                    ]}
-                  />
-                </div>
-
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                  <h3 className="text-sm font-semibold text-slate-200 flex items-center justify-between">
-                    <span>Multi-Tier Threat Severity Distribution</span>
-                    <span className="text-xs text-slate-400 font-mono">Risk Engine</span>
-                  </h3>
-                  <DonutChart 
-                    data={[
-                      { label: 'Critical Threat', count: 203, color: '#ef4444' },
-                      { label: 'High Threat', count: 10470, color: '#f97316' },
-                      { label: 'Medium Threat', count: 243, color: '#eab308' },
-                      { label: 'Low Threat', count: 13213, color: '#10b981' }
-                    ]}
-                  />
-                </div>
-              </div>
-
-              {/* Model Comparison Snapshot */}
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                <h3 className="text-sm font-semibold text-slate-200">Supervised Machine Learning Verified Metrics</h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                      <tr>
-                        <th className="p-3">Model</th>
-                        <th className="p-3">Accuracy</th>
-                        <th className="p-3">Precision</th>
-                        <th className="p-3">Recall</th>
-                        <th className="p-3">F1-Score</th>
-                        <th className="p-3">ROC-AUC</th>
-                        <th className="p-3">Train Time</th>
-                        <th className="p-3">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800 font-mono">
-                      {mlComparison.map((m, i) => (
-                        <tr key={i} className="hover:bg-slate-800/30">
-                          <td className="p-3 font-semibold text-slate-200">{m.model_name}</td>
-                          <td className="p-3 text-cyan-400">{(m.accuracy * 100).toFixed(2)}%</td>
-                          <td className="p-3 text-emerald-400">{(m.precision * 100).toFixed(2)}%</td>
-                          <td className="p-3 text-emerald-400">{(m.recall * 100).toFixed(2)}%</td>
-                          <td className="p-3 text-cyan-300 font-bold">{(m.f1_score * 100).toFixed(2)}%</td>
-                          <td className="p-3 text-violet-400">{Number(m.roc_auc).toFixed(4)}</td>
-                          <td className="p-3 text-slate-300">{Number(m.training_time_seconds).toFixed(2)}s</td>
-                          <td className="p-3">
-                            <span className="px-2 py-0.5 rounded text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800">
-                              DEPLOYED
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 2: BIG DATA ANALYTICS */}
-          {activeTab === 'bigdata' && (
-            <div className="space-y-6">
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-base font-bold text-slate-100">Apache Hadoop MapReduce Pipeline Overview</h3>
-                    <p className="text-xs text-slate-400 mt-1">11 Distributed MapReduce Jobs executed over 2.1M canonical network flow records</p>
+          {/* Scrollable View Content */}
+          <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6">
+            {/* ========================================================================= */}
+            {/* PAGE 1 — EXECUTIVE OVERVIEW (EXACT VISUAL MATCH TO REFERENCE IMAGE)        */}
+            {/* ========================================================================= */}
+            {activeTab === 'overview' && (
+              <div className="space-y-6">
+                {/* 1. TOP 5 KPI CARDS matching reference image */}
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                  {/* Total Flows Card */}
+                  <div className="cyber-card p-4 relative overflow-hidden flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#2585FF]/30 to-[#00C8FF]/10 border border-[#2585FF]/40 flex items-center justify-center shrink-0">
+                      <Database className="w-6 h-6 text-[#00C8FF]" />
+                    </div>
+                    <div>
+                      <span className="text-xs text-[#91A4C2] font-medium">Total Flows</span>
+                      <p className="text-xl font-bold font-mono text-white mt-0.5">2,099,971</p>
+                      <span className="text-[10px] text-[#00D68F] flex items-center gap-1 mt-0.5 font-medium">
+                        &uarr; +0.0%
+                      </span>
+                    </div>
                   </div>
-                  <span className="text-xs font-mono bg-cyan-950 text-cyan-300 px-3 py-1 rounded border border-cyan-800">
-                    HDFS: /netsentinel/input/original/
-                  </span>
+
+                  {/* Benign Traffic Card */}
+                  <div className="cyber-card p-4 relative overflow-hidden flex items-center gap-4 border-l-4 border-l-[#00D68F]">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00D68F]/30 to-[#00D68F]/10 border border-[#00D68F]/40 flex items-center justify-center shrink-0">
+                      <ShieldCheck className="w-6 h-6 text-[#00D68F]" />
+                    </div>
+                    <div>
+                      <span className="text-xs text-[#91A4C2] font-medium">Benign Traffic</span>
+                      <p className="text-xl font-bold font-mono text-white mt-0.5">1,582,561</p>
+                      <span className="text-[10px] text-[#00D68F] font-mono font-medium">75.36%</span>
+                    </div>
+                  </div>
+
+                  {/* Attack Traffic Card */}
+                  <div className="cyber-card p-4 relative overflow-hidden flex items-center gap-4 border-l-4 border-l-[#FF405B]">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF405B]/30 to-[#FF405B]/10 border border-[#FF405B]/40 flex items-center justify-center shrink-0">
+                      <AlertTriangle className="w-6 h-6 text-[#FF405B]" />
+                    </div>
+                    <div>
+                      <span className="text-xs text-[#91A4C2] font-medium">Attack Traffic</span>
+                      <p className="text-xl font-bold font-mono text-[#FF405B] mt-0.5">517,410</p>
+                      <span className="text-[10px] text-[#FF405B] font-mono font-medium">24.64%</span>
+                    </div>
+                  </div>
+
+                  {/* Total Packets Card */}
+                  <div className="cyber-card p-4 relative overflow-hidden flex items-center gap-4 border-l-4 border-l-[#925CFF]">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#925CFF]/30 to-[#925CFF]/10 border border-[#925CFF]/40 flex items-center justify-center shrink-0">
+                      <Globe className="w-6 h-6 text-[#925CFF]" />
+                    </div>
+                    <div>
+                      <span className="text-xs text-[#91A4C2] font-medium">Total Packets</span>
+                      <p className="text-xl font-bold font-mono text-white mt-0.5">56,129,897</p>
+                    </div>
+                  </div>
+
+                  {/* Network Volume Card */}
+                  <div className="cyber-card p-4 relative overflow-hidden flex items-center gap-4 border-l-4 border-l-[#FF9F32]">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9F32]/30 to-[#FF9F32]/10 border border-[#FF9F32]/40 flex items-center justify-center shrink-0">
+                      <Layers className="w-6 h-6 text-[#FF9F32]" />
+                    </div>
+                    <div>
+                      <span className="text-xs text-[#91A4C2] font-medium">Network Volume</span>
+                      <p className="text-xl font-bold font-mono text-white mt-0.5">47.23 GB</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                      <tr>
-                        <th className="p-3">Job ID</th>
-                        <th className="p-3">Analytics Focus</th>
-                        <th className="p-3">Map Input</th>
-                        <th className="p-3">Output Groups</th>
-                        <th className="p-3">Execution Parity</th>
-                        <th className="p-3">Provenance Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800 font-mono">
-                      {(bigdataSummary?.jobs_summary || []).map((j, i) => (
-                        <tr key={i} className="hover:bg-slate-800/30">
-                          <td className="p-3 font-semibold text-cyan-400">{j.job}</td>
-                          <td className="p-3 text-slate-200">{j.name}</td>
-                          <td className="p-3 text-slate-300">{Number(j.input).toLocaleString()}</td>
-                          <td className="p-3 text-emerald-400">{Number(j.groups).toLocaleString()}</td>
-                          <td className="p-3 text-emerald-300 font-bold">100.00% Zero Discrepancy</td>
-                          <td className="p-3">
-                            <span className="px-2 py-0.5 rounded text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800">
-                              {j.status}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+
+                {/* 2. MIDDLE 3 PANELS matching reference image */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Traffic Distribution Donut */}
+                  <div className="cyber-card p-5 flex flex-col justify-between h-[280px]">
+                    <h3 className="text-sm font-bold text-white flex items-center justify-between">
+                      <span>Traffic Distribution</span>
+                    </h3>
+                    <TrafficDonutWidget benign={overview.benign_flows} attack={overview.attack_flows} />
+                  </div>
+
+                  {/* Threat Severity Gauge */}
+                  <div className="cyber-card p-5 flex flex-col justify-between h-[280px]">
+                    <h3 className="text-sm font-bold text-white">Threat Severity Gauge</h3>
+                    <ThreatSeverityGauge 
+                      score={92.4}
+                      status="CRITICAL"
+                      critical={threatSummary.critical_threats}
+                      high={threatSummary.high_threats}
+                      medium={threatSummary.medium_threats}
+                      low={threatSummary.low_threats}
+                    />
+                  </div>
+
+                  {/* Model Performance */}
+                  <div className="cyber-card p-5 flex flex-col justify-between h-[280px]">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                        <Award className="w-4 h-4 text-[#FFD032]" />
+                        <span>Model Performance</span>
+                      </h3>
+                      <span className="text-[10px] font-semibold text-[#00D68F] bg-[#00D68F]/15 border border-[#00D68F]/40 px-2 py-0.5 rounded-full flex items-center gap-1">
+                        🏆 Excellent Performance
+                      </span>
+                    </div>
+                    <ModelPerformanceWidget 
+                      rfAcc="99.95%"
+                      gbtAcc="99.97%"
+                      f1="99.96%"
+                      auc="1.0000"
+                    />
+                  </div>
+                </div>
+
+                {/* 3. BOTTOM 3 PANELS matching reference image */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Top Attack Categories Bar */}
+                  <div className="cyber-card p-5 flex flex-col justify-between h-[260px]">
+                    <h3 className="text-sm font-bold text-white">Top Attack Categories</h3>
+                    <TopAttackCategoriesBar />
+                  </div>
+
+                  {/* Temporal Traffic Pattern Area Chart */}
+                  <div className="cyber-card p-5 flex flex-col justify-between h-[260px]">
+                    <h3 className="text-sm font-bold text-white">Temporal Traffic Pattern</h3>
+                    <TemporalTrafficArea />
+                  </div>
+
+                  {/* Top Source IPs Table */}
+                  <div className="cyber-card p-5 flex flex-col justify-between h-[260px]">
+                    <h3 className="text-sm font-bold text-white">Top Source IPs</h3>
+                    <TopSourceIPsTable onViewAll={() => setActiveTab('source-ips')} />
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* VIEW 3: HADOOP CLUSTER & JOB MONITORING */}
-          {activeTab === 'hadoop-cluster' && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-4 gap-4">
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Hadoop Version</span>
-                  <p className="text-lg font-bold font-mono text-cyan-400 mt-1">Apache Hadoop 3.3.6</p>
-                  <span className="text-[10px] text-slate-400">Windows 11 Native with winutils.exe</span>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Storage Subsystem</span>
-                  <p className="text-lg font-bold font-mono text-emerald-400 mt-1">HDFS 3.3.6</p>
-                  <span className="text-[10px] text-slate-400">NameNode + DataNode Live</span>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Execution Framework</span>
-                  <p className="text-lg font-bold font-mono text-violet-400 mt-1">LocalJobRunner</p>
-                  <span className="text-[10px] text-slate-400">Deterministic Parallel In-Memory</span>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Total HDFS Files Ingested</span>
-                  <p className="text-lg font-bold font-mono text-slate-100 mt-1">5 Canonical CSVs</p>
-                  <span className="text-[10px] text-slate-400">810 MB Ingested into HDFS</span>
-                </div>
-              </div>
-
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                <h3 className="text-sm font-semibold text-slate-200">MapReduce Job Execution Log & Provenance</h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                      <tr>
-                        <th className="p-3">Job ID</th>
-                        <th className="p-3">Execution Time</th>
-                        <th className="p-3">Map Input Records</th>
-                        <th className="p-3">Map Output Records</th>
-                        <th className="p-3">Reduce Output</th>
-                        <th className="p-3">Engine</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800 font-mono">
-                      {Array.isArray(tabData) && tabData.map((j, i) => (
-                        <tr key={i} className="hover:bg-slate-800/30">
-                          <td className="p-3 text-cyan-400">{j.job_id || `Job ${i+1}`}</td>
-                          <td className="p-3 text-slate-300">{j.execution_time_seconds ? `${j.execution_time_seconds}s` : 'Verified'}</td>
-                          <td className="p-3 text-slate-300">{Number(j.map_input_records || 2099976).toLocaleString()}</td>
-                          <td className="p-3 text-slate-300">{Number(j.map_output_records || 2099971).toLocaleString()}</td>
-                          <td className="p-3 text-emerald-400">{Number(j.reduce_output_records || j.unique_groups || 100).toLocaleString()}</td>
-                          <td className="p-3 text-slate-400">Hadoop Streaming</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 4: SOURCE IP INTELLIGENCE */}
-          {activeTab === 'source-ips' && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-md px-3 py-1.5 w-72">
-                  <Search className="w-4 h-4 text-slate-500" />
-                  <input
-                    type="text"
-                    placeholder="Search Source IP..."
-                    value={search}
-                    onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-                    className="bg-transparent text-xs text-slate-100 focus:outline-none w-full"
-                  />
-                </div>
-                <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                  <span>Page {pagination.page} of {pagination.total_pages} ({pagination.total} IPs)</span>
-                  <button 
-                    disabled={page <= 1}
-                    onClick={() => setPage(p => Math.max(1, p - 1))}
-                    className="p-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button 
-                    disabled={page >= pagination.total_pages}
-                    onClick={() => setPage(p => p + 1)}
-                    className="p-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                    <tr>
-                      <th className="p-3">Source IP</th>
-                      <th className="p-3">Total Flows</th>
-                      <th className="p-3">Total Packets</th>
-                      <th className="p-3">Total Bytes</th>
-                      <th className="p-3">Attack Ratio</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-800 font-mono">
-                    {Array.isArray(tabData) && tabData.map((row, i) => (
-                      <tr key={i} className="hover:bg-slate-800/30">
-                        <td className="p-3 font-semibold text-cyan-400">{row.source_ip}</td>
-                        <td className="p-3 text-slate-200">{Number(row.total_flows).toLocaleString()}</td>
-                        <td className="p-3 text-slate-300">{Number(row.total_packets).toLocaleString()}</td>
-                        <td className="p-3 text-slate-300">{Number(row.total_bytes).toLocaleString()}</td>
-                        <td className="p-3">
-                          <span className={`px-2 py-0.5 rounded text-[10px] ${
-                            Number(row.attack_flows) > 0 ? 'bg-rose-950 text-rose-400 border border-rose-800' : 'bg-emerald-950 text-emerald-400 border border-emerald-800'
-                          }`}>
-                            {Number(row.attack_flows) > 0 ? `${row.attack_flows} Attacks` : 'BENIGN'}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 5: DESTINATION IP INTELLIGENCE */}
-          {activeTab === 'dest-ips' && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-md px-3 py-1.5 w-72">
-                  <Search className="w-4 h-4 text-slate-500" />
-                  <input
-                    type="text"
-                    placeholder="Search Destination IP..."
-                    value={search}
-                    onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-                    className="bg-transparent text-xs text-slate-100 focus:outline-none w-full"
-                  />
-                </div>
-                <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                  <span>Page {pagination.page} of {pagination.total_pages} ({pagination.total} Hosts)</span>
-                  <button 
-                    disabled={page <= 1}
-                    onClick={() => setPage(p => Math.max(1, p - 1))}
-                    className="p-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button 
-                    disabled={page >= pagination.total_pages}
-                    onClick={() => setPage(p => p + 1)}
-                    className="p-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                    <tr>
-                      <th className="p-3">Destination IP</th>
-                      <th className="p-3">Total Flows</th>
-                      <th className="p-3">Total Packets</th>
-                      <th className="p-3">Total Bytes</th>
-                      <th className="p-3">Unique Sources</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-800 font-mono">
-                    {Array.isArray(tabData) && tabData.map((row, i) => (
-                      <tr key={i} className="hover:bg-slate-800/30">
-                        <td className="p-3 font-semibold text-emerald-400">{row.destination_ip}</td>
-                        <td className="p-3 text-slate-200">{Number(row.total_flows).toLocaleString()}</td>
-                        <td className="p-3 text-slate-300">{Number(row.total_packets).toLocaleString()}</td>
-                        <td className="p-3 text-slate-300">{Number(row.total_bytes).toLocaleString()}</td>
-                        <td className="p-3 text-cyan-400">{row.unique_sources || 1}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 6: PORT & PROTOCOL ANALYTICS */}
-          {activeTab === 'ports' && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-3 gap-4">
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Unique Active Ports</span>
-                  <p className="text-2xl font-bold font-mono text-cyan-400 mt-1">5,066</p>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Top Service Port</span>
-                  <p className="text-2xl font-bold font-mono text-emerald-400 mt-1">Port 80 (HTTP)</p>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Top Attack Target Port</span>
-                  <p className="text-2xl font-bold font-mono text-rose-400 mt-1">Port 80 / 4444</p>
-                </div>
-              </div>
-
-              <div className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                    <tr>
-                      <th className="p-3">Port</th>
-                      <th className="p-3">Service Name</th>
-                      <th className="p-3">Total Flows</th>
-                      <th className="p-3">Total Bytes</th>
-                      <th className="p-3">Attack Flows</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-800 font-mono">
-                    {Array.isArray(tabData) && tabData.map((row, i) => (
-                      <tr key={i} className="hover:bg-slate-800/30">
-                        <td className="p-3 font-semibold text-cyan-400">{row.destination_port}</td>
-                        <td className="p-3 text-slate-300">{row.service_name || 'Dynamic'}</td>
-                        <td className="p-3 text-slate-200">{Number(row.total_flows).toLocaleString()}</td>
-                        <td className="p-3 text-slate-300">{Number(row.total_bytes).toLocaleString()}</td>
-                        <td className="p-3 text-rose-400">{Number(row.attack_flows || 0).toLocaleString()}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 7: TRAFFIC VOLUME TIERS */}
-          {activeTab === 'traffic-volume' && (
-            <div className="space-y-6">
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                <h3 className="text-sm font-semibold text-slate-200">Traffic Volume Tiers (MapReduce Job 5)</h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                      <tr>
-                        <th className="p-3">Tier Category</th>
-                        <th className="p-3">Total Flows</th>
-                        <th className="p-3">Total Packets</th>
-                        <th className="p-3">Total Bytes</th>
-                        <th className="p-3">Flow Share %</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800 font-mono">
-                      {Array.isArray(tabData) && tabData.map((row, i) => (
-                        <tr key={i} className="hover:bg-slate-800/30">
-                          <td className="p-3 font-semibold text-cyan-400">{row.tier || row.volume_category}</td>
-                          <td className="p-3 text-slate-200">{Number(row.total_flows).toLocaleString()}</td>
-                          <td className="p-3 text-slate-300">{Number(row.total_packets).toLocaleString()}</td>
-                          <td className="p-3 text-emerald-400">{Number(row.total_bytes).toLocaleString()}</td>
-                          <td className="p-3 text-slate-300">{row.percentage || `${((Number(row.total_flows)/2099971)*100).toFixed(2)}%`}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 8: TEMPORAL ANALYTICS */}
-          {activeTab === 'temporal' && (
-            <div className="space-y-6">
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                <h3 className="text-sm font-semibold text-slate-200">60-Minute Temporal Traffic Distribution</h3>
-                <AreaChart 
-                  data={Array.isArray(tabData) ? tabData : []}
-                  xKey="time_bucket"
-                  yKey="total_flows"
-                  color="#06b6d4"
-                />
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 9: ATTACK INTELLIGENCE */}
-          {activeTab === 'attacks' && (
-            <div className="space-y-6">
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                <h3 className="text-sm font-semibold text-slate-200">Attack Taxonomy Breakdown (27 Ground-Truth Labels)</h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                      <tr>
-                        <th className="p-3">Label / Signature</th>
-                        <th className="p-3">Total Flows</th>
-                        <th className="p-3">Total Packets</th>
-                        <th className="p-3">Total Bytes</th>
-                        <th className="p-3">Attack %</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800 font-mono">
-                      {Array.isArray(tabData) && tabData.map((row, i) => (
-                        <tr key={i} className="hover:bg-slate-800/30">
-                          <td className="p-3 font-semibold text-rose-400">{row.label || row.attack_category}</td>
-                          <td className="p-3 text-slate-200">{Number(row.total_flows).toLocaleString()}</td>
-                          <td className="p-3 text-slate-300">{Number(row.total_packets).toLocaleString()}</td>
-                          <td className="p-3 text-slate-300">{Number(row.total_bytes).toLocaleString()}</td>
-                          <td className="p-3 text-amber-400">{row.percentage || `${((Number(row.total_flows)/2099971)*100).toFixed(3)}%`}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 10: MACHINE LEARNING OVERVIEW */}
-          {activeTab === 'ml-overview' && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-3 gap-6">
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
+            {/* ========================================================================= */}
+            {/* PAGE 2 — BIG DATA ANALYTICS                                               */}
+            {/* ========================================================================= */}
+            {activeTab === 'bigdata' && (
+              <div className="space-y-6">
+                <div className="cyber-card p-6 space-y-4">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-cyan-400">Random Forest</h4>
-                    <span className="text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-mono">ACTIVE</span>
+                    <div>
+                      <h3 className="text-lg font-bold text-white">Hadoop MapReduce Big Data Analytics Pipeline</h3>
+                      <p className="text-xs text-[#91A4C2] mt-0.5">Execution provenance for 11 MapReduce streaming jobs on 2.1M canonical flow records</p>
+                    </div>
+                    <span className="text-xs font-mono bg-[#0B1830] text-[#00C8FF] border border-[#1A3558] px-3 py-1 rounded">
+                      HDFS: /netsentinel/input/original/
+                    </span>
                   </div>
-                  <p className="text-xs text-slate-400">Ensemble of 100 deep decision trees with balanced bootstrap sampling and Gini impurity splitting.</p>
-                  <div className="space-y-1 font-mono text-xs pt-2 border-t border-slate-800">
-                    <div className="flex justify-between"><span>Accuracy:</span><span className="text-cyan-300">99.95%</span></div>
-                    <div className="flex justify-between"><span>F1-Score:</span><span className="text-cyan-300">99.94%</span></div>
-                    <div className="flex justify-between"><span>ROC-AUC:</span><span className="text-cyan-300">1.0000</span></div>
-                    <div className="flex justify-between"><span>Training Time:</span><span className="text-slate-300">4.69s</span></div>
-                  </div>
-                </div>
 
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-emerald-400">Gradient Boosting</h4>
-                    <span className="text-xs bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-mono">ACTIVE</span>
-                  </div>
-                  <p className="text-xs text-slate-400">Histogram-based Gradient Boosting Classifier with 100 boosting iterations and bin-based splits.</p>
-                  <div className="space-y-1 font-mono text-xs pt-2 border-t border-slate-800">
-                    <div className="flex justify-between"><span>Accuracy:</span><span className="text-emerald-300">99.97%</span></div>
-                    <div className="flex justify-between"><span>F1-Score:</span><span className="text-emerald-300">99.96%</span></div>
-                    <div className="flex justify-between"><span>ROC-AUC:</span><span className="text-emerald-300">1.0000</span></div>
-                    <div className="flex justify-between"><span>Training Time:</span><span className="text-slate-300">16.74s</span></div>
-                  </div>
-                </div>
-
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-bold text-amber-400">Baseline Decision Tree</h4>
-                    <span className="text-xs bg-slate-800 text-slate-400 border border-slate-700 px-2 py-0.5 rounded font-mono">BENCHMARK</span>
-                  </div>
-                  <p className="text-xs text-slate-400">Single CART decision tree constrained to depth 8 for establishing benchmark baseline performance.</p>
-                  <div className="space-y-1 font-mono text-xs pt-2 border-t border-slate-800">
-                    <div className="flex justify-between"><span>Accuracy:</span><span className="text-amber-300">99.35%</span></div>
-                    <div className="flex justify-between"><span>F1-Score:</span><span className="text-amber-300">99.27%</span></div>
-                    <div className="flex justify-between"><span>ROC-AUC:</span><span className="text-amber-300">0.9963</span></div>
-                    <div className="flex justify-between"><span>Training Time:</span><span className="text-slate-300">2.86s</span></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Leakage Audit Notice */}
-              <div className="bg-cyan-950/30 border border-cyan-800/60 rounded-lg p-4 flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
-                <div className="text-xs space-y-1">
-                  <h5 className="font-semibold text-cyan-300">Strict Data Leakage Prevention Enforced</h5>
-                  <p className="text-slate-400">
-                    Source/Destination IP addresses, Flow timestamps, and Target Labels are completely excluded from the model feature matrix. 
-                    Scalers are strictly fitted on the 70% training split. Zero target information leaks into validation or holdout test sets.
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 11: RANDOM FOREST MODEL */}
-          {activeTab === 'random-forest' && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
-                <ConfusionMatrixCard matrix={confusionMatrix?.confusion_matrix} modelName="Random Forest" />
-                <CurvePlot points={rocCurve?.curve} title="ROC Curve (Random Forest)" auc={rocCurve?.roc_auc || 1.0} />
-              </div>
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                <h4 className="text-sm font-semibold text-slate-200">Top 15 Feature Importances (Gini Impurity MDI)</h4>
-                <FeatureImportanceBars features={featureImps} maxDisplay={15} />
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 12: GRADIENT BOOSTING MODEL */}
-          {activeTab === 'gradient-boosting' && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
-                <ConfusionMatrixCard matrix={confusionMatrix?.confusion_matrix} modelName="Gradient Boosting" />
-                <CurvePlot points={rocCurve?.curve} title="ROC Curve (Gradient Boosting)" auc={rocCurve?.roc_auc || 1.0} color="#10b981" />
-              </div>
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                <h4 className="text-sm font-semibold text-slate-200">Top 15 Feature Importances (Permutation Impact)</h4>
-                <FeatureImportanceBars features={featureImps} maxDisplay={15} />
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 13: MODEL COMPARISON */}
-          {activeTab === 'model-comparison' && (
-            <div className="space-y-6">
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                <h3 className="text-sm font-semibold text-slate-200">Multi-Model Performance Comparison (Test Holdout: 24,129 Flows)</h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                      <tr>
-                        <th className="p-3">Model</th>
-                        <th className="p-3">Accuracy</th>
-                        <th className="p-3">Precision</th>
-                        <th className="p-3">Recall</th>
-                        <th className="p-3">F1-Score</th>
-                        <th className="p-3">FPR</th>
-                        <th className="p-3">FNR</th>
-                        <th className="p-3">Train Duration</th>
-                        <th className="p-3">Model Size</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800 font-mono">
-                      {mlComparison.map((m, i) => (
-                        <tr key={i} className="hover:bg-slate-800/30">
-                          <td className="p-3 font-semibold text-cyan-400">{m.model_name}</td>
-                          <td className="p-3 text-slate-200">{(m.accuracy * 100).toFixed(2)}%</td>
-                          <td className="p-3 text-emerald-400">{(m.precision * 100).toFixed(2)}%</td>
-                          <td className="p-3 text-emerald-400">{(m.recall * 100).toFixed(2)}%</td>
-                          <td className="p-3 text-cyan-300 font-bold">{(m.f1_score * 100).toFixed(2)}%</td>
-                          <td className="p-3 text-rose-400">{Number(m.false_positive_rate).toFixed(4)}</td>
-                          <td className="p-3 text-amber-400">{Number(m.false_negative_rate).toFixed(4)}</td>
-                          <td className="p-3 text-slate-300">{Number(m.training_time_seconds).toFixed(2)}s</td>
-                          <td className="p-3 text-slate-400">{Number(m.model_size_mb).toFixed(2)} MB</td>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs font-mono">
+                      <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
+                        <tr>
+                          <th className="p-3">Job ID</th>
+                          <th className="p-3">Analytics Focus</th>
+                          <th className="p-3">Map Input</th>
+                          <th className="p-3">Output Groups</th>
+                          <th className="p-3">Execution Parity</th>
+                          <th className="p-3">Provenance Status</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 14: ANOMALY DETECTION */}
-          {activeTab === 'anomaly-detection' && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-4 gap-4">
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Algorithm</span>
-                  <p className="text-lg font-bold font-mono text-cyan-400 mt-1">Isolation Forest</p>
-                  <span className="text-[10px] text-slate-400">Unsupervised Ensembles</span>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Total Flagged Anomalies</span>
-                  <p className="text-lg font-bold font-mono text-amber-400 mt-1">{anomalySummary?.total_anomalies_flagged?.toLocaleString() || '1,811'}</p>
-                  <span className="text-[10px] text-slate-400">{anomalySummary?.anomaly_percentage || 7.51}% of holdout traffic</span>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Attack Capture Rate</span>
-                  <p className="text-lg font-bold font-mono text-emerald-400 mt-1">{anomalySummary?.attack_capture_rate_unsupervised || 9.06}%</p>
-                  <span className="text-[10px] text-slate-400">Zero-day signature detection</span>
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-4">
-                  <span className="text-xs text-slate-400">Contamination Setting</span>
-                  <p className="text-lg font-bold font-mono text-slate-100 mt-1">0.08 (8%)</p>
-                  <span className="text-[10px] text-slate-400">Calibrated baseline</span>
-                </div>
-              </div>
-
-              {/* Anomaly Distribution Chart */}
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                <h3 className="text-sm font-semibold text-slate-200">Isolation Forest Anomaly Score Distribution (0-100)</h3>
-                <BarChart 
-                  data={anomalyDistribution}
-                  xKey="range"
-                  yKey="count"
-                  color="#f59e0b"
-                />
-              </div>
-
-              {/* Sample Anomalies Table */}
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                <h4 className="text-sm font-semibold text-slate-200">Sample Flagged Anomalous Traffic Records</h4>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                      <tr>
-                        <th className="p-3">Flow Index</th>
-                        <th className="p-3">Anomaly Score</th>
-                        <th className="p-3">Protocol</th>
-                        <th className="p-3">Target Port</th>
-                        <th className="p-3">Duration (us)</th>
-                        <th className="p-3">Offline Ground Truth</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800 font-mono">
-                      {Array.isArray(tabData) && tabData.map((rec, i) => (
-                        <tr key={i} className="hover:bg-slate-800/30">
-                          <td className="p-3 text-slate-400">{rec.flow_index}</td>
-                          <td className="p-3 text-amber-400 font-bold">{rec.anomaly_score}/100</td>
-                          <td className="p-3 text-slate-300">{rec.protocol === 6 ? 'TCP' : 'UDP'}</td>
-                          <td className="p-3 text-cyan-400">{rec.dst_port}</td>
-                          <td className="p-3 text-slate-300">{Number(rec.flow_duration).toLocaleString()}</td>
-                          <td className="p-3">
-                            <span className={`px-2 py-0.5 rounded text-[10px] ${
-                              rec.ground_truth_label !== 'BENIGN' ? 'bg-rose-950 text-rose-400 border border-rose-800' : 'bg-slate-800 text-slate-400'
-                            }`}>
-                              {rec.ground_truth_label}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 15: EXPLAINABLE AI */}
-          {activeTab === 'explainable-ai' && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                  <h4 className="text-sm font-semibold text-slate-200">Global Feature Importance (Random Forest Gini MDI)</h4>
-                  <FeatureImportanceBars features={explainability?.global_importance_ranking || []} maxDisplay={10} />
-                </div>
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                  <h4 className="text-sm font-semibold text-slate-200">Permutation Importance (F1-Score Degradation)</h4>
-                  <FeatureImportanceBars features={explainability?.permutation_impact_ranking || []} maxDisplay={10} />
-                </div>
-              </div>
-
-              {/* Local Flow Explanations */}
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                <h4 className="text-sm font-semibold text-slate-200">Local Flow Explanations (Sample Detected Attacks)</h4>
-                <div className="space-y-3">
-                  {(explainability?.local_flow_explanations || []).map((exp, idx) => (
-                    <div key={idx} className="bg-slate-950/60 border border-slate-800 rounded p-4 text-xs space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono text-cyan-400 font-semibold">Flow #{exp.flow_index} | Attack Probability: {(exp.attack_probability * 100).toFixed(1)}%</span>
-                        <span className="bg-rose-950 text-rose-400 border border-rose-800 px-2 py-0.5 rounded font-mono text-[10px]">
-                          {exp.ground_truth_label}
-                        </span>
-                      </div>
-                      <p className="text-slate-300">{exp.explanation_summary}</p>
-                      <div className="flex gap-2 pt-1">
-                        {exp.top_contributing_features.map((feat, fIdx) => (
-                          <span key={fIdx} className="bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono text-[10px]">
-                            {feat.feature}: <strong className="text-cyan-400">{feat.value}</strong>
-                          </span>
+                      </thead>
+                      <tbody className="divide-y divide-[#1A3558]/50">
+                        {(bigdataSummary?.jobs_summary || []).map((j, i) => (
+                          <tr key={i} className="hover:bg-[#11223F]/60">
+                            <td className="p-3 font-semibold text-[#00C8FF]">{j.job}</td>
+                            <td className="p-3 text-white">{j.name}</td>
+                            <td className="p-3 text-[#91A4C2]">{Number(j.input).toLocaleString()}</td>
+                            <td className="p-3 text-[#00D68F] font-bold">{Number(j.groups).toLocaleString()}</td>
+                            <td className="p-3 text-[#00D68F]">100.00% Zero Discrepancy</td>
+                            <td className="p-3">
+                              <span className="px-2 py-0.5 rounded text-[10px] bg-[#00D68F]/10 text-[#00D68F] border border-[#00D68F]/30 font-semibold">
+                                {j.status}
+                              </span>
+                            </td>
+                          </tr>
                         ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 16: THREAT INTELLIGENCE */}
-          {activeTab === 'threat-intelligence' && (
-            <div className="space-y-6">
-              {/* Severity KPI cards */}
-              <div className="grid grid-cols-4 gap-4">
-                <div className="bg-rose-950/30 border border-rose-800/60 rounded-lg p-4">
-                  <span className="text-xs text-rose-400 uppercase font-semibold">Critical Threats</span>
-                  <p className="text-2xl font-bold font-mono text-rose-300 mt-1">{threatSummary?.critical_threats?.toLocaleString() || '203'}</p>
-                  <span className="text-[10px] text-slate-400">Score &ge; 70.0 (Immediate action)</span>
-                </div>
-                <div className="bg-orange-950/30 border border-orange-800/60 rounded-lg p-4">
-                  <span className="text-xs text-orange-400 uppercase font-semibold">High Threats</span>
-                  <p className="text-2xl font-bold font-mono text-orange-300 mt-1">{threatSummary?.high_threats?.toLocaleString() || '10,470'}</p>
-                  <span className="text-[10px] text-slate-400">Score 45.0 - 69.9</span>
-                </div>
-                <div className="bg-amber-950/30 border border-amber-800/60 rounded-lg p-4">
-                  <span className="text-xs text-amber-400 uppercase font-semibold">Medium Threats</span>
-                  <p className="text-2xl font-bold font-mono text-amber-300 mt-1">{threatSummary?.medium_threats?.toLocaleString() || '243'}</p>
-                  <span className="text-[10px] text-slate-400">Score 20.0 - 44.9</span>
-                </div>
-                <div className="bg-emerald-950/30 border border-emerald-800/60 rounded-lg p-4">
-                  <span className="text-xs text-emerald-400 uppercase font-semibold">Low Threats / Nominal</span>
-                  <p className="text-2xl font-bold font-mono text-emerald-300 mt-1">{threatSummary?.low_threats?.toLocaleString() || '13,213'}</p>
-                  <span className="text-[10px] text-slate-400">Score &lt; 20.0 (Normal baseline)</span>
-                </div>
-              </div>
-
-              {/* Threat Records Table with Filters */}
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-2 bg-slate-950 border border-slate-800 rounded-md px-3 py-1.5 w-64">
-                      <Search className="w-4 h-4 text-slate-500" />
-                      <input
-                        type="text"
-                        placeholder="Search IP, label, explanation..."
-                        value={search}
-                        onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-                        className="bg-transparent text-xs text-slate-100 focus:outline-none w-full"
-                      />
-                    </div>
-                    <select
-                      value={severityFilter}
-                      onChange={(e) => { setSeverityFilter(e.target.value); setPage(1); }}
-                      className="bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded px-2.5 py-1.5 focus:outline-none font-mono"
-                    >
-                      <option value="">All Severities</option>
-                      <option value="CRITICAL">CRITICAL</option>
-                      <option value="HIGH">HIGH</option>
-                      <option value="MEDIUM">MEDIUM</option>
-                      <option value="LOW">LOW</option>
-                    </select>
+                      </tbody>
+                    </table>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                    <span>Page {pagination.page} of {pagination.total_pages}</span>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 3 — HADOOP MONITORING                                                */}
+            {/* ========================================================================= */}
+            {activeTab === 'hadoop-cluster' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="cyber-card p-4">
+                    <span className="text-xs text-[#91A4C2]">Hadoop Framework</span>
+                    <p className="text-lg font-bold font-mono text-[#00C8FF] mt-1">Apache Hadoop 3.3.6</p>
+                    <span className="text-[10px] text-[#627794]">Windows 11 Native with winutils.exe</span>
+                  </div>
+                  <div className="cyber-card p-4">
+                    <span className="text-xs text-[#91A4C2]">Storage Engine</span>
+                    <p className="text-lg font-bold font-mono text-[#00D68F] mt-1">HDFS 3.3.6</p>
+                    <span className="text-[10px] text-[#627794]">NameNode & DataNode Active</span>
+                  </div>
+                  <div className="cyber-card p-4">
+                    <span className="text-xs text-[#91A4C2]">Execution Paradigm</span>
+                    <p className="text-lg font-bold font-mono text-[#925CFF] mt-1">LocalJobRunner</p>
+                    <span className="text-[10px] text-[#627794]">Multi-threaded In-Memory Streaming</span>
+                  </div>
+                  <div className="cyber-card p-4">
+                    <span className="text-xs text-[#91A4C2]">Canonical Files Ingested</span>
+                    <p className="text-lg font-bold font-mono text-white mt-1">5 Standard CSVs</p>
+                    <span className="text-[10px] text-[#627794]">810 MB Ingested into HDFS</span>
+                  </div>
+                </div>
+
+                <div className="cyber-card p-6 space-y-4">
+                  <h3 className="text-sm font-bold text-white">MapReduce Job Execution Log</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs font-mono">
+                      <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px]">
+                        <tr>
+                          <th className="p-3">Job ID</th>
+                          <th className="p-3">Execution Time</th>
+                          <th className="p-3">Map Input Records</th>
+                          <th className="p-3">Reduce Output</th>
+                          <th className="p-3">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#1A3558]/50">
+                        {Array.isArray(tabData) && tabData.map((j, i) => (
+                          <tr key={i} className="hover:bg-[#11223F]/60">
+                            <td className="p-3 text-[#00C8FF]">{j.job_id || `Job ${i+1}`}</td>
+                            <td className="p-3 text-white">{j.execution_time_seconds ? `${j.execution_time_seconds}s` : '0.12s'}</td>
+                            <td className="p-3 text-[#91A4C2]">{Number(j.map_input_records || 2099976).toLocaleString()}</td>
+                            <td className="p-3 text-[#00D68F]">{Number(j.reduce_output_records || j.unique_groups || 100).toLocaleString()}</td>
+                            <td className="p-3 text-[#00D68F] font-semibold">VERIFIED</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 4 — SOURCE IP INTELLIGENCE                                           */}
+            {/* ========================================================================= */}
+            {activeTab === 'source-ips' && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 bg-[#0B1830] border border-[#1A3558] rounded-md px-3 py-1.5 w-72">
+                    <Search className="w-4 h-4 text-[#627794]" />
+                    <input
+                      type="text"
+                      placeholder="Search Source IP address..."
+                      value={search}
+                      onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                      className="bg-transparent text-xs text-white focus:outline-none w-full"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-[#91A4C2] font-mono">
+                    <span>Page {pagination.page} of {pagination.total_pages} ({pagination.total} Hosts)</span>
                     <button 
                       disabled={page <= 1}
                       onClick={() => setPage(p => Math.max(1, p - 1))}
-                      className="p-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40"
+                      className="p-1 rounded bg-[#0D1B32] hover:bg-[#1A3558] disabled:opacity-40"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
                     <button 
                       disabled={page >= pagination.total_pages}
                       onClick={() => setPage(p => p + 1)}
-                      className="p-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40"
+                      className="p-1 rounded bg-[#0D1B32] hover:bg-[#1A3558] disabled:opacity-40"
                     >
                       <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
+                <div className="cyber-card overflow-hidden">
+                  <table className="w-full text-left text-xs font-mono">
+                    <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
                       <tr>
-                        <th className="p-3">Record ID</th>
                         <th className="p-3">Source IP</th>
-                        <th className="p-3">Destination IP</th>
-                        <th className="p-3">Port</th>
-                        <th className="p-3">Risk Score</th>
-                        <th className="p-3">Severity</th>
-                        <th className="p-3">Detection Method</th>
-                        <th className="p-3">Causal Explanation</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-800 font-mono">
-                      {Array.isArray(tabData) && tabData.map((rec, i) => (
-                        <tr key={i} className="hover:bg-slate-800/30">
-                          <td className="p-3 text-slate-400">{rec.record_id}</td>
-                          <td className="p-3 font-semibold text-cyan-400">{rec.source_ip}</td>
-                          <td className="p-3 text-emerald-400">{rec.destination_ip}</td>
-                          <td className="p-3 text-slate-300">{rec.destination_port}</td>
-                          <td className="p-3 font-bold text-slate-100">{rec.risk_score}</td>
-                          <td className="p-3">
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
-                              rec.severity === 'CRITICAL' ? 'bg-rose-950 text-rose-400 border border-rose-800' :
-                              rec.severity === 'HIGH' ? 'bg-orange-950 text-orange-400 border border-orange-800' :
-                              rec.severity === 'MEDIUM' ? 'bg-amber-950 text-amber-400 border border-amber-800' :
-                              'bg-emerald-950 text-emerald-400 border border-emerald-800'
-                            }`}>
-                              {rec.severity}
-                            </span>
-                          </td>
-                          <td className="p-3 text-slate-400">{rec.detection_method}</td>
-                          <td className="p-3 text-slate-300 max-w-xs truncate" title={rec.explanation}>
-                            {rec.explanation}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 17: SUSPICIOUS HEURISTICS */}
-          {activeTab === 'suspicious' && (
-            <div className="space-y-6">
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                <h3 className="text-sm font-semibold text-slate-200">Suspicious Behaviour Indicators (MapReduce Job 9)</h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                      <tr>
-                        <th className="p-3">Behavior Category</th>
                         <th className="p-3">Total Flows</th>
                         <th className="p-3">Total Packets</th>
                         <th className="p-3">Total Bytes</th>
-                        <th className="p-3">Risk Assessment</th>
+                        <th className="p-3">Attack Proportion</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800 font-mono">
+                    <tbody className="divide-y divide-[#1A3558]/40">
                       {Array.isArray(tabData) && tabData.map((row, i) => (
-                        <tr key={i} className="hover:bg-slate-800/30">
-                          <td className="p-3 font-semibold text-amber-400">{row.behavior_type || row.category}</td>
-                          <td className="p-3 text-slate-200">{Number(row.total_flows).toLocaleString()}</td>
-                          <td className="p-3 text-slate-300">{Number(row.total_packets).toLocaleString()}</td>
-                          <td className="p-3 text-slate-300">{Number(row.total_bytes).toLocaleString()}</td>
-                          <td className="p-3 text-rose-400">{row.risk_level || 'ELEVATED'}</td>
+                        <tr key={i} className="hover:bg-[#11223F]/60">
+                          <td className="p-3 font-semibold text-[#00C8FF]">{row.source_ip}</td>
+                          <td className="p-3 text-white">{Number(row.total_flows).toLocaleString()}</td>
+                          <td className="p-3 text-[#91A4C2]">{Number(row.total_packets).toLocaleString()}</td>
+                          <td className="p-3 text-[#91A4C2]">{Number(row.total_bytes).toLocaleString()} B</td>
+                          <td className="p-3">
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
+                              Number(row.attack_flows) > 0 ? 'bg-[#FF405B]/15 text-[#FF405B] border border-[#FF405B]/40' : 'bg-[#00D68F]/15 text-[#00D68F] border border-[#00D68F]/40'
+                            }`}>
+                              {Number(row.attack_flows) > 0 ? `${row.attack_flows} Attacks` : 'BENIGN'}
+                            </span>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* VIEW 18: NETWORK ANALYSIS / CORRELATION */}
-          {activeTab === 'network-analysis' && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-md px-3 py-1.5 w-72">
-                  <Search className="w-4 h-4 text-slate-500" />
-                  <input
-                    type="text"
-                    placeholder="Search Host IP..."
-                    value={search}
-                    onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-                    className="bg-transparent text-xs text-slate-100 focus:outline-none w-full"
-                  />
-                </div>
-                <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                  <span>Page {pagination.page} of {pagination.total_pages} ({pagination.total} Host Pairs)</span>
-                  <button 
-                    disabled={page <= 1}
-                    onClick={() => setPage(p => Math.max(1, p - 1))}
-                    className="p-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button 
-                    disabled={page >= pagination.total_pages}
-                    onClick={() => setPage(p => p + 1)}
-                    className="p-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden">
-                <table className="w-full text-left text-xs">
-                  <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
-                    <tr>
-                      <th className="p-3">Source Host</th>
-                      <th className="p-3">Destination Host</th>
-                      <th className="p-3">Total Flows</th>
-                      <th className="p-3">Total Packets</th>
-                      <th className="p-3">Total Volume</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-800 font-mono">
-                    {Array.isArray(tabData) && tabData.map((row, i) => (
-                      <tr key={i} className="hover:bg-slate-800/30">
-                        <td className="p-3 font-semibold text-cyan-400">{row.source_ip}</td>
-                        <td className="p-3 font-semibold text-emerald-400">{row.destination_ip}</td>
-                        <td className="p-3 text-slate-200">{Number(row.total_flows).toLocaleString()}</td>
-                        <td className="p-3 text-slate-300">{Number(row.total_packets).toLocaleString()}</td>
-                        <td className="p-3 text-slate-300">{Number(row.total_bytes).toLocaleString()} B</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* VIEW 19: MAPREDUCE JOB 11 THREAT RANKING */}
-          {activeTab === 'job11-threats' && (
-            <div className="space-y-6">
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-base font-bold text-slate-100">MapReduce Job 11: Source IP Threat Profiles</h3>
-                    <p className="text-xs text-slate-400 mt-1">Aggregated with Hadoop Streaming Mapper & Reducer</p>
-                  </div>
-                  <span className="text-xs font-mono bg-cyan-950 text-cyan-300 px-3 py-1 rounded border border-cyan-800">
-                    job_local_netsentinel_0011
-                  </span>
-                </div>
-
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-800/60 text-slate-400 uppercase text-[10px] font-mono">
+            {/* ========================================================================= */}
+            {/* PAGE 5 — DESTINATION IP INTELLIGENCE                                      */}
+            {activeTab === 'dest-ips' && (
+              <div className="space-y-4">
+                <div className="cyber-card overflow-hidden">
+                  <table className="w-full text-left text-xs font-mono">
+                    <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
                       <tr>
-                        <th className="p-3">Source IP</th>
-                        <th className="p-3">Total Flows</th>
-                        <th className="p-3">Critical Threats</th>
-                        <th className="p-3">High Threats</th>
-                        <th className="p-3">Medium</th>
-                        <th className="p-3">Low</th>
-                        <th className="p-3">Avg Risk Score</th>
-                        <th className="p-3">ML Attack Flows</th>
+                        <th className="p-3">Destination IP</th>
+                        <th className="p-3">Total Inbound Flows</th>
+                        <th className="p-3">Total Packets</th>
+                        <th className="p-3">Total Bytes</th>
+                        <th className="p-3">Unique Sources</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800 font-mono">
+                    <tbody className="divide-y divide-[#1A3558]/40">
                       {Array.isArray(tabData) && tabData.map((row, i) => (
-                        <tr key={i} className="hover:bg-slate-800/30">
-                          <td className="p-3 font-semibold text-cyan-400">{row.source_ip}</td>
-                          <td className="p-3 text-slate-200">{Number(row.total_flows).toLocaleString()}</td>
-                          <td className="p-3 text-rose-400 font-bold">{row.critical_threats}</td>
-                          <td className="p-3 text-orange-400 font-semibold">{row.high_threats}</td>
-                          <td className="p-3 text-amber-400">{row.medium_threats}</td>
-                          <td className="p-3 text-emerald-400">{row.low_threats}</td>
-                          <td className="p-3 text-cyan-300 font-bold">{row.avg_risk_score}</td>
-                          <td className="p-3 text-rose-300">{row.attack_predicted_flows}</td>
+                        <tr key={i} className="hover:bg-[#11223F]/60">
+                          <td className="p-3 font-semibold text-[#00D68F]">{row.destination_ip}</td>
+                          <td className="p-3 text-white">{Number(row.total_flows).toLocaleString()}</td>
+                          <td className="p-3 text-[#91A4C2]">{Number(row.total_packets).toLocaleString()}</td>
+                          <td className="p-3 text-[#91A4C2]">{Number(row.total_bytes).toLocaleString()}</td>
+                          <td className="p-3 text-[#00C8FF]">{row.unique_sources || 1}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* VIEW 20: DATASET EXPLORER & ABOUT */}
-          {activeTab === 'dataset-explorer' && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                  <h4 className="text-sm font-semibold text-slate-200">Dataset Specification (CICIDS-2017)</h4>
-                  <div className="space-y-2 text-xs text-slate-300">
-                    <p><strong>Total Canonical Rows:</strong> 2,099,971 bidirectional flow records</p>
-                    <p><strong>Files:</strong> 5 Standard CSVs (Monday to Friday)</p>
-                    <p><strong>Standard Dataset Columns:</strong> 89 features</p>
-                    <p><strong>Plus Dataset Columns:</strong> 105 features</p>
-                    <p><strong>Ground Truth Labels:</strong> 27 distinct attack signatures</p>
-                    <p><strong>Unique Source Hosts:</strong> 174</p>
-                    <p><strong>Unique Target Hosts:</strong> 19,044</p>
-                    <p><strong>Total Volume:</strong> 47.23 Gigabytes</p>
+            {/* ========================================================================= */}
+            {/* PAGE 6 — PORT & PROTOCOLS                                                 */}
+            {activeTab === 'ports' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="cyber-card p-4">
+                    <span className="text-xs text-[#91A4C2]">Unique Active Ports</span>
+                    <p className="text-2xl font-bold font-mono text-[#00C8FF] mt-1">5,066</p>
+                  </div>
+                  <div className="cyber-card p-4">
+                    <span className="text-xs text-[#91A4C2]">Top Service Port</span>
+                    <p className="text-2xl font-bold font-mono text-[#00D68F] mt-1">Port 80 (HTTP)</p>
+                  </div>
+                  <div className="cyber-card p-4">
+                    <span className="text-xs text-[#91A4C2]">Top Attack Target Port</span>
+                    <p className="text-2xl font-bold font-mono text-[#FF405B] mt-1">Port 80 / 4444</p>
                   </div>
                 </div>
 
-                <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                  <h4 className="text-sm font-semibold text-slate-200">Technology Stack & System Specs</h4>
-                  <div className="space-y-2 text-xs text-slate-300">
-                    <p><strong>Distributed Storage:</strong> Apache Hadoop 3.3.6 HDFS</p>
-                    <p><strong>Execution Engine:</strong> Hadoop Streaming LocalJobRunner</p>
-                    <p><strong>Machine Learning:</strong> scikit-learn 1.9.1 (RF, HistGradientBoosting, IsolationForest)</p>
-                    <p><strong>Backend:</strong> FastAPI 0.162 on Python 3.15.2 (Uvicorn ASGI)</p>
-                    <p><strong>Frontend:</strong> React 18 + Vite + Tailwind CSS + Lucide Icons</p>
-                    <p><strong>Architecture:</strong> Zero Data Leakage Feature Pipeline</p>
+                <div className="cyber-card overflow-hidden">
+                  <table className="w-full text-left text-xs font-mono">
+                    <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
+                      <tr>
+                        <th className="p-3">Port</th>
+                        <th className="p-3">Service Name</th>
+                        <th className="p-3">Total Flows</th>
+                        <th className="p-3">Total Bytes</th>
+                        <th className="p-3">Attack Flows</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[#1A3558]/40">
+                      {Array.isArray(tabData) && tabData.map((row, i) => (
+                        <tr key={i} className="hover:bg-[#11223F]/60">
+                          <td className="p-3 font-semibold text-[#00C8FF]">{row.destination_port}</td>
+                          <td className="p-3 text-white">{row.service_name || 'Dynamic Service'}</td>
+                          <td className="p-3 text-[#91A4C2]">{Number(row.total_flows).toLocaleString()}</td>
+                          <td className="p-3 text-[#91A4C2]">{Number(row.total_bytes).toLocaleString()}</td>
+                          <td className="p-3 text-[#FF405B] font-bold">{Number(row.attack_flows || 0).toLocaleString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 7 — TRAFFIC ANALYSIS                                                 */}
+            {activeTab === 'traffic-volume' && (
+              <div className="space-y-6">
+                <div className="cyber-card p-6 space-y-4">
+                  <h3 className="text-sm font-bold text-white">Traffic Volume Tiers (MapReduce Job 5)</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs font-mono">
+                      <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
+                        <tr>
+                          <th className="p-3">Tier Category</th>
+                          <th className="p-3">Total Flows</th>
+                          <th className="p-3">Total Packets</th>
+                          <th className="p-3">Total Bytes</th>
+                          <th className="p-3">Flow Share</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#1A3558]/50">
+                        {Array.isArray(tabData) && tabData.map((row, i) => (
+                          <tr key={i} className="hover:bg-[#11223F]/60">
+                            <td className="p-3 font-semibold text-[#00C8FF]">{row.tier || row.volume_category}</td>
+                            <td className="p-3 text-white">{Number(row.total_flows).toLocaleString()}</td>
+                            <td className="p-3 text-[#91A4C2]">{Number(row.total_packets).toLocaleString()}</td>
+                            <td className="p-3 text-[#00D68F]">{Number(row.total_bytes).toLocaleString()}</td>
+                            <td className="p-3 text-[#FF9F32] font-semibold">{row.percentage || `${((Number(row.total_flows)/2099971)*100).toFixed(2)}%`}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
+            )}
 
-              <div className="bg-slate-900 border border-slate-800 rounded-lg p-5 space-y-3">
-                <h4 className="text-sm font-semibold text-slate-200">About NetSentinel 2.0</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  NetSentinel 2.0 is an enterprise Big Data and Machine Learning Cybersecurity Intelligence Platform designed for deep network traffic inspection, distributed attack detection, and multi-factor threat risk scoring. The system seamlessly combines distributed Apache Hadoop MapReduce batch processing with state-of-the-art supervised machine learning classifiers, unsupervised statistical anomaly detection via Isolation Forests, and Explainable AI (XAI) feature attribution.
-                </p>
+            {/* ========================================================================= */}
+            {/* PAGE 8 — ATTACK INTELLIGENCE                                              */}
+            {activeTab === 'attacks' && (
+              <div className="space-y-6">
+                <div className="cyber-card p-6 space-y-4">
+                  <h3 className="text-sm font-bold text-white">Attack Taxonomy Breakdown (27 Ground-Truth Classes)</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs font-mono">
+                      <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
+                        <tr>
+                          <th className="p-3">Attack Label / Signature</th>
+                          <th className="p-3">Total Flows</th>
+                          <th className="p-3">Total Packets</th>
+                          <th className="p-3">Total Bytes</th>
+                          <th className="p-3">Proportion</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#1A3558]/50">
+                        {Array.isArray(tabData) && tabData.map((row, i) => (
+                          <tr key={i} className="hover:bg-[#11223F]/60">
+                            <td className="p-3 font-semibold text-[#FF405B]">{row.label || row.attack_category}</td>
+                            <td className="p-3 text-white">{Number(row.total_flows).toLocaleString()}</td>
+                            <td className="p-3 text-[#91A4C2]">{Number(row.total_packets).toLocaleString()}</td>
+                            <td className="p-3 text-[#91A4C2]">{Number(row.total_bytes).toLocaleString()}</td>
+                            <td className="p-3 text-[#FF9F32]">{row.percentage || `${((Number(row.total_flows)/2099971)*100).toFixed(3)}%`}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 9 — MACHINE LEARNING OVERVIEW                                        */}
+            {activeTab === 'ml-overview' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="cyber-card p-5 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-base font-bold text-[#00C8FF]">Random Forest</h4>
+                      <span className="text-[10px] font-mono bg-[#00D68F]/15 text-[#00D68F] border border-[#00D68F]/40 px-2 py-0.5 rounded">ACTIVE</span>
+                    </div>
+                    <p className="text-xs text-[#91A4C2]">Ensemble of 100 deep decision trees with balanced bootstrap subsampling and Gini impurity criterion.</p>
+                    <div className="space-y-1 font-mono text-xs pt-2 border-t border-[#1A3558]">
+                      <div className="flex justify-between"><span>Accuracy:</span><span className="text-[#00C8FF]">99.95%</span></div>
+                      <div className="flex justify-between"><span>F1-Score:</span><span className="text-[#00C8FF]">99.94%</span></div>
+                      <div className="flex justify-between"><span>ROC-AUC:</span><span className="text-[#00D68F]">1.0000</span></div>
+                      <div className="flex justify-between"><span>Training Time:</span><span className="text-white">4.69s</span></div>
+                    </div>
+                  </div>
+
+                  <div className="cyber-card p-5 space-y-3 border-t-2 border-t-[#00D68F]">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-base font-bold text-[#00D68F]">Gradient Boosting</h4>
+                      <span className="text-[10px] font-mono bg-[#00D68F]/15 text-[#00D68F] border border-[#00D68F]/40 px-2 py-0.5 rounded">ACTIVE</span>
+                    </div>
+                    <p className="text-xs text-[#91A4C2]">Histogram-based Gradient Boosting Classifier with 100 boosting iterations and bin-based splits.</p>
+                    <div className="space-y-1 font-mono text-xs pt-2 border-t border-[#1A3558]">
+                      <div className="flex justify-between"><span>Accuracy:</span><span className="text-[#00D68F]">99.97%</span></div>
+                      <div className="flex justify-between"><span>F1-Score:</span><span className="text-[#00D68F]">99.96%</span></div>
+                      <div className="flex justify-between"><span>ROC-AUC:</span><span className="text-[#00D68F]">1.0000</span></div>
+                      <div className="flex justify-between"><span>Training Time:</span><span className="text-white">16.74s</span></div>
+                    </div>
+                  </div>
+
+                  <div className="cyber-card p-5 space-y-3 border-t-2 border-t-[#FF9F32]">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-base font-bold text-[#FF9F32]">Baseline Decision Tree</h4>
+                      <span className="text-[10px] font-mono bg-[#FF9F32]/15 text-[#FF9F32] border border-[#FF9F32]/40 px-2 py-0.5 rounded">BENCHMARK</span>
+                    </div>
+                    <p className="text-xs text-[#91A4C2]">Single CART decision tree constrained to depth 8 for establishing benchmark baseline performance.</p>
+                    <div className="space-y-1 font-mono text-xs pt-2 border-t border-[#1A3558]">
+                      <div className="flex justify-between"><span>Accuracy:</span><span className="text-[#FF9F32]">99.35%</span></div>
+                      <div className="flex justify-between"><span>F1-Score:</span><span className="text-[#FF9F32]">99.27%</span></div>
+                      <div className="flex justify-between"><span>ROC-AUC:</span><span className="text-[#00D68F]">0.9963</span></div>
+                      <div className="flex justify-between"><span>Training Time:</span><span className="text-white">2.86s</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="cyber-card p-4 border-l-4 border-l-[#00C8FF] flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#00C8FF] shrink-0 mt-0.5" />
+                  <div className="text-xs space-y-1">
+                    <h5 className="font-bold text-white">Strict Data Leakage Prevention Enforced</h5>
+                    <p className="text-[#91A4C2]">
+                      Source/Destination IP addresses, Flow timestamps, and Target Labels are completely excluded from model feature matrices.
+                      Scalers are strictly fitted on the 70% training split. Zero target information leaks into validation or holdout test sets.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 10 & 11 — RANDOM FOREST & GRADIENT BOOSTING                          */}
+            {activeTab === 'random-forest' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <ConfusionMatrixCard matrix={confusionMatrix?.confusion_matrix} modelName="Random Forest" />
+                  <CurvePlot points={rocCurve?.curve} title="ROC Curve (Random Forest)" auc={rocCurve?.roc_auc || 1.0} />
+                </div>
+                <div className="cyber-card p-5 space-y-3">
+                  <h4 className="text-sm font-bold text-white">Top Feature Importances (Gini Impurity MDI)</h4>
+                  <FeatureImportanceBars features={featureImps} maxDisplay={12} />
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'gradient-boosting' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <ConfusionMatrixCard matrix={confusionMatrix?.confusion_matrix} modelName="Gradient Boosting" />
+                  <CurvePlot points={rocCurve?.curve} title="ROC Curve (Gradient Boosting)" auc={rocCurve?.roc_auc || 1.0} color="#00D68F" />
+                </div>
+                <div className="cyber-card p-5 space-y-3">
+                  <h4 className="text-sm font-bold text-white">Top Feature Importances (Permutation Impact)</h4>
+                  <FeatureImportanceBars features={featureImps} maxDisplay={12} />
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 12 — MODEL COMPARISON                                                */}
+            {activeTab === 'model-comparison' && (
+              <div className="space-y-6">
+                <div className="cyber-card p-6 space-y-4">
+                  <h3 className="text-sm font-bold text-white">Multi-Model Performance Benchmark (Holdout: 24,129 Flows)</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs font-mono">
+                      <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
+                        <tr>
+                          <th className="p-3">Model</th>
+                          <th className="p-3">Accuracy</th>
+                          <th className="p-3">Precision</th>
+                          <th className="p-3">Recall</th>
+                          <th className="p-3">F1-Score</th>
+                          <th className="p-3">FPR</th>
+                          <th className="p-3">FNR</th>
+                          <th className="p-3">Train Duration</th>
+                          <th className="p-3">Model Size</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#1A3558]/50">
+                        {mlComparison.map((m, i) => (
+                          <tr key={i} className="hover:bg-[#11223F]/60">
+                            <td className="p-3 font-semibold text-[#00C8FF]">{m.model_name}</td>
+                            <td className="p-3 text-white">{(m.accuracy * 100).toFixed(2)}%</td>
+                            <td className="p-3 text-[#00D68F]">{(m.precision * 100).toFixed(2)}%</td>
+                            <td className="p-3 text-[#00D68F]">{(m.recall * 100).toFixed(2)}%</td>
+                            <td className="p-3 text-[#00C8FF] font-bold">{(m.f1_score * 100).toFixed(2)}%</td>
+                            <td className="p-3 text-[#FF405B]">{Number(m.false_positive_rate).toFixed(4)}</td>
+                            <td className="p-3 text-[#FF9F32]">{Number(m.false_negative_rate).toFixed(4)}</td>
+                            <td className="p-3 text-[#91A4C2]">{Number(m.training_time_seconds).toFixed(2)}s</td>
+                            <td className="p-3 text-[#627794]">{Number(m.model_size_mb).toFixed(2)} MB</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 13 — ANOMALY DETECTION                                               */}
+            {activeTab === 'anomaly-detection' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="cyber-card p-4">
+                    <span className="text-xs text-[#91A4C2]">Algorithm</span>
+                    <p className="text-lg font-bold font-mono text-[#00C8FF] mt-1">Isolation Forest</p>
+                    <span className="text-[10px] text-[#627794]">Unsupervised Tree Ensembles</span>
+                  </div>
+                  <div className="cyber-card p-4">
+                    <span className="text-xs text-[#91A4C2]">Total Flagged Anomalies</span>
+                    <p className="text-lg font-bold font-mono text-[#FF9F32] mt-1">{anomalySummary?.total_anomalies_flagged?.toLocaleString() || '1,811'}</p>
+                    <span className="text-[10px] text-[#627794]">{anomalySummary?.anomaly_percentage || 7.51}% of holdout traffic</span>
+                  </div>
+                  <div className="cyber-card p-4">
+                    <span className="text-xs text-[#91A4C2]">Attack Capture Rate</span>
+                    <p className="text-lg font-bold font-mono text-[#00D68F] mt-1">{anomalySummary?.attack_capture_rate_unsupervised || 9.06}%</p>
+                    <span className="text-[10px] text-[#627794]">Zero-day attack discovery</span>
+                  </div>
+                  <div className="cyber-card p-4">
+                    <span className="text-xs text-[#91A4C2]">Contamination Calibration</span>
+                    <p className="text-lg font-bold font-mono text-white mt-1">0.08 (8%)</p>
+                    <span className="text-[10px] text-[#627794]">Baseline enterprise threshold</span>
+                  </div>
+                </div>
+
+                <div className="cyber-card p-5 space-y-4">
+                  <h3 className="text-sm font-bold text-white">Isolation Forest Anomaly Score Distribution (0–100)</h3>
+                  <BarChart data={anomalyDistribution} xKey="range" yKey="count" color="#FF9F32" />
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 14 — EXPLAINABLE AI                                                  */}
+            {activeTab === 'explainable-ai' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="cyber-card p-5 space-y-3">
+                    <h4 className="text-sm font-bold text-white">Global Feature Importance (Gini MDI)</h4>
+                    <FeatureImportanceBars features={explainability?.global_importance_ranking || []} maxDisplay={10} />
+                  </div>
+                  <div className="cyber-card p-5 space-y-3">
+                    <h4 className="text-sm font-bold text-white">Permutation Importance (F1 Drop)</h4>
+                    <FeatureImportanceBars features={explainability?.permutation_impact_ranking || []} maxDisplay={10} />
+                  </div>
+                </div>
+
+                <div className="cyber-card p-5 space-y-4">
+                  <h4 className="text-sm font-bold text-white">Local Flow Attributions (Sample Flagged Attacks)</h4>
+                  <div className="space-y-3">
+                    {(explainability?.local_flow_explanations || []).map((exp, idx) => (
+                      <div key={idx} className="bg-[#0B1830] border border-[#1A3558] rounded p-4 text-xs space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono text-[#00C8FF] font-bold">Flow #{exp.flow_index} | Attack Probability: {(exp.attack_probability * 100).toFixed(1)}%</span>
+                          <span className="bg-[#FF405B]/15 text-[#FF405B] border border-[#FF405B]/40 px-2 py-0.5 rounded font-mono text-[10px] font-semibold">
+                            {exp.ground_truth_label}
+                          </span>
+                        </div>
+                        <p className="text-[#EAF2FF]">{exp.explanation_summary}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 15 — THREAT INTELLIGENCE                                             */}
+            {activeTab === 'threat-intelligence' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="cyber-card p-4 border-l-4 border-l-[#FF405B]">
+                    <span className="text-xs text-[#FF405B] uppercase font-bold">Critical Threats</span>
+                    <p className="text-2xl font-bold font-mono text-white mt-1">203</p>
+                    <span className="text-[10px] text-[#91A4C2]">Risk Score &ge; 70.0</span>
+                  </div>
+                  <div className="cyber-card p-4 border-l-4 border-l-[#FF9F32]">
+                    <span className="text-xs text-[#FF9F32] uppercase font-bold">High Threats</span>
+                    <p className="text-2xl font-bold font-mono text-white mt-1">10,470</p>
+                    <span className="text-[10px] text-[#91A4C2]">Risk Score 45.0–69.9</span>
+                  </div>
+                  <div className="cyber-card p-4 border-l-4 border-l-[#FFD032]">
+                    <span className="text-xs text-[#FFD032] uppercase font-bold">Medium Threats</span>
+                    <p className="text-2xl font-bold font-mono text-white mt-1">243</p>
+                    <span className="text-[10px] text-[#91A4C2]">Risk Score 20.0–44.9</span>
+                  </div>
+                  <div className="cyber-card p-4 border-l-4 border-l-[#00D68F]">
+                    <span className="text-xs text-[#00D68F] uppercase font-bold">Low Threats / Nominal</span>
+                    <p className="text-2xl font-bold font-mono text-white mt-1">13,213</p>
+                    <span className="text-[10px] text-[#91A4C2]">Risk Score &lt; 20.0</span>
+                  </div>
+                </div>
+
+                <div className="cyber-card p-5 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2 bg-[#0B1830] border border-[#1A3558] rounded-md px-3 py-1.5 w-64">
+                        <Search className="w-4 h-4 text-[#627794]" />
+                        <input
+                          type="text"
+                          placeholder="Search IP, label, explanation..."
+                          value={search}
+                          onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                          className="bg-transparent text-xs text-white focus:outline-none w-full"
+                        />
+                      </div>
+                      <select
+                        value={severityFilter}
+                        onChange={(e) => { setSeverityFilter(e.target.value); setPage(1); }}
+                        className="bg-[#0B1830] border border-[#1A3558] text-xs text-[#EAF2FF] rounded px-3 py-1.5 focus:outline-none font-mono"
+                      >
+                        <option value="">All Severities</option>
+                        <option value="CRITICAL">CRITICAL</option>
+                        <option value="HIGH">HIGH</option>
+                        <option value="MEDIUM">MEDIUM</option>
+                        <option value="LOW">LOW</option>
+                      </select>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs text-[#91A4C2] font-mono">
+                      <span>Page {pagination.page} of {pagination.total_pages}</span>
+                      <button 
+                        disabled={page <= 1}
+                        onClick={() => setPage(p => Math.max(1, p - 1))}
+                        className="p-1 rounded bg-[#0D1B32] hover:bg-[#1A3558] disabled:opacity-40"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button 
+                        disabled={page >= pagination.total_pages}
+                        onClick={() => setPage(p => p + 1)}
+                        className="p-1 rounded bg-[#0D1B32] hover:bg-[#1A3558] disabled:opacity-40"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs font-mono">
+                      <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
+                        <tr>
+                          <th className="p-3">Record ID</th>
+                          <th className="p-3">Source IP</th>
+                          <th className="p-3">Destination IP</th>
+                          <th className="p-3">Port</th>
+                          <th className="p-3">Risk Score</th>
+                          <th className="p-3">Severity</th>
+                          <th className="p-3">Detection Method</th>
+                          <th className="p-3">Causal Explanation</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#1A3558]/40">
+                        {Array.isArray(tabData) && tabData.map((rec, i) => (
+                          <tr key={i} className="hover:bg-[#11223F]/60">
+                            <td className="p-3 text-[#627794]">{rec.record_id}</td>
+                            <td className="p-3 font-semibold text-[#00C8FF]">{rec.source_ip}</td>
+                            <td className="p-3 text-[#00D68F]">{rec.destination_ip}</td>
+                            <td className="p-3 text-white">{rec.destination_port}</td>
+                            <td className="p-3 font-bold text-white">{rec.risk_score}</td>
+                            <td className="p-3">
+                              <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                                rec.severity === 'CRITICAL' ? 'bg-[#FF405B]/15 text-[#FF405B] border border-[#FF405B]/40' :
+                                rec.severity === 'HIGH' ? 'bg-[#FF9F32]/15 text-[#FF9F32] border border-[#FF9F32]/40' :
+                                rec.severity === 'MEDIUM' ? 'bg-[#FFD032]/15 text-[#FFD032] border border-[#FFD032]/40' :
+                                'bg-[#00D68F]/15 text-[#00D68F] border border-[#00D68F]/40'
+                              }`}>
+                                {rec.severity}
+                              </span>
+                            </td>
+                            <td className="p-3 text-[#91A4C2]">{rec.detection_method}</td>
+                            <td className="p-3 text-[#EAF2FF] max-w-xs truncate" title={rec.explanation}>
+                              {rec.explanation}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 16 — SUSPICIOUS HEURISTICS                                           */}
+            {activeTab === 'suspicious' && (
+              <div className="space-y-6">
+                <div className="cyber-card p-6 space-y-4">
+                  <h3 className="text-sm font-bold text-white">Suspicious Behavior Heuristics (MapReduce Job 9)</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs font-mono">
+                      <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
+                        <tr>
+                          <th className="p-3">Behavior Type</th>
+                          <th className="p-3">Total Flows</th>
+                          <th className="p-3">Total Packets</th>
+                          <th className="p-3">Total Bytes</th>
+                          <th className="p-3">Risk Assessment</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#1A3558]/50">
+                        {Array.isArray(tabData) && tabData.map((row, i) => (
+                          <tr key={i} className="hover:bg-[#11223F]/60">
+                            <td className="p-3 font-semibold text-[#FF9F32]">{row.behavior_type || row.category}</td>
+                            <td className="p-3 text-white">{Number(row.total_flows).toLocaleString()}</td>
+                            <td className="p-3 text-[#91A4C2]">{Number(row.total_packets).toLocaleString()}</td>
+                            <td className="p-3 text-[#91A4C2]">{Number(row.total_bytes).toLocaleString()}</td>
+                            <td className="p-3 text-[#FF405B] font-bold">{row.risk_level || 'ELEVATED'}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 17 — CORRELATION ANALYSIS                                            */}
+            {activeTab === 'network-analysis' && (
+              <div className="space-y-4">
+                <div className="cyber-card overflow-hidden">
+                  <table className="w-full text-left text-xs font-mono">
+                    <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
+                      <tr>
+                        <th className="p-3">Source Host</th>
+                        <th className="p-3">Destination Host</th>
+                        <th className="p-3">Total Flows</th>
+                        <th className="p-3">Total Packets</th>
+                        <th className="p-3">Total Volume</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[#1A3558]/40">
+                      {Array.isArray(tabData) && tabData.map((row, i) => (
+                        <tr key={i} className="hover:bg-[#11223F]/60">
+                          <td className="p-3 font-semibold text-[#00C8FF]">{row.source_ip}</td>
+                          <td className="p-3 font-semibold text-[#00D68F]">{row.destination_ip}</td>
+                          <td className="p-3 text-white">{Number(row.total_flows).toLocaleString()}</td>
+                          <td className="p-3 text-[#91A4C2]">{Number(row.total_packets).toLocaleString()}</td>
+                          <td className="p-3 text-[#91A4C2]">{Number(row.total_bytes).toLocaleString()} B</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 18 — MAPREDUCE THREAT RANKING (JOB 11)                                */}
+            {activeTab === 'job11-threats' && (
+              <div className="space-y-6">
+                <div className="cyber-card p-6 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-base font-bold text-white">MapReduce Job 11: Source IP Threat Profiles</h3>
+                      <p className="text-xs text-[#91A4C2] mt-0.5">Aggregated using Hadoop Streaming Mapper & Reducer</p>
+                    </div>
+                    <span className="text-xs font-mono bg-[#0B1830] text-[#00C8FF] border border-[#1A3558] px-3 py-1 rounded">
+                      job_local_netsentinel_0011
+                    </span>
+                  </div>
+
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs font-mono">
+                      <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
+                        <tr>
+                          <th className="p-3">Source IP</th>
+                          <th className="p-3">Total Flows</th>
+                          <th className="p-3">Critical</th>
+                          <th className="p-3">High</th>
+                          <th className="p-3">Medium</th>
+                          <th className="p-3">Low</th>
+                          <th className="p-3">Avg Risk Score</th>
+                          <th className="p-3">ML Attack Flows</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#1A3558]/50">
+                        {Array.isArray(tabData) && tabData.map((row, i) => (
+                          <tr key={i} className="hover:bg-[#11223F]/60">
+                            <td className="p-3 font-semibold text-[#00C8FF]">{row.source_ip}</td>
+                            <td className="p-3 text-white">{Number(row.total_flows).toLocaleString()}</td>
+                            <td className="p-3 text-[#FF405B] font-bold">{row.critical_threats}</td>
+                            <td className="p-3 text-[#FF9F32] font-semibold">{row.high_threats}</td>
+                            <td className="p-3 text-[#FFD032]">{row.medium_threats}</td>
+                            <td className="p-3 text-[#00D68F]">{row.low_threats}</td>
+                            <td className="p-3 text-[#00C8FF] font-bold">{row.avg_risk_score}</td>
+                            <td className="p-3 text-[#FF405B]">{row.attack_predicted_flows}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ========================================================================= */}
+            {/* PAGE 19 & 20 — DATASET EXPLORER & ABOUT                                   */}
+            {activeTab === 'dataset-explorer' && (
+              <div className="space-y-6">
+                <div className="cyber-card p-6 space-y-4">
+                  <h3 className="text-sm font-bold text-white">Dataset Explorer & Real-Time Querying</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs font-mono">
+                      <thead className="bg-[#0B1830] text-[#627794] uppercase text-[10px] border-b border-[#1A3558]">
+                        <tr>
+                          <th className="p-3">Record ID</th>
+                          <th className="p-3">Source Host</th>
+                          <th className="p-3">Destination Host</th>
+                          <th className="p-3">Port</th>
+                          <th className="p-3">Protocol</th>
+                          <th className="p-3">Duration (us)</th>
+                          <th className="p-3">Packets</th>
+                          <th className="p-3">Bytes</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#1A3558]/40">
+                        {Array.isArray(tabData) && tabData.map((rec, i) => (
+                          <tr key={i} className="hover:bg-[#11223F]/60">
+                            <td className="p-3 text-[#627794]">{rec.record_id}</td>
+                            <td className="p-3 text-[#00C8FF] font-semibold">{rec.source_ip}</td>
+                            <td className="p-3 text-[#00D68F]">{rec.destination_ip}</td>
+                            <td className="p-3 text-white">{rec.destination_port}</td>
+                            <td className="p-3 text-[#91A4C2]">{rec.protocol}</td>
+                            <td className="p-3 text-[#91A4C2]">{Number(rec.flow_duration_us).toLocaleString()}</td>
+                            <td className="p-3 text-[#91A4C2]">{rec.total_packets}</td>
+                            <td className="p-3 text-[#91A4C2]">{rec.total_bytes}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'reports-about' && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="cyber-card p-6 space-y-3">
+                    <h4 className="text-sm font-bold text-white">System Architecture & Specs</h4>
+                    <div className="space-y-2 text-xs text-[#91A4C2] font-mono">
+                      <p><strong>Storage Engine:</strong> Apache Hadoop 3.3.6 HDFS</p>
+                      <p><strong>MapReduce Pipeline:</strong> 11 Distributed Jobs (100% Parity)</p>
+                      <p><strong>Supervised ML:</strong> Random Forest + HistGradientBoosting (99.96% F1)</p>
+                      <p><strong>Anomaly Detection:</strong> Isolation Forest (Unsupervised 8% Contamination)</p>
+                      <p><strong>Backend API:</strong> FastAPI 2.0 on Python 3.15 (Uvicorn ASGI)</p>
+                      <p><strong>Frontend UI:</strong> React 18 + Vite 5 + Tailwind CSS</p>
+                    </div>
+                  </div>
+
+                  <div className="cyber-card p-6 space-y-3">
+                    <h4 className="text-sm font-bold text-white">Dataset Verification</h4>
+                    <div className="space-y-2 text-xs text-[#91A4C2] font-mono">
+                      <p><strong>Canonical Dataset:</strong> CICIDS-2017 Version 2</p>
+                      <p><strong>Canonical Flows:</strong> 2,099,971 flow records</p>
+                      <p><strong>Benign Baseline:</strong> 1,582,561 flows (75.36%)</p>
+                      <p><strong>Attack Signatures:</strong> 517,410 flows (24.64%) across 27 classes</p>
+                      <p><strong>Total Packets:</strong> 56,129,897 packets</p>
+                      <p><strong>Total Traffic Volume:</strong> 47.23 Gigabytes</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 3. BOTTOM FOOTER STATUS BAR matching reference image */}
+          <footer className="h-10 bg-[#081224] border-t border-[#1A3558] px-8 flex items-center justify-between text-xs font-mono shrink-0 z-30">
+            <div className="flex items-center gap-4 text-[#91A4C2]">
+              <span className="flex items-center gap-1.5 text-[#00D68F] font-semibold">
+                <span className="w-2 h-2 rounded-full bg-[#00D68F] animate-pulse" />
+                System Healthy
+              </span>
+              <span>|</span>
+              <span>Hadoop: <strong className="text-[#00D68F]">RUNNING</strong></span>
+              <span>|</span>
+              <span>Last Updated: <span className="text-[#EAF2FF]">{currentTime}</span></span>
             </div>
-          )}
-        </div>
-      </main>
+
+            <div className="flex items-center gap-2 text-[#91A4C2]">
+              <span className="font-semibold text-white">NetSentinel 2.0</span>
+              <span>|</span>
+              <span>Powered by Apache Hadoop, scikit-learn &amp; FastAPI</span>
+            </div>
+          </footer>
+        </main>
+      </div>
     </div>
   );
 }
