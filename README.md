@@ -1,44 +1,71 @@
 # NetSentinel 2.0 — Big Data + Machine Learning Cybersecurity Intelligence Platform
 
-[![Build Status](https://img.shields.io/badge/System_Status-100%25_Verified-success?style=for-the-badge&logo=apache-hadoop)](https://github.com/)
-[![Tests](https://img.shields.io/badge/Tests-24%2F24_Passing-emerald?style=for-the-badge)](https://github.com/)
-[![Hadoop](https://img.shields.io/badge/Apache_Hadoop-3.3.6-orange?style=for-the-badge&logo=apache)](https://hadoop.apache.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-2.0.0-teal?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
-[![React](https://img.shields.io/badge/React_18-Vite-blue?style=for-the-badge&logo=react)](https://react.dev/)
+<p align="center">
+  <a href="https://github.com/kiranreddy58/NetSentinal">
+    <img src="https://img.shields.io/badge/System_Status-100%25_Verified-success?style=for-the-badge&logo=apache-hadoop" alt="Status" />
+  </a>
+  <a href="https://github.com/kiranreddy58/NetSentinal">
+    <img src="https://img.shields.io/badge/Tests-24%2F24_Passing-emerald?style=for-the-badge" alt="Tests" />
+  </a>
+  <a href="https://hadoop.apache.org/">
+    <img src="https://img.shields.io/badge/Apache_Hadoop-3.3.6-orange?style=for-the-badge&logo=apache" alt="Hadoop" />
+  </a>
+  <a href="https://fastapi.tiangolo.com/">
+    <img src="https://img.shields.io/badge/FastAPI-2.0.0-teal?style=for-the-badge&logo=fastapi" alt="FastAPI" />
+  </a>
+  <a href="https://react.dev/">
+    <img src="https://img.shields.io/badge/React_18-Vite-blue?style=for-the-badge&logo=react" alt="React" />
+  </a>
+</p>
 
 **NetSentinel 2.0** is an enterprise-grade Big Data and Machine Learning Cybersecurity Intelligence Platform. It combines distributed **Apache Hadoop 3.3.6 HDFS & MapReduce** batch processing with **supervised machine learning classification**, **unsupervised statistical anomaly detection**, **explainable AI (XAI)**, and **multi-factor threat risk scoring**, visualized through a modern 20-page Security Operations Center (SOC) dashboard.
 
 ---
 
-## 📸 Platform Screenshots (Executive UI, Terminal, ML, Hadoop & Threat Operations)
+## 📸 Platform Deliverables & Live Screenshots
 
 ### 1. Home Page — Executive Overview Dashboard
 > Real-time SOC executive dashboard displaying 2,099,971 canonical flows, traffic breakdown donut charts, multi-tier threat severity distribution, and active machine learning performance metrics.
-![1. Executive Home Page](output/1_home_page_overview.png)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kiranreddy58/NetSentinal/main/output/1_home_page_overview.png" alt="1. Home Page Executive Overview" width="100%" />
+</p>
 
 ---
 
 ### 2. Terminal — Platform Execution & 24 Automated Tests
 > Live PowerShell terminal displaying concurrent Uvicorn ASGI + Vite frontend startup, Apache Hadoop MapReduce Jobs 1–11 execution provenance, and all 24 unit/integration test suites passing 100%.
-![2. Terminal Execution and Tests](output/2_terminal_execution_and_tests.png)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kiranreddy58/NetSentinal/main/output/2_terminal_execution_and_tests.png" alt="2. Terminal Execution and Tests" width="100%" />
+</p>
 
 ---
 
 ### 3. Machine Learning — Model Ensembles & Comparative Benchmarks
 > Supervised Machine Learning subsystem displaying active Random Forest, Histogram Gradient Boosting, and Baseline Decision Tree models, verified metrics, and strict data leakage prevention audit.
-![3. Machine Learning Models](output/3_machine_learning_models.png)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kiranreddy58/NetSentinal/main/output/3_machine_learning_models.png" alt="3. Machine Learning Models" width="100%" />
+</p>
 
 ---
 
 ### 4. Hadoop & Big Data — Distributed MapReduce Analytics
 > Apache Hadoop 3.3.6 MapReduce analytics pipeline processing 2.1M flows across 11 streaming jobs with 100.00% ground-truth parity verification.
-![4. Hadoop Big Data Analytics](output/4_hadoop_bigdata_analytics.png)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kiranreddy58/NetSentinal/main/output/4_hadoop_bigdata_analytics.png" alt="4. Hadoop Big Data Analytics" width="100%" />
+</p>
 
 ---
 
 ### 5. Threat Intelligence — Multi-Factor Risk Operations & Severity Tiers
 > Unified Threat Intelligence Engine fusing supervised ensemble probabilities, Isolation Forest anomaly scores, and behavioral heuristics into 4 calibrated severity tiers (Critical, High, Medium, Low) with causal explanations.
-![5. Threat Intelligence Operations](output/5_threat_intelligence_operations.png)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kiranreddy58/NetSentinal/main/output/5_threat_intelligence_operations.png" alt="5. Threat Intelligence Operations" width="100%" />
+</p>
 
 ---
 
